@@ -33,11 +33,6 @@ class Notas_model extends CI_Model {
         $this->db->insert_batch('notas',$dados);
     }
 
-    public function deletar_tabela(){
-        $sql='DROP TABLE notas';
-        return $this->db->query($sql);
-    }
-
     public function criar_tabela(){
         $sql='CREATE TABLE notas(id INT PRIMARY KEY AUTO_INCREMENT, faixa_id INT, sexo VARCHAR(10), nota FLOAT,corrida_2400m FLOAT,flexao_abdominal_supra FLOAT,flexao_barra_fixa FLOAT,natacao_100m FLOAT,flexao_braco_solo FLOAT,natacao_12min FLOAT,FOREIGN KEY (faixa_id) REFERENCES faixas_etarias(id))';
         return $this->db->query($sql);

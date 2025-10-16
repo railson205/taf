@@ -49,8 +49,7 @@
     <main class="main">
         <div class="container">
             <div class="row justify-content-center">
-                <a class="btn btn-primary btn-lg" href=<?= site_url('Home/mocar_tabela') ?>>Mocar Tabela</a>
-                <a class="btn btn-primary btn-lg" href=<?= site_url('Home/deletar_tabela') ?>>Deletar Tabela</a>
+                <a class="btn btn-primary btn-lg" href=<?= site_url('Home/mocar_tabela') ?>>Adicionar notas na Tabela</a>
 
                 <!-- FORMULÁRIO DE USUÁRIOS -->
                 <div class="container_usuarios">

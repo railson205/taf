@@ -151,18 +151,14 @@ class Home extends CI_Controller
 
     }
 
-    public function mocar_tabela(){
-        $this->Notas_model->mocar_tabela(tabela());
+    public function adicionar_notas_tabela()
+    {
+        $this->Notas_model->adicionar_notas_tabela(criar_notas_tabela());
         redirect("Home");
     }
 
-    public function deletar_tabela(){
-        $this->Notas_model->deletar_tabela();
-        $this->Notas_model->criar_tabela();
-        redirect("Home");
-    }
-
-    public function criar_tabela(){
+    public function criar_tabela()
+    {
         $this->Notas_model->criar_tabela();
         redirect("Home");
     }

@@ -56,7 +56,7 @@ function organizar_array($array, $key1, $ordem1 = SORT_ASC, $key2 = null, $ordem
 }
 
 
-function tabela()
+function criar_notas_tabela()
 {
     $faixas = [1, 2, 3, 4, 5, 6, 7, 8];
     $inicio = [
@@ -125,7 +125,7 @@ function tabela()
             } else {
                 $dados[$k] = $v;
             }
-            
+
         }
     }
     return $notas;
