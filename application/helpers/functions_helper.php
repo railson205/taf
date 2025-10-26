@@ -1,10 +1,24 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+function coletar_idade($data_nascimento)
+{
+    $idade = (date('Y') - formata_data_nascimento($data_nascimento, true)) - 1;
+    return $idade;
+}
+
+function formata_data_nascimento($data_nascimento, $only_year = false)
+{
+    $d_nasc = new DateTime($data_nascimento);
+    return $only_year ? $d_nasc->format('Y') : $d_nasc->format('d/m/Y');
+}
+
+
 function tempo_para_segundos($tempo)
 {
     $tempo_slice = explode(':', $tempo);
-    return ((int) $tempo_slice[0]) * 60 + (int) $tempo_slice[1];
+    //Trata para o caso de passar um número como string no lugar do tempo
+    return count($tempo_slice) == 1 ? (int) $tempo_slice[0] : ((int) $tempo_slice[0]) * 60 + (int) $tempo_slice[1];
 }
 ;
 
@@ -55,78 +69,102 @@ function organizar_array($array, $key1, $ordem1 = SORT_ASC, $key2 = null, $ordem
     return $array;
 }
 
-
-function criar_notas_tabela()
+/**
+ * Agrupa os resultados dos exercícios por usuário para tabela dinâmica
+ *
+ * @param array $usuarios_exercicios Resultado do banco de dados
+ * @return array Array estruturado por usuário com sub-array de exercícios
+ */
+function agrupar_resultados_exercicios_por_usuarios(array $usuarios_exercicios): array
 {
-    $faixas = [1, 2, 3, 4, 5, 6, 7, 8];
-    $inicio = [
-        'corrida_2400m' => [tempo_para_segundos('18:40'), 20, 600],
-        'flexao_abdominal_supra' => [2, 2, 54],
-        'natacao_100m' => [tempo_para_segundos('02:38'), 3, 80],
-        'flexao_braco_solo' => [14, 1, 40],
-        'natacao_12min' => [25, 25, 675],
+    $resultados = [];
+    $exercicios_unicos = [];
+
+    foreach ($usuarios_exercicios as $row) {
+        $uid = $row['usuario_id'];
+
+        // Exercícios únicos (mantém o nome pelo ID)
+        $exercicios_unicos[$row['exercicio_id']] = $row['nome_exercicio'];
+
+        // Se ainda não existe o usuário no array, cria
+        if (!isset($resultados[$uid])) {
+            $resultados[$uid] = [
+                'usuario_id' => $uid,
+                'nome' => $row['nome'],
+                'sexo' => $row['sexo'],
+                'faixa_etaria' => $row['faixa_etaria'],
+                'grupo_faixa' => $row['nome_grupo'],
+                'nota_final' => 0, // inicia a soma
+                'exercicios' => []
+            ];
+        }
+
+        // Adiciona o exercício ao usuário
+        $resultados[$uid]['exercicios'][] = [
+            'exercicio_id' => $row['exercicio_id'],
+            'nome_exercicio' => $row['nome_exercicio'],
+            'tipo_exercicio' => $row['tipo_exercicio'],
+            'valor_nota' => $row['valor_nota'],
+            'meta_exercicio' => $row['meta_exercicio'],
+            'contagem_exercicio' => $row['contagem_exercicio']
+        ];
+
+        // Soma o valor da nota ao total do usuário
+        $resultados[$uid]['nota_final'] += (float) $row['valor_nota'];
+    }
+
+    return [
+        array_values($resultados), // resultados com índice numérico
+        $exercicios_unicos
     ];
-    $fim = [
-        'corrida_2400m' => [],
-        'flexao_abdominal_supra' => [],
-        'natacao_100m' => [],
-        'flexao_braco_solo' => [],
-        'natacao_12min' => [],
-        'flexao_barra_fixa' => [1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-    ];
-
-    foreach ($inicio as $key => $v) {
-        if (in_array($key, ['corrida_2400m', 'natacao_100m'])) {
-            for ($i = $v[0]; $i >= $v[2]; $i -= $v[1]) {
-                $fim[$key][] = $i;
-
-            }
-        } else {
-            for ($i = $v[0]; $i <= $v[2]; $i += $v[1]) {
-                $fim[$key][] = $i;
-
-            }
-        }
-
-    }
-    $notas = $fim;
-    $nota_inicial = 0.5;
-    for ($i = 0; $i < 27; $i++) {
-        foreach ($faixas as $key => $f) {
-            $nota = $nota_inicial * ($i + 1) - (0.5 * (7 - $key));
-            $notas[$f][] = $nota;
-        }
-    }
-
-    $combined = [];
-    $keys = array_keys($notas);        // todas as chaves do array principal
-    $length = count($notas[$keys[0]]); // pega o tamanho de qualquer sub-array
-
-    for ($i = 0; $i < $length; $i++) {
-        $row = [];
-        foreach ($keys as $key) {
-            $row[$key] = $notas[$key][$i];
-        }
-        $combined[] = $row;
-    }
-
-    $notas = [];
-    foreach ($combined as $c) {
-        $dados = ['sexo' => 'Masculino'];
-        foreach ($c as $k => $v) {
-            if (is_int($k)) {
-                if ($v > 0 && $v <= 10) {
-                    $dados['faixa_id'] = $k;
-                    $dados['nota'] = $v;
-                    $notas[] = $dados;
-                } else {
-                    continue;
-                }
-            } else {
-                $dados[$k] = $v;
-            }
-
-        }
-    }
-    return $notas;
 }
+
+/**
+ * Agrupa os exercícios por usuário para tabela dinâmica
+ *
+ * @param array $usuarios_exercicios Resultado do banco de dados
+ * @return array Array estruturado por usuário com sub-array de exercícios
+ */
+function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
+{
+    $resultados = [];
+    $exercicios_unicos = [];
+
+    foreach ($usuarios_exercicios as $row) {
+        $uid = $row['usuario_id'];
+
+        // Exercícios únicos (mantém o nome pelo ID)
+        $exercicios_unicos[$row['exercicio_id']] = $row['nome_exercicio'];
+
+        // Se ainda não existe o usuário no array, cria
+        if (!isset($resultados[$uid])) {
+            $resultados[$uid] = [
+                'usuario_id' => $uid,
+                'nome' => $row['nome'],
+                'sexo' => $row['sexo'],
+                'data_nascimento'=>$row['data_nascimento'],
+                'faixa_etaria' => $row['faixa_etaria'],
+                'grupo_faixa' => $row['grupo_faixa_etaria'],
+                'exercicios' => []
+            ];
+        }
+
+        // Adiciona o exercício ao usuário
+        $resultados[$uid]['exercicios'][] = [
+            'exercicio_id' => $row['exercicio_id'],
+            'nome_exercicio' => $row['nome_exercicio'],
+            'tipo_exercicio' => $row['tipo_exercicio'],
+            'contagem_exercicio' => $row['contagem_exercicio']
+        ];
+
+        
+    }
+
+    return [
+        array_values($resultados), // resultados com índice numérico
+        $exercicios_unicos
+    ];
+}
+
+
+

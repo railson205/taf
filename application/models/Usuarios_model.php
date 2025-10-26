@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Usuario_model extends CI_Model
+class Usuarios_model extends CI_Model
 {
 
     public function buscar($usuario_id)
@@ -11,12 +11,13 @@ class Usuario_model extends CI_Model
 
     public function listar_todos_usuarios()
     {
-        return $this->db->get('usuarios')->result_array();
+        $dados = $this->db->select('u.id,u.nome,u.sexo,u.data_nascimento')->from('usuarios u')->order_by('u.nome, u.data_nascimento')->get()->result_array();
+        return $dados;
     }
 
     public function inserir_usuario($nome, $data_nascimento, $sexo)
     {
-        //Help:Insere um novo usuário na tabela 'usuarios' com os dados fornecidos
+        
         $data = [
             'nome' => $nome,
             'data_nascimento' => $data_nascimento,
