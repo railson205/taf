@@ -4,6 +4,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Notas_exercicios_model extends CI_Model
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Registro_exercicios_model');
+    }
+
     public function listar_notas_exercicios()
     {
         $dados = $this->db
@@ -79,7 +85,7 @@ class Notas_exercicios_model extends CI_Model
 
         // Pega o tipo e a meta mínima geral
         $tipo = $dados[0]['tipo_exercicio'];
-        $meta_minima = $this->meta_minima($exercicio_id);
+        $meta_minima = $this->Registro_exercicios_model->meta_minima($exercicio_id);
 
         // Define se atingiu o mínimo (tempo menor ou contagem maior)
         $atingiu_meta = $tipo === 'Tempo'
@@ -125,56 +131,6 @@ class Notas_exercicios_model extends CI_Model
         // Corrige índice para o original do array filtrado
         $filtrados = array_values($filtrados);
         return $filtrados[$index];
-    }
-
-
-
-
-    function exercicio_atingiram_meta($dados_exercicios)
-    {
-        $exercicio_id = $dados_exercicios['registro_exercicio_id'];
-        $faixa_id = $dados_exercicios['faixa_id'];
-        $sexo = $dados_exercicios['sexo'];
-        $meta = $dados_exercicios['meta_exercicio'];
-
-        $exercicios = $this->db->select('
-        ru.id,
-        ru.usuario_id,
-        ru.faixa_id,
-        ru.registro_exercicio_id,
-        ru.nota_ex_id,
-        u.sexo,
-        re.tipo_exercicio,
-        eu.contagem_exercicio,
-        COALESCE(ne.valor_nota, 0) AS valor_nota,
-        ')
-            ->from('resultados_usuarios ru')
-            ->join('notas_exercicios ne', 'ne.id=ru.nota_ex_id', 'left')
-            ->join('registro_exercicios re', 're.id=ru.registro_exercicio_id', 'left')
-            ->join('usuarios u', 'u.id=ru.usuario_id', 'left')
-            ->join('exercicios_usuarios eu', 'eu.id=ru.exercicio_usuario_id', 'left')
-            ->where('ru.faixa_id', $faixa_id)
-            ->where('ru.registro_exercicio_id', $exercicio_id)
-            ->where('u.sexo', $sexo)
-            ->where('(
-        CASE 
-        WHEN re.tipo_exercicio = "Tempo" THEN ' . $meta . ' >= eu.contagem_exercicio 
-        WHEN re.tipo_exercicio = "Contagem" THEN ' . $meta . ' <= eu.contagem_exercicio 
-        ELSE FALSE
-        END
-    )', null, false)
-            ->get()
-            ->result_array();
-
-
-        return $exercicios;
-    }
-
-    function meta_minima($exercicio_id)
-    {
-        $this->db->where('registro_exercicio_id', $exercicio_id)->order_by('valor_nota', 'ASC')->limit(1);
-        $meta_minima = $this->db->get('notas_exercicios')->row_array()['meta_exercicio'];
-        return $meta_minima;
     }
 }
 ?>

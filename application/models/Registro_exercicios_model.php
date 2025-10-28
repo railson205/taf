@@ -3,11 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Registro_exercicios_model extends CI_Model
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('Idades_model');
-    }
 
     public function listar_exercicios()
     {
@@ -30,5 +25,11 @@ class Registro_exercicios_model extends CI_Model
         return $this->db->insert('registro_exercicios', $dados);
     }
 
+    function meta_minima($exercicio_id)
+    {
+        $this->db->where('registro_exercicio_id', $exercicio_id)->order_by('valor_nota', 'ASC')->limit(1);
+        $meta_minima = $this->db->get('notas_exercicios')->row_array()['meta_exercicio'];
+        return $meta_minima;
+    }
 }
 ?>
