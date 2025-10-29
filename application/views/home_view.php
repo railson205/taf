@@ -213,8 +213,11 @@
                             ?>
                             <div class="div_row">
                                 <?= input_component("Nome:", 'usuario_id', 'select', 'Selecione um nome.', '', $nomes, $nomes_id) ?>
-                                <?= input_component("Exercício:", 'exercicio_id', 'select', 'Selecione um nome.', '', $exercicios, $exercicios_id, 'onChange="onChangeExerciciosUsuarios()"') ?>
-                                <?= input_component('Contagem do exercício:', 'contagem_exercicio', 'number', '', '', '', '', 'disabled') ?>
+                                <?= input_component("Exercício:", 'exercicio_id', 'select', 'Selecione um nome.', '', $exercicios, $exercicios_id) ?>
+                                <?= input_component('Índice do exercício:', 'contagem_exercicio', 'select', '', '', [], [], 'disabled') ?>
+                                <button type="button" class="btn btn-primary btn-lg"
+                                    onclick="onChangeExerciciosUsuarios()">Mostrar
+                                    índices</button>
                             </div>
                             <div class="d-grid mb-3">
                                 <button type="submit" class="btn btn-primary btn-lg">Adicionar</button>
@@ -233,7 +236,9 @@
                                     <th rowspan="2" class="th-center">Grupo da Faixa Etária</th>
                                     <th rowspan="2" class="th-center">Faixa Etária</th>
                                     <?php foreach ($exercicios_unicos_usuarios as $ex): ?>
-                                        <th colspan="3" style="border-right: 2px solid black; border-left: 2px solid black"><?= $ex ?></th>
+                                        <th colspan="3" style="border-right: 2px solid black; border-left: 2px solid black">
+                                            <?= $ex ?>
+                                        </th>
                                     <?php endforeach; ?>
                                 </tr>
                                 <tr>
@@ -267,9 +272,10 @@
                                             foreach ($resultados_exercicios_unicos as $exercicio):
                                                 $ex = $map_exercicios[$exercicio] ?? null;
                                                 ?>
-                                                <td style="border-left: 2px solid black"><?= $ex['nome_exercicio']?></td>
-                                                <td><?= $ex['tipo_exercicio']=='Tempo' ? segundos_para_tempo($ex['contagem_exercicio']).' min' : $ex['contagem_exercicio']?></td>
-                                                <td style="border-rigth: 2px solid black"><?= $ex['tipo_exercicio']?></td>
+                                                <td style="border-left: 2px solid black"><?= $ex['nome_exercicio'] ?></td>
+                                                <td><?= $ex['tipo_exercicio'] == 'Tempo' ? segundos_para_tempo($ex['contagem_exercicio']) . ' min' : $ex['contagem_exercicio'] ?>
+                                                </td>
+                                                <td style="border-rigth: 2px solid black"><?= $ex['tipo_exercicio'] ?></td>
                                             <?php endforeach; ?>
                                         </tr>
                                     <?php endforeach; ?>
@@ -407,10 +413,10 @@
                                             ?>
                                             <td><?= $ex['tipo_exercicio'] ?? '-' ?></td>
                                             <td><?= $ex['valor_nota'] ?? '-' ?></td>
-                                            <td><?= $ex['tipo_exercicio'] == 'Tempo' ? segundos_para_tempo($ex['meta_exercicio']).' min' : $ex['meta_exercicio'] ?? '-' ?>
+                                            <td><?= $ex['tipo_exercicio'] == 'Tempo' ? segundos_para_tempo($ex['meta_exercicio']) . ' min' : $ex['meta_exercicio'] ?? '-' ?>
                                             </td>
                                             <td style="border-right: 2px solid black">
-                                                <?= $ex['tipo_exercicio'] == 'Tempo' ? segundos_para_tempo($ex['contagem_exercicio']).' min' : $ex['contagem_exercicio'] ?? '-' ?>
+                                                <?= $ex['tipo_exercicio'] == 'Tempo' ? segundos_para_tempo($ex['contagem_exercicio']) . ' min' : $ex['contagem_exercicio'] ?? '-' ?>
                                             </td>
                                         <?php endforeach; ?>
                                         <td><?= $usuario['nota_final'] ?? '-' ?></td>
@@ -428,24 +434,52 @@
         </div>
         <script>
             const registro_exercicios = <?= json_encode($registro_exercicios) ?>;
+            const notas_exercicios = <?= json_encode($notas_exercicios) ?>;
+            const usuarios = <?= json_encode($usuarios) ?>;
+
             function onChangeExerciciosUsuarios() {
-                const campo_id = document.getElementById('inputExercicio_id');
+                const campo_usuario_id = document.getElementById('inputUsuario_id');
+                const usuario_selecionado = usuarios.find(u => u.id === String(campo_usuario_id.value));
+
+                const campo_exercicio_id = document.getElementById('inputExercicio_id');
+                const exercicio_selecionado = registro_exercicios.find(e => e.exercicio_id === String(campo_exercicio_id.value));
+
+
                 const campo_contagem = document.getElementById('inputContagem_exercicio');
 
-                //Procura no array qual objeto com a key id tem o mesmo valor de campo.value
-                const exercicio = registro_exercicios.find(e => e.exercicio_id === String(campo_id.value));
-
-                if (!exercicio) {
+                if (!exercicio_selecionado || !usuario_selecionado) {
                     campo_contagem.disabled = true;
                     campo_contagem.placeholder = '';
                     return;
                 }
 
-                const tipo_exercicio = exercicio.tipo_exercicio;
+                const tipo_exercicio = exercicio_selecionado.tipo_exercicio;
 
-                campo_contagem.removeEventListener('input', aplicarMascaraTempo);
 
-                if (tipo_exercicio === 'Tempo') {
+                const notas_selecionadas = notas_exercicios.filter(e => {
+                    const idade_usuario = new Date().getFullYear() - new Date(usuario_selecionado.data_nascimento).getFullYear();
+                    const [idade_min, idade_max] = e.faixa_etaria.split('-').map(Number);
+
+                    return e.exercicio_id == exercicio_selecionado.exercicio_id && e.sexo == usuario_selecionado.sexo && idade_min <= idade_usuario && idade_usuario <= idade_max;
+                });
+
+
+
+                if (notas_selecionadas.length==0) {
+                    campo_contagem.disabled = true;
+                    campo_contagem.placeholder = '';
+                    return;
+                } else {
+                    campo_contagem.innerHTML='';
+                    const notas = notas_selecionadas.map(e => e.valor_nota);
+                    const indices=notas_selecionadas.map(e=>e.meta_exercicio);
+                    console.log(notas_selecionadas);
+                    campo_contagem.type = 'select';
+                    campo_contagem.disabled = false;
+                    
+                }
+
+                /*if (tipo_exercicio === 'Tempo') {
                     campo_contagem.type = 'text';
                     campo_contagem.icon = 'bi-stopwatch';
                     campo_contagem.placeholder = 'mm:ss';
@@ -461,7 +495,7 @@
                     campo_contagem.type = 'text';
                     campo_contagem.placeholder = '';
                     campo_contagem.disabled = true;
-                }
+                }*/
             }
 
             function onChangeExerciciosNota() {
@@ -538,6 +572,8 @@
                     alert('Digite um valor entre 0 e 10');
                 }
             }
+
+
         </script>
     </main>
 </body>

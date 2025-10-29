@@ -21,7 +21,8 @@ class Notas_exercicios_model extends CI_Model
         re.id as exercicio_id,
         re.nome_exercicio,
         re.tipo_exercicio,
-        ne.meta_exercicio
+        ne.meta_exercicio,
+        f.id as faixa_id,
     ')
             ->from('notas_exercicios ne')
             ->join('faixas_etarias f', 'f.id = ne.faixa_id')
@@ -131,6 +132,44 @@ class Notas_exercicios_model extends CI_Model
         // Corrige índice para o original do array filtrado
         $filtrados = array_values($filtrados);
         return $filtrados[$index];
+    }
+    function exercicio_atingiram_meta($dados_exercicios)
+    {
+        $exercicio_id = $dados_exercicios['registro_exercicio_id'];
+        $faixa_id = $dados_exercicios['faixa_id'];
+        $sexo = $dados_exercicios['sexo'];
+        $meta = $dados_exercicios['meta_exercicio'];
+
+        $exercicios = $this->db->select('
+        ru.id,
+        ru.usuario_id,
+        ru.faixa_id,
+        ru.registro_exercicio_id,
+        ru.nota_ex_id,
+        u.sexo,
+        re.tipo_exercicio,
+        eu.contagem_exercicio,
+        COALESCE(ne.valor_nota, 0) AS valor_nota,
+        ')
+            ->from('resultados_usuarios ru')
+            ->join('notas_exercicios ne', 'ne.id=ru.nota_ex_id', 'left')
+            ->join('registro_exercicios re', 're.id=ru.registro_exercicio_id', 'left')
+            ->join('usuarios u', 'u.id=ru.usuario_id', 'left')
+            ->join('exercicios_usuarios eu', 'eu.id=ru.exercicio_usuario_id', 'left')
+            ->where('ru.faixa_id', $faixa_id)
+            ->where('ru.registro_exercicio_id', $exercicio_id)
+            ->where('u.sexo', $sexo)
+            ->where('(
+        CASE 
+        WHEN re.tipo_exercicio = "Tempo" THEN ' . $meta . ' >= eu.contagem_exercicio 
+        WHEN re.tipo_exercicio = "Contagem" THEN ' . $meta . ' <= eu.contagem_exercicio 
+        ELSE FALSE
+        END
+    )', null, false)
+            ->get()
+            ->result_array();
+
+        return $exercicios;
     }
 }
 ?>
