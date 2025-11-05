@@ -15,14 +15,8 @@ class Usuarios_model extends CI_Model
         return $dados;
     }
 
-    public function inserir_usuario($nome, $data_nascimento, $sexo)
+    public function inserir_usuario($data)
     {
-        
-        $data = [
-            'nome' => $nome,
-            'data_nascimento' => $data_nascimento,
-            'sexo' => $sexo
-        ];
         return $this->db->insert('usuarios', $data);
     }
 

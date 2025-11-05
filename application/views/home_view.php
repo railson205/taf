@@ -85,13 +85,13 @@
                             <tbody>
                                 <?php
                                 if (!empty($usuarios)):
-                                    foreach ($usuarios as $usuario):
+                                    foreach ($usuarios as $data):
                                         ?>
                                         <tr>
-                                            <td><?= $usuario['nome'] ?? '-'; ?></td>
-                                            <td><?= formata_data_nascimento($usuario['data_nascimento']) ?? '-'; ?></td>
-                                            <td><?= coletar_idade($usuario['data_nascimento']) ?? '-'; ?></td>
-                                            <td><?= $usuario['sexo'] ?? '-'; ?></td>
+                                            <td><?= $data['nome'] ?? '-'; ?></td>
+                                            <td><?= formata_data_nascimento($data['data_nascimento']) ?? '-'; ?></td>
+                                            <td><?= coletar_idade($data['data_nascimento']) ?? '-'; ?></td>
+                                            <td><?= $data['sexo'] ?? '-'; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
@@ -180,8 +180,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (!empty($registro_exercicios)):
-                                    foreach ($registro_exercicios as $e):
+                                <?php if (!empty($tipos_exercicios)):
+                                    foreach ($tipos_exercicios as $e):
                                         ?>
                                         <tr>
                                             <td><?= $e['nome_exercicio'] ?></td>
@@ -198,7 +198,7 @@
                     </div>
                 </div>
                 <!-- FORMULÁRIO DE Exercícios dos usuários -->
-                <div class="container_exercicios_usuarios">
+                <div class="container_exercicios_realizados">
                     <div class="body">
                         <h3>Registre os exercícios de cada usuário</h3>
                         <form method="POST" action="<?= site_url('Home/inserir_exercicio_usuario') ?>">
@@ -207,9 +207,9 @@
                             $nomes = array_column($usuarios, 'nome');
                             $nomes_id = array_column($usuarios, 'id');
                             //Nomes dos exercícios
-                            $exercicios = array_column($registro_exercicios, 'nome_exercicio');
-                            $exercicios_tipos = array_column($registro_exercicios, 'tipo_exercicio');
-                            $exercicios_id = array_column($registro_exercicios, 'exercicio_id');
+                            $exercicios = array_column($tipos_exercicios, 'nome_exercicio');
+                            $exercicios_tipos = array_column($tipos_exercicios, 'tipo_exercicio');
+                            $exercicios_id = array_column($tipos_exercicios, 'exercicio_id');
                             ?>
                             <div class="div_row">
                                 <?= input_component("Nome:", 'usuario_id', 'select', 'Selecione um nome.', '', $nomes, $nomes_id) ?>
@@ -235,9 +235,9 @@
                                     <th rowspan="2" class="th-center">Idade</th>
                                     <th rowspan="2" class="th-center">Grupo da Faixa Etária</th>
                                     <th rowspan="2" class="th-center">Faixa Etária</th>
-                                    <?php foreach ($exercicios_unicos_usuarios as $ex): ?>
+                                    <?php foreach ($exercicios_unicos_usuarios as $key => $ex): ?>
                                         <th colspan="3" style="border-right: 2px solid black; border-left: 2px solid black">
-                                            <?= $ex ?>
+                                            Exercício <?= $key ?>
                                         </th>
                                     <?php endforeach; ?>
                                 </tr>
@@ -250,22 +250,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (!empty($exercicios_usuarios)):
-                                    organizar_array($exercicios_usuarios, 'nome');
-                                    foreach ($exercicios_usuarios as $usuario):
+                                <?php if (!empty($exercicios_realizados)):
+                                    organizar_array($exercicios_realizados, 'nome');
+                                    foreach ($exercicios_realizados as $data):
                                         ?>
                                         <tr>
-                                            <td><?= $usuario['nome'] ?? '-' ?></td>
-                                            <td><?= $usuario['sexo'] ?? '-' ?></td>
-                                            <td><?= coletar_idade($usuario['data_nascimento']) ?? '-' ?> anos</td>
-                                            <td><?= $usuario['grupo_faixa'] ?? '-' ?></td>
-                                            <td><?= $usuario['faixa_etaria'] ?? '-' ?> anos</td>
+                                            <td><?= $data['nome'] ?? '-' ?></td>
+                                            <td><?= $data['sexo'] ?? '-' ?></td>
+                                            <td><?= coletar_idade($data['data_nascimento']) ?? '-' ?> anos</td>
+                                            <td><?= $data['grupo_faixa'] ?? '-' ?></td>
+                                            <td><?= $data['faixa_etaria'] ?? '-' ?> anos</td>
 
 
                                             <?php
                                             // Mapeia os exercícios do usuário para facilitar acesso pelo nome
                                             $map_exercicios = [];
-                                            foreach ($usuario['exercicios'] as $ex) {
+                                            foreach ($data['exercicios'] as $ex) {
                                                 $map_exercicios[$ex['nome_exercicio']] = $ex;
                                             }
 
@@ -301,8 +301,8 @@
                             $notas_options = array_map(function ($f) {
                                 return $f;
                             }, range(0.5, 10, 0.5));
-                            $exercicios_options = array_column($registro_exercicios, 'nome_exercicio');
-                            $exercicios_options_id = array_column($registro_exercicios, 'exercicio_id');
+                            $exercicios_options = array_column($tipos_exercicios, 'nome_exercicio');
+                            $exercicios_options_id = array_column($tipos_exercicios, 'exercicio_id');
                             ?>
                             <div class="div_row">
                                 <?= input_component("Faixa Etária:", 'faixa_etaria_id_nota', 'select', 'Selecione um nome.', '', $faixas_etarias_options, $faixas_etarias_options_id) ?>
@@ -311,9 +311,6 @@
                                 <!-- Modificar os inputs de exercícios e meta-->
                                 <?= input_component("Exercício:", 'exercicio_nota', 'select', 'Selecione uma nota.', '', $exercicios_options, $exercicios_options_id, 'onChange="onChangeExerciciosNota()"') ?>
                                 <?= input_component('Meta:', 'meta_nota', 'number', '', '', '', '', 'disabled') ?>
-                                <!--<?= input_component("Adicionar novo valor de nota:", 'nova_nota', 'float', 'Digite uma nota de 0 a 10', 'Valor de 0 a 10') ?>
-                                <button type="button" onclick="adicionar_nova_nota()">Adicionar nova
-                                    nota</button>-->
                             </div>
                             <div class="d-grid mb-3">
                                 <button type="submit" class="btn btn-primary btn-lg">Adicionar</button>
@@ -362,7 +359,7 @@
                         </table>
                     </div>
                 </div>
-                <!-- TABELA DE resultados) -->
+                <!-- TABELA DE resultados -->
                 <div class='container-resultados'>
                     <h3>Resultados</h3>
                     <div style="width: 100%; max-height: 800px; overflow: auto;">
@@ -392,19 +389,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($resultados as $usuario): ?>
+                                <?php foreach ($resultados as $data): ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($usuario['nome']) ?></td>
-                                        <td><?= htmlspecialchars($usuario['sexo']) ?></td>
-                                        <td><?= htmlspecialchars($usuario['faixa_etaria']) ?></td>
+                                        <td><?= htmlspecialchars($data['nome']) ?></td>
+                                        <td><?= htmlspecialchars($data['sexo']) ?></td>
+                                        <td><?= htmlspecialchars($data['faixa_etaria']) ?></td>
                                         <td style="border-right: 2px solid black">
-                                            <?= htmlspecialchars($usuario['grupo_faixa']) ?>
+                                            <?= htmlspecialchars($data['grupo_faixa']) ?>
                                         </td>
 
                                         <?php
                                         // Mapeia os exercícios do usuário para facilitar acesso pelo nome
                                         $map_exercicios = [];
-                                        foreach ($usuario['exercicios'] as $ex) {
+                                        foreach ($data['exercicios'] as $ex) {
                                             $map_exercicios[$ex['nome_exercicio']] = $ex;
                                         }
 
@@ -419,7 +416,7 @@
                                                 <?= $ex['tipo_exercicio'] == 'Tempo' ? segundos_para_tempo($ex['contagem_exercicio']) . ' min' : $ex['contagem_exercicio'] ?? '-' ?>
                                             </td>
                                         <?php endforeach; ?>
-                                        <td><?= $usuario['nota_final'] ?? '-' ?></td>
+                                        <td><?= $data['nota_final'] ?? '-' ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -433,7 +430,7 @@
             </div>
         </div>
         <script>
-            const registro_exercicios = <?= json_encode($registro_exercicios) ?>;
+            const tipos_exercicios = <?= json_encode($tipos_exercicios) ?>;
             const notas_exercicios = <?= json_encode($notas_exercicios) ?>;
             const usuarios = <?= json_encode($usuarios) ?>;
 
@@ -442,7 +439,7 @@
                 const usuario_selecionado = usuarios.find(u => u.id === String(campo_usuario_id.value));
 
                 const campo_exercicio_id = document.getElementById('inputExercicio_id');
-                const exercicio_selecionado = registro_exercicios.find(e => e.exercicio_id === String(campo_exercicio_id.value));
+                const exercicio_selecionado = tipos_exercicios.find(e => e.exercicio_id === String(campo_exercicio_id.value));
 
 
                 const campo_contagem = document.getElementById('inputContagem_exercicio');
@@ -465,37 +462,18 @@
 
 
 
-                if (notas_selecionadas.length==0) {
+                if (notas_selecionadas.length == 0) {
                     campo_contagem.disabled = true;
                     campo_contagem.placeholder = '';
                     return;
                 } else {
-                    campo_contagem.innerHTML='';
+                    campo_contagem.innerHTML = '';
                     const notas = notas_selecionadas.map(e => e.valor_nota);
-                    const indices=notas_selecionadas.map(e=>e.meta_exercicio);
-                    console.log(notas_selecionadas);
-                    campo_contagem.type = 'select';
+                    const indices = notas_selecionadas.map(e => e.meta_exercicio);
                     campo_contagem.disabled = false;
-                    
-                }
 
-                /*if (tipo_exercicio === 'Tempo') {
-                    campo_contagem.type = 'text';
-                    campo_contagem.icon = 'bi-stopwatch';
-                    campo_contagem.placeholder = 'mm:ss';
-                    campo_contagem.disabled = false;
-                    campo_contagem.addEventListener('input', aplicarMascaraTempo);
+
                 }
-                else if (tipo_exercicio === 'Contagem') {
-                    campo_contagem.type = 'number';
-                    campo_contagem.placeholder = 'Digite a contagem';
-                    campo_contagem.disabled = false;
-                }
-                else {
-                    campo_contagem.type = 'text';
-                    campo_contagem.placeholder = '';
-                    campo_contagem.disabled = true;
-                }*/
             }
 
             function onChangeExerciciosNota() {
@@ -503,7 +481,7 @@
                 const campo_contagem = document.getElementById('inputMeta_nota');
 
                 //Procura no array qual objeto com a key id tem o mesmo valor de campo.value
-                const exercicio = registro_exercicios.find(e => e.exercicio_id === String(campo_id.value));
+                const exercicio = tipos_exercicios.find(e => e.exercicio_id === String(campo_id.value));
                 if (!exercicio) {
                     campo_contagem.disabled = true;
                     campo_contagem.placeholder = '';
@@ -534,19 +512,7 @@
                 }
             }
 
-            // Função que simula o "extra" de máscara de tempo
-            function aplicarMascaraTempo(event) {
-                //Permite somente números
-                let v = event.target.value.replace(/\D/g, '');
-                //Limita para 4 dígitos
-                if (v.length > 4) v = v.slice(0, 4);
-                //Adiciona : se tiver mais de 2 dígitos
-                if (v.length >= 3) v = v.slice(0, 2) + ':' + v.slice(2);
-                let parts = v.split(':');
-                //Permite que os segundos vão até 59
-                if (parts[1]?.length == 1 && parseInt(parts[1]) > 5) parts[1] = '';
-                event.target.value = parts.join(':');
-            }
+            
 
             function adicionar_nova_nota() {
 

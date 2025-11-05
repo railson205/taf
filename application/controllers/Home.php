@@ -2,24 +2,15 @@
 
 class Home extends CI_Controller
 {
-    //HELP:ajustar os models para verificar somente em suas tabelas
-    public function __construct()
-    {
-        parent::__construct();
-        $models = ['Usuarios_model', 'Idades_model', 'Registro_exercicios_model', 'Exercicios_usuarios_model', 'Notas_exercicios_model', 'Resultados_usuarios_model'];
-        foreach ($models as $m) {
-            $this->load->model($m);
-        }
-        $this->load->database();
-    }
+
     public function index()
     {
         $data['usuarios'] = $this->Usuarios_model->listar_todos_usuarios();
         $data['faixas_etarias'] = $this->Idades_model->listar_faixa_etaria();
-        $data['registro_exercicios'] = $this->Registro_exercicios_model->listar_exercicios();
-        [$data['exercicios_usuarios'],$data['exercicios_unicos_usuarios']] = $this->Exercicios_usuarios_model->listar_exercicios_usuarios();
+        $data['tipos_exercicios'] = $this->Tipos_exercicios_model->listar_exercicios();
         $data['notas_exercicios'] = $this->Notas_exercicios_model->listar_notas_exercicios();
-        [$data['resultados'], $data['resultados_exercicios_unicos']] = $this->Resultados_usuarios_model->listar_resultados();
+        //[$data['exercicios_realizados'], $data['exercicios_unicos_usuarios']] = $this->Exercicios_realizados_model->listar_exercicios_realizados();
+        //[$data['resultados'], $data['resultados_exercicios_unicos']] = $this->Resultados_usuarios_model->listar_resultados();
 
         $this->load->view('home_view', $data);
     }
@@ -56,7 +47,7 @@ class Home extends CI_Controller
             'nome_exercicio' => $this->input->post('nome_exercicio'),
             'tipo_exercicio' => $this->input->post('tipo_exercicio'),
         ];
-        $this->Registro_exercicios_model->inserir_registro_exercicio($data);
+        $this->Tipos_exercicios_model->inserir_registro_exercicio($data);
         redirect('Home');
     }
 
@@ -65,10 +56,10 @@ class Home extends CI_Controller
 
         $data = [
             'usuario_id' => $this->input->post('usuario_id'),
-            'registro_exercicio_id' => $this->input->post('exercicio_id'),
+            'exercicio_id' => $this->input->post('exercicio_id'),
             'contagem_exercicio' => tempo_para_segundos($this->input->post('contagem_exercicio')),
         ];
-        $exercicio_usuario_id = $this->Exercicios_usuarios_model->inserir_exercicios_usuarios($data);
+        $exercicio_usuario_id = $this->Exercicios_realizados_model->inserir_exercicios_realizados($data);
         $this->Resultados_usuarios_model->inserir_resultados_usuarios($data, $exercicio_usuario_id);
         redirect('Home');
     }
@@ -79,7 +70,7 @@ class Home extends CI_Controller
             'faixa_id' => $this->input->post('faixa_etaria_id_nota'),
             'sexo' => $this->input->post('sexo_nota'),
             'valor_nota' => $this->input->post('nota'),
-            'registro_exercicio_id' => $this->input->post('exercicio_nota'),
+            'exercicio_id' => $this->input->post('exercicio_nota'),
             'meta_exercicio' => tempo_para_segundos($this->input->post('meta_nota')),
         ];
         $this->Notas_exercicios_model->inserir_nota_exercicio($data);

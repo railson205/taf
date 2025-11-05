@@ -28,7 +28,7 @@ function segundos_para_tempo($segundos)
     $min = (int) ($segundos / 60);
     $seg = (int) $segundos % 60;
     //Formata 17 e 1 para 17:01
-    $tempo = sprintf("%02d:%02d", $min, $seg);
+    $tempo = sprintf("%02d:%02d min", $min, $seg);
     return $tempo;
 }
 
@@ -112,10 +112,12 @@ function agrupar_resultados_exercicios_por_usuarios(array $usuarios_exercicios):
         // Soma o valor da nota ao total do usuário
         $resultados[$uid]['nota_final'] += (float) $row['valor_nota'];
     }
+    ksort($exercicios_unicos);
+
 
     return [
-        array_values($resultados), // resultados com índice numérico
-        $exercicios_unicos
+        'resultados' => array_values($resultados), // resultados com índice numérico
+        'resultados_exericios_unicos' => $exercicios_unicos
     ];
 }
 
@@ -142,7 +144,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
                 'usuario_id' => $uid,
                 'nome' => $row['nome'],
                 'sexo' => $row['sexo'],
-                'data_nascimento'=>$row['data_nascimento'],
+                'data_nascimento' => $row['data_nascimento'],
                 'faixa_etaria' => $row['faixa_etaria'],
                 'grupo_faixa' => $row['grupo_faixa_etaria'],
                 'exercicios' => []
@@ -153,18 +155,37 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
         $resultados[$uid]['exercicios'][] = [
             'exercicio_id' => $row['exercicio_id'],
             'nome_exercicio' => $row['nome_exercicio'],
-            'tipo_exercicio' => $row['tipo_exercicio'],
-            'contagem_exercicio' => $row['contagem_exercicio']
+            'modo_contagem' => $row['modo_contagem'],
+            'indice' => $row['indice']
         ];
 
-        
+
     }
 
+    ksort($exercicios_unicos);
     return [
-        array_values($resultados), // resultados com índice numérico
-        $exercicios_unicos
+        'registro_exercicios' => array_values($resultados), // resultados com índice numérico
+        'exercicios_unicos_usuarios' => $exercicios_unicos
     ];
 }
 
+function array_is_assoc(array $array)
+{
+    return array_keys($array) !== range(0, count($array) - 1);
+}
 
+/**
+ * Recebe um array associativo e vai transformar em um array apropriado para o uso em um input select
+ * $key vai ser o nome da key para associar o valor para a key no array associativo
+ * @param mixed $array
+ * @param mixed $key
+ */
+function array_para_select($array, $key,$key_value)
+{
+    $array_options = [];
+    foreach ($array as $value) {
+        $array_options[] = [$value[$key] => $value[$key_value]];
+    }
+    return $array_options;
+}
 

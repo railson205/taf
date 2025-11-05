@@ -1,0 +1,154 @@
+/* =========================
+   Estilos globais AdminLTE 4
+   ========================= */
+
+/* Corpo do site */
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: #f4f6f9;
+}
+
+/* Sidebar */
+.main-sidebar {
+  font-size: 0.95rem;
+}
+
+/* Sidebar brand */
+.brand-link {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Nav links da sidebar */
+.nav-sidebar .nav-link {
+  display: flex;           /* ativa flexbox */
+  align-items: center;     /* centraliza verticalmente */
+  padding: 0.5rem 1rem;
+  transition: background 0.3s;
+}
+
+.nav-sidebar .nav-link .nav-icon {
+  margin-right: 10px;      /* espaço entre ícone e texto */
+  min-width: 20px;         /* garante alinhamento vertical */
+  text-align: center;
+  font-size: 1rem;
+}
+
+.nav-sidebar .nav-link p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Hover e ativo */
+.nav-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-sidebar .nav-link.active {
+  background-color: #0d6efd !important; /* azul principal */
+  color: #fff !important;
+}
+
+/* Ícones do menu ativo */
+.nav-sidebar .nav-link.active .nav-icon {
+  color: #fff !important;
+}
+
+/* Cards */
+.card {
+  border-radius: 10px;
+}
+
+/* Rodapé */
+.main-footer {
+  background: #fff;
+  border-top: 1px solid #ddd;
+  font-size: 0.85rem;
+}
+
+/* Links do navbar */
+.navbar .nav-link {
+  font-size: 0.9rem;
+}
+
+/* Botões globais */
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  border-radius: 5px;
+}
+
+/* Linhas horizontais entre ícones e textos */
+.div-row {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+/* Área principal (Sidebar + Conteúdo) */
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f6f9;
+  overflow-x: hidden;
+}
+
+/* Content Wrapper (área central das páginas) */
+.content-wrapper {
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin: 1rem;
+  min-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Content interno com espaçamento uniforme */
+.content-container {
+  flex: 1;
+  min-height: 70vh; /* evita encolher demais */
+  border-radius: 0.5rem;
+}
+
+/* Header do conteúdo */
+.content-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Breadcrumb ajustado */
+.breadcrumb {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+
+
+/* Responsividade — ajusta as small-box */
+@media (min-width: 1400px) {
+  .content-wrapper {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-sidebar {
+    font-size: 0.9rem;
+  }
+
+  .nav-sidebar .nav-link .nav-icon {
+    font-size: 0.9rem;
+  }
+
+  .small-box > .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+}

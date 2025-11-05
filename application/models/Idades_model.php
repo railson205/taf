@@ -6,7 +6,18 @@ class Idades_model extends CI_Model
 
     public function listar_faixa_etaria()
     {
-        return $this->db->from('faixas_etarias f')->order_by('f.idade_inicial')->get()->result_array();
+        $dados = $this->db->select('
+        f.id,
+        f.nome_grupo,
+        f.idade_inicial,
+        f.idade_final,
+        CONCAT(f.idade_inicial,"-",f.idade_final) AS faixa_etaria,
+        ')
+            ->from('faixas_etarias f')
+            ->order_by('f.idade_inicial')
+            ->get()
+            ->result_array();
+        return $dados;
     }
 
     public function inserir_faixa_etaria($data)
@@ -37,7 +48,7 @@ class Idades_model extends CI_Model
 
         $this->db->where('idade_inicial <=', $idade);
         $this->db->where('idade_final >=', $idade);
-        $row=$this->db->get('faixas_etarias')->row_array();
+        $row = $this->db->get('faixas_etarias')->row_array();
         return $row['id'];
     }
 

@@ -1,0 +1,105 @@
+<section class="content">
+    <div class="container-fluid">
+        <?php
+        $this->load->view('templates/small_box', [
+            'color' => 'bg-success',
+            'value' => count($faixas_etarias),
+            'title' => 'Faixas Etárias',
+            'icon' => 'fa-solid fa-calendar'
+        ]);
+        ?>
+
+        <h3>Adicionar Faixa Etária</h3>
+
+        <div class="col-md-6">
+            <!--Form-->
+            <form method="POST" action="<?= site_url("FaixasEtarias/adicionar_faixa_etaria") ?>"
+                class="needs-validation" novalidate>
+
+                <!-- Nome do Grupo -->
+                <?php
+                $this->load->view('templates/inputs/input_texto', [
+                    'id' => 'nome_grupo',
+                    'title' => 'Nome do grupo',
+                    'placeholder' => 'Ex.: Grupo 1',
+                    'type' => 'text',
+                    'icon_span' => 'abc',
+                    'minlength' => 3,
+                    'maxlength' => 50,
+                ]);
+                ?>
+
+                <!-- Idade Inicial -->
+                <?php
+                $this->load->view('templates/inputs/input_texto', [
+                    'id' => 'idade_i',
+                    'title' => 'Idade inicial',
+                    'placeholder' => 'Idade inicial da faixa',
+                    'type' => 'number',
+                    'icon_span' => '<i class="fa-solid fa-calendar"></i>',
+                    'min' => '18'
+                ]);
+                ?>
+
+                <!-- Idade Final -->
+                <?php
+                $this->load->view('templates/inputs/input_texto', [
+                    'id' => 'idade_f',
+                    'title' => 'Idade final',
+                    'placeholder' => 'Idade final da faixa',
+                    'type' => 'number',
+                    'icon_span' => '<i class="fa-solid fa-calendar"></i>',
+                    'min' => '18'
+                ]);
+                ?>
+
+                <button type="submit" class="btn btn-primary me-1">Nova Faixa Etária</button>
+            </form>
+        </div>
+        <!--Form-->
+        <!--Tabela -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h5>Usuários</h5>
+                <div class="card">
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome do grupo</th>
+                                    <th>Idade Inicial</th>
+                                    <th>Idade Final</th>
+                                    <th>Faixa Etária</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                if (!empty($faixas_etarias)):
+                                    foreach ($faixas_etarias as $key => $f):
+                                        ?>
+                                        <tr>
+                                            <td><?= $key + 1 ?></td>
+                                            <td><?= $f['nome_grupo'] ?? '-' ?></td>
+                                            <td><?= $f['idade_inicial'] . ' anos' ?? '-' ?></td>
+                                            <td><?= $f['idade_final'] . ' anos' ?? '-' ?></td>
+                                            <td><?= $f['faixa_etaria'] ?? '-' ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="5">Nenhuma faixa etária encontrada.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--Tabela -->
+        </div>
+    </div>
+
+    <!-- Script de Validação Bootstrap -->
+    <?php $this->load->view('templates/validator_form'); ?>
+</section>
