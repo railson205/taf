@@ -1,6 +1,5 @@
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
             <?php
             $this->load->view('templates/small_box', [
                 'color' => 'bg-danger',
@@ -34,15 +33,16 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <h3>Adicionar Notas</h3>
 
         <!--Form-->
         <div class="col-md-6">
             <form method="POST" action="<?= site_url("Notas/adicionar_nota") ?>" class="needs-validation" novalidate>
+
                 <!-- Faixa Etária-->
                 <?php $this->load->view('templates/inputs/input_select', ['id' => 'faixa_id_nota', 'title' => 'Faixa Etária', 'placeholder' => 'Escolha uma faixa etária', 'options' => $faixa_options]) ?>
+
                 <!-- Sexo-->
                 <?php
                 $this->load->view('templates/inputs/input_select', [
@@ -52,10 +52,13 @@
                     'options' => ['Masculino', 'Feminino'],
                 ]);
                 ?>
+
                 <!-- Notas-->
                 <?php $this->load->view('templates/inputs/input_select', ['id' => 'valor_nota', 'title' => 'Nota', 'placeholder' => 'Escolha uma nota', 'options' => $notas_options]) ?>
+
                 <!-- Exercícios-->
                 <?php $this->load->view('templates/inputs/input_select', ['id' => 'exercicio_id_nota', 'title' => 'Exercícios', 'placeholder' => 'Escolha um exercício', 'options' => $exercicios_options]) ?>
+
                 <!--Indice/Meta-->
                 <?php
                 $this->load->view('templates/inputs/input_texto', [
@@ -77,8 +80,8 @@
             <div class="col-md-12">
                 <h5>Usuários</h5>
                 <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body table-responsive p-0" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-hover text-nowrap table-fixed-header">
                             <thead>
                                 <tr>
                                     <th>#</th>

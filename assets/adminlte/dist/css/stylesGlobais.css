@@ -8,11 +8,6 @@ body {
   background-color: #f4f6f9;
 }
 
-/* Sidebar */
-.main-sidebar {
-  font-size: 0.95rem;
-}
-
 /* Sidebar brand */
 .brand-link {
   font-weight: bold;
@@ -87,25 +82,38 @@ body {
   gap: 10px;
 }
 
-/* Área principal (Sidebar + Conteúdo) */
+/* Layout principal */
 .main-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;                /* ocupa exatamente a tela toda */
+  overflow: hidden;             /* impede o content-wrapper de ultrapassar */
   background-color: #f4f6f9;
-  overflow-x: hidden;
+  padding: 1rem;                /* espaçamento interno */
+  box-sizing: border-box;
 }
 
-/* Content Wrapper (área central das páginas) */
+/* Sidebar fixa */
+.main-sidebar {
+  font-size: 0.95rem;
+  width: 250px;                 /* largura fixa */
+  flex-shrink: 0;               /* impede de encolher */
+  height: 100%;                 /* preenche o layout verticalmente */
+  overflow-y: auto;             /* rolagem caso o conteúdo seja maior */
+}
+
+/* Conteúdo principal */
 .content-wrapper {
   flex-grow: 1;
   background-color: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.05);
-  margin: 1rem;
-  min-height: calc(100vh - 2rem);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  overflow-y: auto;             /* rolagem interna do conteúdo */
+  overflow-x: hidden;
+  height: 100%;                 /* ocupa o restante da altura */
+  box-sizing: border-box;
+  padding: 1rem;
 }
 
 /* Content interno com espaçamento uniforme */
@@ -125,6 +133,13 @@ body {
 .breadcrumb {
   margin-bottom: 0;
   font-size: 0.9rem;
+}
+
+.table-fixed-header thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 2;
 }
 
 

@@ -156,7 +156,8 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
             'exercicio_id' => $row['exercicio_id'],
             'nome_exercicio' => $row['nome_exercicio'],
             'modo_contagem' => $row['modo_contagem'],
-            'indice' => $row['indice']
+            'indice' => $row['indice'],
+            'valor_nota'=>$row['valor_nota'],
         ];
 
 

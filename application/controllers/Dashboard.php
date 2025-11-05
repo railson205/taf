@@ -23,6 +23,8 @@ class Dashboard extends CI_Controller
 }
 
 /*HELP: 
--Adicionar novo controller responsável para adicionar o exercício realizado por cada usuário
 -Adicionar aos controller opções para edição e remoção dos dados nas tabelas
+-Edição somente ao apertar o botão e abrir um modal
+-Se caso os dados inseridos fora do modal, emitir um alerta se os dados forem parecidos e não adicionar via insert
+-Ajustar os templates para a pasta core, fazendo com que tenha um template para cada usuário logado
 */

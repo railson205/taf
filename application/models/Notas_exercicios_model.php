@@ -45,6 +45,7 @@ class Notas_exercicios_model extends CI_Model
             ne.exercicio_id,
             f.id as faixa_id,
             re.modo_contagem,
+            ne.valor_nota,
     ')
             ->from('notas_exercicios ne')
             ->join('faixas_etarias f', 'f.id = ne.faixa_id')
@@ -58,7 +59,24 @@ class Notas_exercicios_model extends CI_Model
 
     function inserir_nova_nota($dados)
     {
-        return $this->db->insert('notas_exercicios', $dados);
+        debug($dados);
+        $this->db->where('faixa_id', $dados['faixa_id']);
+        $this->db->where('sexo', $dados['sexo']);
+        $this->db->where('exercicio_id', $dados['exercicio_id']);
+        $this->db->where('indice', $dados['indice']);
+        $nota_array = $this->db->select('valor_nota')->get('notas_exercicios')->row_array();
+
+        if ($nota_array) {
+            if ($nota_array['valor_nota'] != $dados['valor_nota']) {
+                $this->db->where('faixa_id', $dados['faixa_id']);
+                $this->db->where('sexo', $dados['sexo']);
+                $this->db->where('exercicio_id', $dados['exercicio_id']);
+                $this->db->where('indice', $dados['indice']);
+                return $this->db->update('notas_exercicios', ['valor_nota' => $dados['valor_nota']]);
+            }
+        } else {
+            return $this->db->insert('notas_exercicios', $dados);
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-dark-primary elevation-4" style="width:250px;min-width:250px;max-width:250px;">
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
         <!--begin::Brand Link-->
@@ -11,7 +11,7 @@
     </div>
     <!--end::Sidebar Brand-->
     <!--begin::Sidebar Wrapper-->
-    <div class="sidebar">
+    <div class="sidebar ">
         <nav class="mt-2">
             <!--begin::Sidebar Menu-->
             <ul class="nav nav-pills nav-sidebar flex-column" data-lte-toggle="treeview" role="navigation"

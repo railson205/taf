@@ -1,6 +1,7 @@
 <section class="content">
     <div class="container-fluid">
         <?php
+        $qtdExercicios = 0;
         foreach ($exercicios_realizados['registro_exercicios'] as $registro) {
             $qtdExercicios = count($registro['exercicios']);
         }
@@ -76,7 +77,7 @@
                                     <th rowspan="2" class="text-center border-end border-top border-dark">Grupo da Faixa
                                         Etária</th>
                                     <?php foreach ($ex_unic as $exercicio): ?>
-                                        <th colspan="2" class="text-center border-end border-dark bg-secondary text-white">
+                                        <th colspan="3" class="text-center border-end border-dark bg-secondary text-white">
                                             <?= htmlspecialchars($exercicio) ?>
                                         </th>
                                     <?php endforeach; ?>
@@ -86,6 +87,7 @@
                                     <?php foreach ($ex_unic as $exercicio): ?>
                                         <th class="text-center border-end border-dark">Modo de Contagem</th>
                                         <th class="text-center border-end border-dark">Índice</th>
+                                        <th class="text-center border-end border-dark">Nota</th>
                                     <?php endforeach; ?>
 
                                 </tr>
@@ -94,7 +96,6 @@
                                 <?php
                                 if (!empty($exercicios_realizados)):
                                     foreach ($exercicios_realizados['registro_exercicios'] as $key => $er):
-                                        debug($er);
                                         ?>
                                         <tr>
                                             <td class="text-center"><?= $key + 1 ?></td>
@@ -117,6 +118,7 @@
                                                 <td class="text-center">
                                                     <?= $ex['modo_contagem'] == 'Tempo' ? segundos_para_tempo($ex['indice']) : $ex['indice'] ?? '-' ?>
                                                 </td>
+                                                <td class="text-center"><?= $ex['valor_nota'] ?? '-' ?></td>
 
                                             <?php endforeach; ?>
 
@@ -170,19 +172,33 @@
                     const idade_usuario = new Date().getFullYear() - new Date(infoUsuario.data_nascimento).getFullYear();
                     const usuarioNaFaixa = faixa.find(f => f.id == n.faixa_id && parseInt(f.idade_inicial) <= idade_usuario && idade_usuario <= parseInt(f.idade_final));
 
+
                     return infoUsuario.sexo == n.sexo &&
                         infoExercicio.exercicio_id == n.exercicio_id &&
                         usuarioNaFaixa
                 }
                 );
-                console.log(notasSelecionadas);
+
+                const notasFiltradas = Object.values(
+                    notasSelecionadas.reduce((acc, item) => {
+                        const indice = item.indice;
+
+                        // se ainda não existe esse indice ou se esse item tem valor maior, substitui
+                        if (!acc[indice] || parseFloat(item.valor_nota) > parseFloat(acc[indice].valor_nota)) {
+                            acc[indice] = item;
+                        }
+                        return acc;
+                    }, {})
+                );
+
+
 
                 const campoNota = document.getElementById('nota_id');
                 // Limpa o select antes de adicionar novas opções
                 campoNota.innerHTML = '';
 
                 // Se não encontrou notas, desabilita e mostra uma opção vazia
-                if (!notasSelecionadas.length) {
+                if (!notasFiltradas.length) {
                     campoNota.disabled = true;
                     const opt = document.createElement('option');
                     opt.textContent = 'Nenhuma nota disponível';
@@ -200,7 +216,7 @@
                 optBase.value = "";
                 campoNota.appendChild(optBase);
 
-                notasSelecionadas.forEach(nota => {
+                notasFiltradas.forEach(nota => {
                     const opt = document.createElement('option');
 
                     opt.textContent = `${nota.modo_contagem == 'Tempo' ? seg_para_tempo(nota.indice) : nota.indice + ' repetições' ?? ''}`;
@@ -212,7 +228,9 @@
         }
 
         function seg_para_tempo(segundos) {
-            const tempo = `${Math.floor(segundos / 60)}:${segundos % 60} min`;
+            const minutos = Math.floor(segundos / 60);
+            const seg = segundos % 60;
+            const tempo = `${String(minutos).padStart(2, '0')}:${String(seg).padStart(2, '0')} min`;
             return tempo;
         }
     </script>

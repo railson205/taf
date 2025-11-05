@@ -14,13 +14,6 @@ class Notas extends CI_Controller
         $this->load->view('templates/layout', $data);
     }
 
-    /*
-     Faixa Etária
-     Sexo
-     Exercício
-     Nota
-     Indice/Meta
-     */
     function adicionar_nota()
     {
         $data = [
@@ -30,7 +23,6 @@ class Notas extends CI_Controller
             'valor_nota' => $this->input->post('valor_nota'),
             'indice' => tempo_para_segundos($this->input->post('indice_nota')),
         ];
-        debug($data);
         $this->Notas_exercicios_model->inserir_nova_nota($data);
         redirect('Notas');
     }

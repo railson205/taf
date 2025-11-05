@@ -13,8 +13,7 @@
 
         <div class="col-md-6">
             <!--Form-->
-            <form method="POST" action="<?= site_url("Usuarios/adicionar_usuario") ?>" class="needs-validation"
-                novalidate>
+            <form method="POST" action="<?= site_url("Usuarios/adicionar_usuario") ?>" class="needs-validation" novalidate>
 
                 <!-- Nome -->
                 <?php
@@ -57,6 +56,7 @@
             </form>
         </div>
         <!--Form-->
+        
         <!--Tabela -->
         <div class="row mt-4">
             <div class="col-md-12">
