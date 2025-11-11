@@ -9,9 +9,22 @@
         ]);
         ?>
 
-        <h3>Adicionar Exercícios</h3>
+        <?php $this->load->view('templates/modal_edicao/tipo_exercicio_modal', ['id' => 'tipo_exercicio_modal_editar']); ?>
+        <?php $this->load->view('templates/modal_excluir/tipo_exercicio_modal', ['id' => 'tipo_exercicio_modal_excluir']); ?>
+
+        <?php
+        $alert_type = $this->session->flashdata('alert_type');
+        $alert_message = $this->session->flashdata('alert_message');
+
+        if ($alert_message): ?>
+            <div class="alert alert-<?= $alert_type ?> alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i> <?= $alert_message ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
 
         <div class="col-md-6">
+            <h3>Adicionar Exercícios</h3>
             <!--Form-->
             <form method="POST" action="<?= site_url("Exercicios/adicionar_exercicios") ?>" class="needs-validation"
                 novalidate>
@@ -55,6 +68,7 @@
                                     <th>#</th>
                                     <th>Nome do Exercício</th>
                                     <th>Modo de Contagem</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,6 +80,19 @@
                                             <td><?= $key + 1 ?></td>
                                             <td><?= $e['nome_exercicio'] ?? '-' ?></td>
                                             <td><?= $e['modo_contagem'] ?? '-' ?></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#tipo_exercicio_modal_editar" data-id="<?= $e['id'] ?>"
+                                                    data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
+                                                    data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"
+                                                    data-modo-contagem-options="Contagem,Tempo">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#tipo_exercicio_modal_excluir" data-id="<?= $e['id'] ?>"
+                                                    data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
+                                                    data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

@@ -9,9 +9,22 @@
         ]);
         ?>
 
-        <h3>Adicionar Faixa Etária</h3>
+        <?php $this->load->view('templates/modal_edicao/faixa_modal', ['id' => 'faixa_modal_editar']); ?>
+        <?php $this->load->view('templates/modal_excluir/faixa_modal', ['id' => 'faixa_modal_excluir']); ?>
+        
+        <?php
+        $alert_type = $this->session->flashdata('alert_type');
+        $alert_message = $this->session->flashdata('alert_message');
+
+        if ($alert_message): ?>
+            <div class="alert alert-<?= $alert_type ?> alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i> <?= $alert_message ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
 
         <div class="col-md-6">
+            <h3>Adicionar Faixa Etária</h3>
             <!--Form-->
             <form method="POST" action="<?= site_url("FaixasEtarias/adicionar_faixa_etaria") ?>"
                 class="needs-validation" novalidate>
@@ -71,6 +84,7 @@
                                     <th>Idade Inicial</th>
                                     <th>Idade Final</th>
                                     <th>Faixa Etária</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,6 +98,20 @@
                                             <td><?= $f['idade_inicial'] . ' anos' ?? '-' ?></td>
                                             <td><?= $f['idade_final'] . ' anos' ?? '-' ?></td>
                                             <td><?= $f['faixa_etaria'] ?? '-' ?></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#faixa_modal_editar" data-id="<?= $f['id'] ?>"
+                                                    data-nome="<?= $f['nome_grupo'] ?>"
+                                                    data-idade-inicial="<?= $f['idade_inicial'] ?>"
+                                                    data-idade-final="<?= $f['idade_final'] ?>">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#faixa_modal_excluir" data-id="<?= $f['id'] ?>"
+                                                    data-nome="<?= $f['nome_grupo'] ?>"
+                                                    data-idade-inicial="<?= $f['idade_inicial'] ?>"
+                                                    data-idade-final="<?= $f['idade_final'] ?>"><i
+                                                    class="fas fa-trash"></i></button>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>

@@ -20,10 +20,10 @@
                 <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'Usuarios', 'name_page' => 'Usuários', 'icon' => 'bi bi-person-circle']) ?>
                 <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'FaixasEtarias', 'name_page' => 'Faixas Etárias', 'icon' => 'fa-solid fa-calendar']) ?>
                 <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'Exercicios', 'name_page' => 'Tipos de Exercícios', 'icon' => 'fa-solid fa-dumbbell']) ?>
-                <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'ExerciciosRealizados', 'name_page' => 'Exercícios Realizados', 'icon' => 'fa-solid fa-person-swimming']) ?>
                 <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'Notas', 'name_page' => 'Notas', 'icon' => 'fa-solid fa-file-pen']) ?>
+                <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'Resultados', 'name_page' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']) ?>
                 <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'Demo', 'name_page' => 'AdminLTE Demo', 'icon' => 'bi bi-clipboard-data']) ?>
-                <?php $this->load->view('templates/fixos/items_sidebar', ['route' => 'Home', 'name_page' => 'Home', 'icon' => 'bi bi-clipboard-data']) ?>
+                
             </ul>
             <!--end::Sidebar Menu-->
         </nav>

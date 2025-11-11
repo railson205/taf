@@ -1,38 +1,47 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Usuarios_model extends CI_Model
+class Exercicios_model extends CI_Model
 {
     public function __construct()
     {
-        $this->nome_tabela = 'usuarios';
+        $this->nome_tabela = 'exercicios';
     }
 
-    public function listar_usuarios()
+    public function listar_exercicios()
     {
-        $dados = $this->db->select('id,nome,sexo,data_nascimento,matricula')->from($this->nome_tabela)->order_by('nome, data_nascimento')->get()->result_array();
+        $dados = $this->db
+            ->select('
+            id,
+            nome_exercicio,
+            modo_contagem
+            ')
+            ->from($this->nome_tabela)
+            ->order_by('nome_exercicio')
+            ->get()
+            ->result_array();
         return $dados;
     }
 
-    public function inserir_usuario($data)
+    public function inserir_registro_exercicio($data)
     {
-        $matricula_existe = $this->db->where('matricula', $data['matricula'])->get($this->nome_tabela)->row_array();
-        if ($matricula_existe) {
+        $exercicio_existe = $this->db->where('nome_exercicio', $data['nome_exercicio'])->get($this->nome_tabela)->row_array();
+        if ($exercicio_existe) {
             return [
                 'status' => false,
-                'message' => 'Matrícula ja cadastrada.',
+                'message' => 'Exxercício ja cadastrado.',
                 'type' => 'danger'
             ];
         }
         $this->db->insert($this->nome_tabela, $data);
         return [
             'status' => $this->db->affected_rows() > 0,
-            'message' => 'Usuário cadastrado.',
+            'message' => 'Exxercício cadastrado.',
             'type' => 'success'
         ];
     }
 
-    public function editar_usuarios($id, $data)
+    public function editar_exercicios($id, $data)
     {
         $this->db->where('id', $id)->update($this->nome_tabela, $data);
 
@@ -51,7 +60,7 @@ class Usuarios_model extends CI_Model
         }
     }
 
-    public function excluir_usuarios($id)
+    public function excluir_exercicios($id)
     {
         $this->db->where('id', $id)->delete($this->nome_tabela);
 

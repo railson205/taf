@@ -1,43 +1,42 @@
 <section class="content">
     <div class="container-fluid">
-            <?php
-            $this->load->view('templates/small_box', [
-                'color' => 'bg-danger',
-                'value' => count($notas),
-                'title' => 'Notas dos Exercícios',
-                'icon' => 'fa-solid fa-file-pen'
-            ]);
-            $faixa_options = array_para_select($faixa, 'id', 'faixa_etaria');
-            $exercicios_options = array_para_select($exercicios, 'exercicio_id', 'nome_exercicio');
-            $notas_options = array_map(function ($f) {
-                return $f;
-            }, range(0.5, 10, 0.5));
-            ?>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Abrir Tabela
-            </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tabela</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <?php $this->load->view('templates/tabelas/tabela_de_indices',['notas'=>$notas,'faixa'=>$faixa,'exercicios'=>$exercicios])?>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                            <button type="button" class="btn btn-primary">Salvar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <?php
+        $this->load->view('templates/small_box', [
+            'color' => 'bg-danger',
+            'value' => count($notas),
+            'title' => 'Notas dos Exercícios',
+            'icon' => 'fa-solid fa-file-pen'
+        ]);
+        $faixa_options = array_para_select($faixa, 'id', 'faixa_etaria');
+        $exercicios_options = array_para_select($exercicios, 'id', 'nome_exercicio');
+        $modo_options = array_para_select($exercicios, 'id', 'modo_contagem');
+        $notas_options = array_map(function ($f) {
+            return $f;
+        }, range(0.5, 10, 0.5));
+        $cores = geraCoresDegrade(min($notas_options), max($notas_options), count($notas_options) - 1, [255, 0, 0], [0, 255, 0], 0.6);
+        $notas_por_sexo = [];
+        foreach ($notas as $n) {
+            $notas_por_sexo[$n['sexo']][] = $n;
+        }
+        ?>
 
-        <h3>Adicionar Notas</h3>
+        <?php $this->load->view('templates/modal_edicao/notas_modal', ['id' => 'notas_modal_editar']); ?>
+        <?php $this->load->view('templates/modal_excluir/notas_modal', ['id' => 'notas_modal_excluir']); ?>
+
+        <?php
+        $alert_type = $this->session->flashdata('alert_type');
+        $alert_message = $this->session->flashdata('alert_message');
+
+        if ($alert_message): ?>
+            <div class="alert alert-<?= $alert_type ?> alert-dismissible fade show" role="alert">
+                <i class="fas fa-info-circle me-2"></i> <?= $alert_message ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
 
         <!--Form-->
         <div class="col-md-6">
+            <h3>Adicionar Notas</h3>
             <form method="POST" action="<?= site_url("Notas/adicionar_nota") ?>" class="needs-validation" novalidate>
 
                 <!-- Faixa Etária-->
@@ -78,48 +77,10 @@
         <!--Tabela -->
         <div class="row mt-4">
             <div class="col-md-12">
-                <h5>Usuários</h5>
+                <h5>Notas</h5>
                 <div class="card">
-                    <div class="card-body table-responsive p-0" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-hover text-nowrap table-fixed-header">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Faixa Etária</th>
-                                    <th>Grupo da Faixa Etária</th>
-                                    <th>Sexo</th>
-                                    <th>Nota</th>
-                                    <th>Nome do Exercício</th>
-                                    <th>Modo de Contagem do Exercício</th>
-                                    <th>Índice do Exercício</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($notas)):
-                                    foreach ($notas as $key => $n):
-                                        ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $n['faixa_etaria'] ?? '-' ?></td>
-                                            <td><?= $n['grupo_faixa_etaria'] ?? '-' ?></td>
-                                            <td><?= $n['sexo'] ?? '-' ?></td>
-                                            <td><?= $n['valor_nota'] ?? '-' ?></td>
-                                            <td><?= $n['nome_exercicio'] ?? '-' ?></td>
-                                            <td><?= $n['modo_contagem'] ?? '-' ?></td>
-                                            <td><?= $n['modo_contagem'] == 'Tempo' ? segundos_para_tempo($n['indice']) : $n['indice'] ?? '-' ?>
-                                            </td>
-
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="5">Nenhuma nota encontrada.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                    <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Masculino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
+                    <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Feminino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
                 </div>
             </div>
             <!--Tabela -->
@@ -128,7 +89,6 @@
 
     <script>
         const tipos_exercicios = <?= json_encode($exercicios) ?>;
-        const notas_exercicios = <?= json_encode($notas) ?>;
 
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -144,7 +104,7 @@
             const campo_contagem = document.getElementById('indice_nota');
 
             //Procura no array qual objeto com a key id tem o mesmo valor de campo.value
-            const exercicio = tipos_exercicios.find(e => e.exercicio_id === String(campo_id.value));
+            const exercicio = tipos_exercicios.find(e => e.id === String(campo_id.value));
             if (!exercicio) {
                 campo_contagem.disabled = true;
                 return;

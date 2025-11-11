@@ -1,6 +1,46 @@
-CREATE TABLE usuarios(id INT PRIMARY KEY AUTO_INCREMENT,nome varchar(50), data_nascimento date, sexo varchar(10));
-CREATE TABLE faixas_etarias(id INT PRIMARY KEY AUTO_INCREMENT, nome_grupo varchar(15),idade_inicial int, idade_final int);
-CREATE TABLE tipos_exercicios(id INT PRIMARY KEY AUTO_INCREMENT, nome_exercicio varchar(40), modo_contagem varchar(10));
-CREATE TABLE notas_exercicios(id INT PRIMARY KEY AUTO_INCREMENT, faixa_id INT, sexo VARCHAR(10),valor_nota float, exercicio_id int, indice int, FOREIGN KEY (faixa_id) REFERENCES faixas_etarias(id), FOREIGN KEY (exercicio_id) REFERENCES tipos_exercicios(id));
-CREATE TABLE exercicios_realizados(id INT PRIMARY KEY AUTO_INCREMENT,usuario_id int,exercicio_id int,nota_id int, FOREIGN KEY (usuario_id) REFERENCES usuarios(id),FOREIGN KEY (exercicio_id) REFERENCES tipos_exercicios(id), FOREIGN KEY (nota_id) REFERENCES notas_exercicios(id));
-CREATE TABLE resultados_usuarios(id INT PRIMARY KEY AUTO_INCREMENT, usuario_id int, faixa_id int, exercicio_id int,nota_id int,exercicio_realizado_id int,FOREIGN KEY (exercicio_realizado_id) REFERENCES exercicios_realizados(id), FOREIGN KEY (usuario_id) REFERENCES usuarios(id),FOREIGN KEY (faixa_id) REFERENCES faixas_etarias(id),FOREIGN KEY (exercicio_id) REFERENCES tipos_exercicios(id),FOREIGN KEY (nota_id) REFERENCES notas_exercicios(id));
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50),
+    data_nascimento DATE,
+    sexo VARCHAR(10),
+    matricula VARCHAR(50)
+);
+
+CREATE TABLE faixas_etarias (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_grupo VARCHAR(15),
+    idade_inicial INT,
+    idade_final INT
+);
+
+CREATE TABLE exercicios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome_exercicio VARCHAR(40),
+    modo_contagem VARCHAR(10)
+);
+
+CREATE TABLE notas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    faixa_id INT,
+    sexo VARCHAR(10),
+    valor_nota FLOAT,
+    exercicio_id INT,
+    indice INT,
+    FOREIGN KEY (faixa_id) REFERENCES faixas_etarias(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (exercicio_id) REFERENCES exercicios(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE resultados (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT,
+    exercicio_id INT,
+    nota_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (exercicio_id) REFERENCES exercicios(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (nota_id) REFERENCES notas(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);

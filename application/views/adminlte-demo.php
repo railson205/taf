@@ -50,7 +50,7 @@
                         <i class="fas fa-info-circle me-2"></i> Alerta primário.
                     </div>
                     <div class="alert alert-success" role="alert">
-                        <i class="fas fa-check-circle me-2"></i> Ação executada com sucesso.
+                        <i class="c"></i> Ação executada com sucesso.
                     </div>
                     <div class="alert alert-warning" role="alert">
                         <i class="fas fa-exclamation-triangle me-2"></i> Atenção: verifique os dados.

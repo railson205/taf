@@ -31,7 +31,7 @@
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-      <a href="<?= base_url('Dashboard') ?>" class="navbar-brand">
+      <a href="<?= site_url('Dashboard') ?>" class="navbar-brand">
         <span class="brand-text fw-bold text-primary">Meu Painel</span>
       </a>
 
