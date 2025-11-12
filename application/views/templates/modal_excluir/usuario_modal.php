@@ -7,7 +7,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="form_usuario_edicao" method="POST" action="<?= site_url("Usuarios/excluir_usuario") ?>">
+                <form id="form_usuario_edicao" method="POST" action="<?= site_url("Usuarios/excluir_usuarios") ?>">
                     <input type="hidden" id="usuario_id" name="usuario_id_excluir">
 
                     <div class="mb-3">

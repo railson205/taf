@@ -1,0 +1,6 @@
+-Fazer login
+-Ajustar layout para cada tipo de usuário(Avaliador, Admin, Atleta e Sem usuário{logout})
+*Admin: pode ver todas as telas
+*Avaliador: ver somente resultados que ele mesmo aplicou e poder adicionar novas avaliações. Ao adicionar nova avaliação, enviar para o email do avaliador e do usuário
+*Atleta: ver somente seus resultados e poder imprimir/enviar para o email
+-Sweet Alert no lugar do template/alert

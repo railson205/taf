@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,38 +20,45 @@
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/dist/css/adminlte.css') ?>">
 
-<!-- Styles Globais-->
+  <!-- Styles Globais-->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/dist/css/stylesGlobais.css') ?>">
 
 
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 
-<div class="wrapper">
+  <div class="wrapper">
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-      <a href="<?= site_url('Dashboard') ?>" class="navbar-brand">
-        <span class="brand-text fw-bold text-primary">Meu Painel</span>
-      </a>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand-md navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a href="<?= site_url('/') ?>" class="navbar-brand">
+          <span class="brand-text fw-bold text-primary">Meu Painel</span>
+        </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a href="#" class="nav-link"><i class="fas fa-user"></i> Perfil</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> Sair</a>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ms-auto">
+            <?php if (!$this->session->userdata('username')): ?>
+              <li class="nav-item">
+                <a href=<?=site_url('Login')?> class="nav-link"> Login</a>
+              </li>
+            <?php else: ?>
+              <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-user"></i> Perfil</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> Sair</a>
+              </li>
+            <?php endif; ?>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-  <!-- Content Wrapper -->
-  <div class="content-wrapper p-3">
+    <!-- Content Wrapper -->
+    <div class="content-wrapper p-3">

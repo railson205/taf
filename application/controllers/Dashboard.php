@@ -25,3 +25,10 @@ class Dashboard extends CI_Controller
 -Ajustar os templates para a pasta core, fazendo com que tenha um template para cada usuário logado
 -Logar os usuários
 */
+
+/**
+ * Admin: ver todas as telas
+ * Avaliador: tela de resultados filtrados por matrícula
+ * ao adicionar nova avaliação enviar email para avaliador e atleta
+ * Atleta: ver somente seu resultado e poder imprimir/enviar por email
+ */

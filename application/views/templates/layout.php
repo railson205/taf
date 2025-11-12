@@ -3,7 +3,9 @@
 <div class="main-layout d-flex gap-3">
 
   <!-- Sidebar -->
-  <?php $this->load->view('templates/fixos/sidebar'); ?>
+  <?php if ($title != "Login"): ?>
+    <?php $this->load->view('templates/fixos/sidebar'); ?>
+  <?php endif; ?>
 
   <!-- Content Wrapper -->
   <div class="content-wrapper flex-grow-1 p-4">
@@ -12,11 +14,12 @@
       <div class="d-flex justify-content-between align-items-center flex-wrap">
         <h1 class="m-0"><?= isset($title) ? $title : 'Página' ?></h1>
         <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item"><a href="<?= site_url('Dashboard') ?>">Home</a></li>
+          <li class="breadcrumb-item"><a href="<?= site_url('ControladorCondicional') ?>">Home</a></li>
           <li class="breadcrumb-item active"><?= isset($title) ? $title : '' ?></li>
         </ol>
       </div>
     </div>
+
 
     <!-- Main Content -->
     <section class="content">
