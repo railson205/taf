@@ -28,10 +28,14 @@
         $alert_message = $this->session->flashdata('alert_message');
 
         if ($alert_message): ?>
-            <div class="alert alert-<?= $alert_type ?> alert-dismissible fade show" role="alert">
-                <i class="fas fa-info-circle me-2"></i> <?= $alert_message ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <script>
+                Swal.fire({
+                    title: "Aviso",
+                    text: "<?= $alert_message ?>",
+                    icon: "<?= $alert_type ?>", // success, error, warning, info
+                    confirmButtonText: "OK"
+                });
+            </script>
         <?php endif; ?>
 
         <!--Form-->

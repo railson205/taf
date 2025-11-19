@@ -30,6 +30,7 @@ class Resultados extends CI_Controller
             'usuario_id' => $this->input->post('usuario_id'),
             'exercicio_id' => $this->input->post('exercicio_id'),
             'nota_id' => $this->input->post('nota_id'),
+            'avaliador_id'=>$this->input->post('avaliador_id'),
         ];
         $resultado = $this->Resultados_model->inserir_resultados($data);
         $this->session->set_flashdata('alert_type', $resultado['type']);

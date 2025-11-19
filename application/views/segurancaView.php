@@ -1,16 +1,8 @@
 <section class="content">
     <div class="container-fluid">
-        <?php
-        $this->load->view('templates/small_box', [
-            'color' => 'bg-info',
-            'value' => count($usuarios),
-            'title' => 'Usuários',
-            'icon' => 'fa-solid fa-user'
-        ]);
-        ?>
 
-        <?php $this->load->view('templates/modal_edicao/usuario_modal', ['id' => 'usuario_modal_editar']); ?>
-        <?php $this->load->view('templates/modal_excluir/usuario_modal', ['id' => 'usuario_modal_excluir']); ?>
+        <?php $this->load->view('templates/modal_edicao/seguranca_modal', ['id' => 'seguranca_modal_editar']); ?>
+        <?php $this->load->view('templates/modal_excluir/seguranca_modal', ['id' => 'seguranca_modal_excluir']); ?>
 
         <?php
         $alert_type = $this->session->flashdata('alert_type');
@@ -30,59 +22,40 @@
         <div class="col-md-6">
             <h3>Adicionar Usuários</h3>
             <!--Form-->
-            <form method="POST" action="<?= site_url("Usuarios/adicionar_usuario") ?>" class="needs-validation"
+            <form method="POST" action="<?= site_url("Seguranca/adicionar_login") ?>" class="needs-validation"
                 novalidate>
 
-                <!-- Nome -->
+                <!-- Email -->
                 <?php
                 $this->load->view('templates/inputs/input_texto', [
-                    'id' => 'nome_usuario',
-                    'title' => 'Nome',
-                    'placeholder' => 'Seu Nome',
+                    'id' => 'email',
+                    'title' => 'Email',
+                    'placeholder' => 'Seu Email',
                     'type' => 'text',
-                    'icon_span' => '<i class="fa-solid fa-user"></i>',
                     'minlength' => 3,
                     'maxlength' => 50,
                     'pattern' => "^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$"
                 ]);
                 ?>
 
-                <!-- Matrícula -->
+                <!-- Senha -->
                 <?php
                 $this->load->view('templates/inputs/input_texto', [
-                    'id' => 'matricula',
-                    'title' => 'Matrícula',
-                    'placeholder' => 'Sua matrícula',
-                    'type' => 'number',
-                    'minlength' => 3,
-                    'maxlength' => 50,
+                    'id' => 'senha',
+                    'title' => 'Senha',
+                    'placeholder' => 'Sua senha',
+                    'type' => 'text',
+                    'minlength' => 6,
                 ]);
                 ?>
 
-                <!-- Data de nascimento -->
-                <?php
-                $this->load->view('templates/inputs/input_texto', [
-                    'id' => 'data_nasc_usuario',
-                    'title' => 'Data de Nascimento',
-                    'placeholder' => 'Sua data de nascimento',
-                    'type' => 'date',
-                    'icon_span' => '<i class="fa-solid fa-calendar"></i>',
-                    'min' => '1900-01-01',
-                    'max' => date('Y-m-d')
-                ]);
-                ?>
+                <!-- Nível de segurança -->
+                
 
-                <!-- Sexo -->
-                <?php
-                $this->load->view('templates/inputs/input_select', [
-                    'id' => 'sexo_usuario',
-                    'title' => 'Sexo',
-                    'placeholder' => 'Selecione seu sexo',
-                    'options' => ['Masculino', 'Feminino'],
-                ]);
-                ?>
+                <!-- Usuário -->
+               
 
-                <button type="submit" class="btn btn-primary me-1">Novo Usuário</button>
+                <button type="submit" class="btn btn-primary me-1">Novo Login</button>
             </form>
         </div>
         <!--Form-->
@@ -130,7 +103,7 @@
                                                     data-sexo-selecionado="<?= $u['sexo'] ?>"
                                                     data-sexo-options="Masculino,Feminino">
                                                     <i class="fas fa-edit"></i></button>
-                                                    
+
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#usuario_modal_excluir" data-id="<?= $u['id'] ?>"
                                                     data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"

@@ -26,7 +26,7 @@ class Notas_model extends CI_Model
         n.indice,
         f.id as faixa_id,
     ')
-            ->from($this->nome_tabela.' n')
+            ->from($this->nome_tabela . ' n')
             ->join('faixas_etarias f', 'f.id = n.faixa_id')
             ->join('exercicios e', 'e.id = n.exercicio_id')
             ->order_by('n.valor_nota', 'faixa_etaria', 'n.sexo')
@@ -48,7 +48,7 @@ class Notas_model extends CI_Model
             e.modo_contagem,
             n.valor_nota,
     ')
-            ->from($this->nome_tabela.' n')
+            ->from($this->nome_tabela . ' n')
             ->join('faixas_etarias f', 'f.id = n.faixa_id')
             ->join('exercicios e', 'e.id = n.exercicio_id')
             ->order_by('n.valor_nota', 'faixa_etaria', 'n.sexo')
@@ -75,7 +75,7 @@ class Notas_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Exercício já cadastrado.',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
 
@@ -123,7 +123,7 @@ class Notas_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Falha ao excluir resultado (ID inxistente).',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
     }

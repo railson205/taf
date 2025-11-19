@@ -21,7 +21,7 @@ class Usuarios_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Matrícula ja cadastrada.',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
         $this->db->insert($this->nome_tabela, $data);
@@ -65,7 +65,7 @@ class Usuarios_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Falha ao excluir resultado (ID inexistente).',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
     }

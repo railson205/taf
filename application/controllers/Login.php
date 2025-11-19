@@ -24,11 +24,15 @@ class Login extends CI_Controller
     public function efetuar_login()
     {
         $data = [
-            'nome' => $this->input->post('nome'),
+            'email' => $this->input->post('email'),
             'senha' => $this->input->post('senha'),
         ];
         $this->session->set_userdata('usuario', $this->Login_model->efetuar_login($data));
         redirect('/');
     }
 
+    public function logout(){
+        $this->session->set_userdata('usuario','');
+        redirect('/');
+    }
 }

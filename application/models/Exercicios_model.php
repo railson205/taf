@@ -30,7 +30,7 @@ class Exercicios_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Exxercício ja cadastrado.',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
         $this->db->insert($this->nome_tabela, $data);
@@ -74,7 +74,7 @@ class Exercicios_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Falha ao excluir resultado (ID inexistente).',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
     }

@@ -29,17 +29,17 @@ class FaixasEtarias_model extends CI_Model
         $faixa_existe = $this->db->where('idade_inicial', $data['idade_inicial'])->where('idade_final', $data['idade_final'])->get($this->nome_tabela)->row_array();
         if ($faixa_existe) {
             return [
-                'status'=>false,
-                'message'=>'Faixa Etária ja cadastrada.',
-                'type'=>'danger'
+                'status' => false,
+                'message' => 'Faixa Etária ja cadastrada.',
+                'type' => 'danger'
             ];
         }
         $this->db->insert($this->nome_tabela, $data);
         return [
-                'status'=>$this->db->affected_rows()>0,
-                'message'=>'Faiax Etária cadastrada.',
-                'type'=>'success'
-            ];
+            'status' => $this->db->affected_rows() > 0,
+            'message' => 'Faixa Etária cadastrada.',
+            'type' => 'success'
+        ];
     }
     public function editar_faixa($id, $data)
     {
@@ -74,7 +74,7 @@ class FaixasEtarias_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Falha ao excluir resultado (ID inexistente).',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
     }

@@ -12,6 +12,11 @@ class Resultados_model extends CI_Model
 
     public function listar_resultados()
     {
+        if ($_SESSION['usuario']['nivel'] == 'avaliador') {
+            $this->db->where('avaliador_id', $_SESSION['usuario']['id']);
+        } elseif ($_SESSION['usuario']['nivel'] == 'atleta') {
+            $this->db->where('usuario_id', $_SESSION['usuario']['usuario_id']);
+        }
         $dados = $this->db
             ->select('
         r.id,
@@ -26,7 +31,8 @@ class Resultados_model extends CI_Model
         e.modo_contagem,
         n.indice,
         n.valor_nota,
-        n.id as nota_id
+        n.id as nota_id,
+        r.avaliador_id,
     ')
             ->from($this->nome_tabela . ' r')
             ->join('usuarios u', 'u.id = r.usuario_id')
@@ -40,7 +46,7 @@ class Resultados_model extends CI_Model
             ->order_by('u.nome, u.data_nascimento')
             ->get()
             ->result_array();
-
+        //exit();
         return agrupar_exercicios_por_usuarios($dados);
     }
 
@@ -57,7 +63,7 @@ class Resultados_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Exercício já contabilizado.',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
 
@@ -103,7 +109,7 @@ class Resultados_model extends CI_Model
             return [
                 'status' => false,
                 'message' => 'Falha ao excluir resultado (ID inexistente).',
-                'type' => 'danger'
+                'type' => 'error'
             ];
         }
     }

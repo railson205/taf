@@ -23,6 +23,16 @@
   <!-- Styles Globais-->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/dist/css/stylesGlobais.css') ?>">
 
+  <!-- Sweet Alert-->
+  <script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js
+"></script>
+  <link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.min.css
+" rel="stylesheet">
+
+
+
 
 </head>
 
@@ -43,16 +53,16 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav ms-auto">
-            <?php if (!$this->session->userdata('username')): ?>
+            <?php if (!$this->session->userdata('usuario')): ?>
               <li class="nav-item">
-                <a href=<?=site_url('Login')?> class="nav-link"> Login</a>
+                <a href=<?= site_url('Login') ?> class="nav-link"> Login</a>
               </li>
             <?php else: ?>
               <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-user"></i> Perfil</a>
+                <a href="#" class="nav-link"><i class="fas fa-user"></i> <?= $_SESSION['usuario']['nome'] ?></a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                <a href=<?= site_url('Login/logout') ?> class="nav-link"><i class="fas fa-sign-out-alt"></i> Sair</a>
               </li>
             <?php endif; ?>
           </ul>

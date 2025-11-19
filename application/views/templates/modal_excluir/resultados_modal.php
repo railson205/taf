@@ -1,56 +1,105 @@
 <div class="modal fade" id="<?= $id ?>" tabindex="-1" aria-labelledby="<?= $id ?>_label" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="<?= $id ?>_label">Editar Notas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg border-0">
+
+            <!-- HEADER -->
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Excluir Resultado
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body">
+            <!-- BODY -->
+            <div class="modal-body bg-light">
+
+                <div class="alert alert-warning d-flex align-items-center gap-3" role="alert">
+                    <i class="fa-solid fa-circle-exclamation fa-2x"></i>
+                    <div>
+                        <strong>Atenção!</strong><br>
+                        Você está prestes a excluir este resultado permanentemente.  
+                        Essa ação não pode ser desfeita.
+                    </div>
+                </div>
+
                 <form id="form_resultados_excluir" method="POST"
-                    action="<?= site_url("Resultados/editar_resultados") ?>">
+                      action="<?= site_url("Resultados/excluir_resultados") ?>">
+
                     <input type="hidden" id="resultados_id" name="resultados_id_excluir">
                     <input type="hidden" id="resultados_usuario_id" name="resultados_usuario_id_excluir">
                     <input type="hidden" id="resultados_exercicio_id" name="resultados_exercicio_id_excluir">
 
-                    <div class="mb-3">
-                        <label for="resultados_nome" class="form-label">Nome</label>
-                        <input id="resultados_nome" name="resultados_nome_excluir" class="form-control" readonly>
+                    <!-- CARDS DE RESUMO -->
+                    <div class="row g-3">
+
+                        <div class="col-md-5">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Nome</h6>
+                                    <input id="resultados_nome" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Sexo</h6>
+                                    <input id="resultados_sexo" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Faixa Etária</h6>
+                                    <input id="resultados_faixa" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Grupo Faixa</h6>
+                                    <input id="resultados_grupo_faixa" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Exercício</h6>
+                                    <input id="resultados_exercicio" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Índice</h6>
+                                    <input id="resultados_indice" class="form-control form-control-sm" readonly>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="mb-3">
-                        <label for="resultados_sexo" class="form-label">Sexo</label>
-                        <input id="resultados_sexo" name="resultados_sexo_excluir" class="form-control" readonly>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button type="submit" class="btn btn-danger btn-lg px-4">
+                            <i class="fa-solid fa-trash"></i> Confirmar Exclusão
+                        </button>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="resultados_faixa" class="form-label">Faixa Etária</label>
-                        <input id="resultados_faixa" name="resultados_faixa_excluir" class="form-control" readonly>
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="resultados_grupo_faixa" class="form-label">Grupo da Faixa Etária</label>
-                        <input id="resultados_grupo_faixa" name="resultados_grupo_faixa_excluir" class="form-control"
-                            readonly>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="resultados_exercicio" class="form-label">Exercício</label>
-                        <input id="resultados_exercicio" name="resultados_exercicio_excluir" class="form-control"
-                            readonly>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="resultados_indice" class="form-label">Índice</label>
-                        <input id="resultados_indice" name="resultados_indice_excluir" class="form-select" readonly>
-                    </div>
-
-                    <button type="submit" class="btn btn-success">Salvar</button>
                 </form>
             </div>
         </div>
     </div>
+</div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const modal = document.getElementById('resultados_modal_excluir');
