@@ -6,12 +6,17 @@ class FaixasEtarias extends CI_Controller
 
     public function index()
     {
-        $data = [
-            'title' => 'Faixas Etárias',
-            'view_name' => 'faixasEtariasView',
-            'view_data' => ['faixas_etarias' => $this->FaixasEtarias_model->listar_faixa_etaria()]
-        ];
-        $this->load->view('templates/layout', $data);
+        if ($_SESSION['usuario']) {
+
+            $data = [
+                'title' => 'Faixas Etárias',
+                'view_name' => 'faixasEtariasView',
+                'view_data' => ['faixas_etarias' => $this->FaixasEtarias_model->listar_faixa_etaria()]
+            ];
+            $this->load->view('templates/layout', $data);
+        } else {
+            redirect('/');
+        }
     }
 
     function adicionar_faixa_etaria()
@@ -21,39 +26,39 @@ class FaixasEtarias extends CI_Controller
             'idade_inicial' => $this->input->post('idade_i'),
             'idade_final' => $this->input->post('idade_f')
         ];
-        $resultado=$this->FaixasEtarias_model->inserir_faixa_etaria($data);
-        
+        $resultado = $this->FaixasEtarias_model->inserir_faixa_etaria($data);
+
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
-        
+
         redirect('FaixasEtarias');
     }
 
     function editar_faixa()
     {
-        $id= $this->input->post('faixa_id_edicao');
+        $id = $this->input->post('faixa_id_edicao');
         $data = [
             'nome_grupo' => $this->input->post('faixa_nome_edicao'),
             'idade_inicial' => $this->input->post('faixa_idade_inicial_edicao'),
             'idade_final' => $this->input->post('faixa_idade_final_edicao')
         ];
-        $resultado=$this->FaixasEtarias_model->editar_faixa($id, $data);
-        
+        $resultado = $this->FaixasEtarias_model->editar_faixa($id, $data);
+
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
-        
+
         redirect('FaixasEtarias');
     }
 
     function excluir_faixa()
     {
-        $id= $this->input->post('faixa_id_excluir');
-        
-        $resultado=$this->FaixasEtarias_model->excluir_faixa($id);
-        
+        $id = $this->input->post('faixa_id_excluir');
+
+        $resultado = $this->FaixasEtarias_model->excluir_faixa($id);
+
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
-        
+
         redirect('FaixasEtarias');
     }
 }

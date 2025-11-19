@@ -48,4 +48,11 @@ CREATE TABLE resultados (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-create TABLE seguranca(id int PRIMARY KEY AUTO_INCREMENT, email varchar(50), senha varchar(50), usuario_id int, FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE);
+create TABLE seguranca(id int PRIMARY KEY AUTO_INCREMENT,
+email varchar(50),
+senha varchar(50),
+nivel varchar(25),
+usuario_id int,
+FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -12,9 +12,7 @@ class Resultados_model extends CI_Model
 
     public function listar_resultados()
     {
-        if ($_SESSION['usuario']['nivel'] == 'avaliador') {
-            $this->db->where('avaliador_id', $_SESSION['usuario']['id']);
-        } elseif ($_SESSION['usuario']['nivel'] == 'atleta') {
+       if ($_SESSION['usuario']['nivel'] == 'atleta') {
             $this->db->where('usuario_id', $_SESSION['usuario']['usuario_id']);
         }
         $dados = $this->db

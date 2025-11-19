@@ -13,12 +13,14 @@ class Login extends CI_Controller
 
     public function index()
     {
-        $data = [
-            'title' => 'Login',
-            'view_name' => 'loginView',
-            'view_data' => []
-        ];
-        $this->load->view('templates/layout', $data);
+
+            $data = [
+                'title' => 'Login',
+                'view_name' => 'loginView',
+                'view_data' => []
+            ];
+            $this->load->view('templates/layout', $data);
+        
     }
 
     public function efetuar_login()
@@ -31,8 +33,9 @@ class Login extends CI_Controller
         redirect('/');
     }
 
-    public function logout(){
-        $this->session->set_userdata('usuario','');
+    public function logout()
+    {
+        $this->session->set_userdata('usuario', '');
         redirect('/');
     }
 }

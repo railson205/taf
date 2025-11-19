@@ -126,7 +126,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
         // Se ainda não existe o usuário no array, cria
         if (!isset($resultados[$uid])) {
             $resultados[$uid] = [
-                'id' => $row['id'],
+                
                 'usuario_id' => $uid,
                 'nome' => $row['nome'],
                 'sexo' => $row['sexo'],
@@ -139,6 +139,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
 
         // Adiciona o exercício ao usuário
         $resultados[$uid]['exercicios'][] = [
+            'resultado_id' => $row['id'],
             'exercicio_id' => $row['exercicio_id'],
             'nome_exercicio' => $row['nome_exercicio'],
             'modo_contagem' => $row['modo_contagem'],

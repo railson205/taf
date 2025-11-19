@@ -22,6 +22,7 @@
         <?php $this->load->view('templates/modal_edicao/resultados_modal', ['id' => 'resultados_modal_editar']); ?>
         <?php $this->load->view('templates/modal_excluir/resultados_modal', ['id' => 'resultados_modal_excluir']); ?>
 
+
         <?php
         $alert_type = $this->session->flashdata('alert_type');
         $alert_message = $this->session->flashdata('alert_message');
@@ -86,6 +87,10 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <h5>Usuários</h5>
+                <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
+                    $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r,'usuarios_options'=>$usuarios_options,'exercicios_options'=>$exercicios_options,'indices_id_options'=>$indices_id_options,'tipo_exercicios'=>$tipos_exercicios]);
+                } ?>
+
                 <div class="card">
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover text-nowrap">
@@ -105,11 +110,11 @@
                             <tbody>
                                 <?php if (!empty($resultados)): ?>
                                     <?php foreach ($resultados['registro_exercicios'] as $key => $r): ?>
-                                        <?php $detalhes = $r['exercicios'] ?? []; ?>
+
 
                                         <!-- LINHA PAI -->
                                         <tr>
-                                            <td class="text-center"><?= $key + 1 ?></td>
+                                            <td class="text-center"><?= $key + 1 ?> </td>
                                             <td class="text-center"><?= $r['nome'] ?? '-' ?></td>
 
                                             <td class="text-center">
@@ -126,122 +131,14 @@
 
                                             <!-- BOTÃO DO ACCORDION -->
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-<?= $key ?>">
+                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#avaliacao_modal<?= $key ?>">
                                                     Detalhes
                                                 </button>
-                                            </td>
-                                        </tr>
-
-                                        <!-- LINHA FILHA (accordion) -->
-                                        <tr class="collapse" id="collapse-<?= $key ?>">
-                                            <td colspan="6" class="bg-light">
-
-                                                <?php if (!empty($detalhes)): ?>
-                                                    <div class="p-3">
-
-                                                        <h6 class="fw-bold mb-3">Detalhes do Exercício</h6>
-
-                                                        <table class="table table-sm table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Quantidade de Exercícios</th>
-                                                                    <th>Nota Média</th>
-                                                                    <th>Nota Total</th>
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-                                                                <?php
-                                                                $nota_total = 0;
-                                                                $qtd_notas = 0;
-                                                                foreach ($detalhes as $d) {
-                                                                    $nota_total += (int) $d['valor_nota'];
-                                                                    $qtd_notas += 1;
-                                                                } ?>
-                                                                <tr>
-                                                                    <td><?= $qtd_notas ?></td>
-                                                                    <td><?= $nota_total / $qtd_notas ?></td>
-                                                                    <td><?= $nota_total ?></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table class="table table-sm table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Nome</th>
-                                                                    <th>Modo Contagem</th>
-                                                                    <th>Índice</th>
-                                                                    <th>Valor Nota</th>
-                                                                    <?php if (in_array($_SESSION['usuario']['nivel'], ['avaliador', 'admin'])): ?>
-                                                                        <th>Ações</th>
-                                                                    <?php endif; ?>
-                                                                </tr>
-                                                            </thead>
-
-                                                            <tbody>
-                                                                <?php foreach ($detalhes as $d): ?>
-                                                                    <tr>
-                                                                        <td><?= $d['nome_exercicio'] ?></td>
-                                                                        <td><?= $d['modo_contagem'] ?></td>
-                                                                        <td><?= $d['modo_contagem'] == "Tempo" ? segundos_para_tempo($d['indice']) : $d['indice'] ?>
-                                                                        </td>
-                                                                        <td><?= $d['valor_nota'] ?></td>
-                                                                        <?php if (in_array($_SESSION['usuario']['nivel'], ['avaliador', 'admin'])): ?>
-                                                                            <td class="text-center">
-                                                                                <button class="btn btn-sm btn-primary"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#resultados_modal_editar"
-                                                                                    data-selecionado='<?= json_encode([
-                                                                                        "id" => $r["id"],
-                                                                                        "usuario_id" => $r['usuario_id'],
-                                                                                        "exercicio_id" => $d["exercicio_id"],
-                                                                                        "nota_id" => $d['nota_id'],
-                                                                                        'nome' => $r['nome'],
-                                                                                        'sexo' => $r['sexo'],
-                                                                                        'faixa' => $r['faixa_etaria'],
-                                                                                        'grupo_faixa' => $r['grupo_faixa'],
-                                                                                        'indice' => $d['indice'],
-                                                                                    ]) ?>' data-opcoes='<?= json_encode([
-                                                                                         'usuarios' => $usuarios_options,
-                                                                                         "exercicios" => $exercicios_options,
-                                                                                         'notas' => $indices_id_options,
-                                                                                         'all_exercicios' => $tipos_exercicios,
-                                                                                     ]) ?>'>
-                                                                                    <i class="fas fa-edit"></i></button>
-                                                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                                                    data-bs-target="#resultados_modal_excluir"
-                                                                                    data-selecionado='<?= json_encode([
-                                                                                        "id" => $r["id"],
-                                                                                        "usuario_id" => $r['usuario_id'],
-                                                                                        "exercicio_id" => $d["exercicio_id"],
-                                                                                        "nota_id" => $d['nota_id'],
-                                                                                        'nome' => $r['nome'],
-                                                                                        'sexo' => $r['sexo'],
-                                                                                        'faixa' => $r['faixa_etaria'],
-                                                                                        'grupo_faixa' => $r['grupo_faixa'],
-                                                                                        'indice' => $d['indice'],
-                                                                                    ]) ?>' data-opcoes='<?= json_encode([
-                                                                                         'usuarios' => $usuarios_options,
-                                                                                         "exercicios" => $exercicios_options,
-                                                                                         'notas' => $indices_id_options,
-                                                                                         'all_exercicios' => $tipos_exercicios,
-                                                                                     ]) ?>'><i class="fas fa-trash"></i></button>
-                                                                                     
-                                                                            </td>
-                                                                        <?php endif; ?>
-                                                                    </tr>
-                                                                <?php endforeach; ?>
-                                                            </tbody>
-                                                        </table>
-
-                                                    </div>
-                                                <?php else: ?>
-                                                    <div class="p-3 text-muted">Nenhum detalhe encontrado.</div>
-                                                <?php endif; ?>
 
                                             </td>
                                         </tr>
+
 
                                     <?php endforeach; ?>
                                 <?php else: ?>

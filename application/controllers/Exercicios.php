@@ -6,12 +6,17 @@ class Exercicios extends CI_Controller
 
     public function index()
     {
-        $data = [
-            'title' => 'Exercícios',
-            'view_name' => 'exerciciosView',
-            'view_data' => ['exercicios' => $this->Exercicios_model->listar_exercicios()]
-        ];
-        $this->load->view('templates/layout', $data);
+        if ($_SESSION['usuario']) {
+
+            $data = [
+                'title' => 'Exercícios',
+                'view_name' => 'exerciciosView',
+                'view_data' => ['exercicios' => $this->Exercicios_model->listar_exercicios()]
+            ];
+            $this->load->view('templates/layout', $data);
+        } else {
+            redirect('/');
+        }
     }
 
     function adicionar_exercicios()

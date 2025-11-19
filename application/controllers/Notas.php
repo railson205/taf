@@ -6,12 +6,17 @@ class Notas extends CI_Controller
 
     public function index()
     {
-        $data = [
-            'title' => 'Notas',
-            'view_name' => 'notasView',
-            'view_data' => ['notas' => $this->Notas_model->listar_Notas(), 'faixa' => $this->FaixasEtarias_model->listar_faixa_etaria(), 'exercicios' => $this->Exercicios_model->listar_exercicios()]
-        ];
-        $this->load->view('templates/layout', $data);
+        if ($_SESSION['usuario']) {
+
+            $data = [
+                'title' => 'Notas',
+                'view_name' => 'notasView',
+                'view_data' => ['notas' => $this->Notas_model->listar_Notas(), 'faixa' => $this->FaixasEtarias_model->listar_faixa_etaria(), 'exercicios' => $this->Exercicios_model->listar_exercicios()]
+            ];
+            $this->load->view('templates/layout', $data);
+        } else {
+            redirect('/');
+        }
     }
 
     function adicionar_nota()
@@ -52,7 +57,7 @@ class Notas extends CI_Controller
     function excluir_nota()
     {
         $id = $this->input->post('notas_id_excluir');
-        
+
         $resultado = $this->Notas_model->excluir_notas($id);
 
         $this->session->set_flashdata('alert_type', $resultado['type']);

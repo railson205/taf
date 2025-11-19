@@ -4,12 +4,17 @@ class Usuarios extends CI_Controller
 {
     public function index()
     {
-        $data = [
-            'title' => 'Usuários',
-            'view_name' => 'usuariosView',
-            'view_data' => ['usuarios' => $this->Usuarios_model->listar_usuarios(),]
-        ];
-        $this->load->view('templates/layout', $data);
+        if ($_SESSION['usuario']) {
+
+            $data = [
+                'title' => 'Usuários',
+                'view_name' => 'usuariosView',
+                'view_data' => ['usuarios' => $this->Usuarios_model->listar_usuarios(),]
+            ];
+            $this->load->view('templates/layout', $data);
+        } else {
+            redirect('/');
+        }
     }
 
     function adicionar_usuario()
