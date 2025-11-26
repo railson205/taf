@@ -48,8 +48,6 @@ class Resultados extends CI_Controller
     {
         $id = $this->input->post('resultados_id_editar');
         $data = [
-            'usuario_id' => $this->input->post('resultados_usuario_id_editar'),
-            'exercicio_id' => $this->input->post('resultados_exercicio_id_editar'),
             'nota_id' => $this->input->post('resultados_indice_editar'),
         ];
 

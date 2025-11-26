@@ -9,7 +9,7 @@ class Seguranca extends CI_Controller
         $data = [
             'title' => 'Segurança',
             'view_name' => 'segurancaView',
-            'view_data' => ['logins' => $this->Login_model->listar_logins()]
+            'view_data' => ['logins' => $this->Seguranca_model->listar_logins(), 'usuarios' => $this->Usuarios_model->listar_usuarios(),]
         ];
         $this->load->view('templates/layout', $data);
     }
@@ -17,37 +17,43 @@ class Seguranca extends CI_Controller
     function adicionar_login()
     {
         $data = [
+            'email' => $this->input->post('email'),
+            'senha' => $this->input->post('senha'),
+            'nivel' => $this->input->post('nivel'),
+            'usuario_id' => $this->input->post('usuario_id'),
         ];
-        $resultado=$this->Login_model->adicionar_login($data);
-        
+        $resultado = $this->Seguranca_model->adicionar_login($data);
+
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
-        
-        redirect('FaixasEtarias');
+
+        redirect('Seguranca');
     }
 
     function editar_login()
     {
-        $id= $this->input->post('login_id_edicao');
+        $id = $this->input->post('seguranca_id_editar');
         $data = [
+            'email' => $this->input->post('seguranca_email_editar'),
+            'nivel' => $this->input->post('seguranca_nivel_editar'),
         ];
-        $resultado=$this->Login_model->editar_login($id, $data);
-        
+        $resultado = $this->Seguranca_model->editar_login($id, $data);
+
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
-        
-        redirect('FaixasEtarias');
+
+        redirect('Seguranca');
     }
 
     function excluir_login()
     {
-        $id= $this->input->post('login_id_excluir');
-        
-        $resultado=$this->Login_model->excluir_login($id);
-        
+        $id = $this->input->post('seguranca_id_excluir');
+
+        $resultado = $this->Seguranca_model->excluir_login($id);
+
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
-        
-        redirect('FaixasEtarias');
+
+        redirect('Seguranca');
     }
 }

@@ -12,10 +12,10 @@ class ControladorCondicional extends CI_Controller
         } else {
             // Redireciona de acordo com o tipo de usuário
             switch ($_SESSION['usuario']['nivel']) {
-                case 'admin':
+                case 'Administrador':
                     redirect('Dashboard');
                     break;
-                case 'avaliador':
+                case 'Avaliador':
                     redirect('Resultados');
                     break;
                 default:

@@ -18,7 +18,7 @@
                 aria-label="Main navigation" data-accordion="false" id="navigation">
 
                 <?php switch ($_SESSION['usuario']['nivel']) {
-                    case 'admin':
+                    case 'Administrador':
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Dashboard', 'name_page' => 'Dashboard', 'icon' => 'bi bi-clipboard-data']);
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Seguranca', 'name_page' => 'Segurança', 'icon' => 'fa fa-lock']);
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Usuarios', 'name_page' => 'Usuários', 'icon' => 'bi bi-person-circle']);
@@ -28,10 +28,10 @@
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Resultados', 'name_page' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']);
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Demo', 'name_page' => 'AdminLTE Demo', 'icon' => 'bi bi-clipboard-data']);
                         break;
-                    case 'avaliador':
+                    case 'Avaliador':
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Resultados', 'name_page' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']);
                         break;
-                    case 'atleta':
+                    case 'Atleta':
                         $this->load->view('templates/fixos/items_sidebar', ['route' => 'Resultados', 'name_page' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']);
                         break;
                     default:

@@ -38,7 +38,7 @@
             </script>
         <?php endif; ?>
 
-        <?php if (in_array($_SESSION['usuario']['nivel'], ['avaliador', 'admin'])): ?>
+        <?php if (in_array($_SESSION['usuario']['nivel'], ['Avaliador', 'Administrador'])): ?>
             <div class="col-md-6">
                 <h3>Adicionar Exercícios</h3>
                 <!--Form-->
@@ -88,7 +88,7 @@
             <div class="col-md-12">
                 <h5>Usuários</h5>
                 <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
-                    $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r,'usuarios_options'=>$usuarios_options,'exercicios_options'=>$exercicios_options,'indices_id_options'=>$indices_id_options,'tipo_exercicios'=>$tipos_exercicios]);
+                    $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'usuarios_options' => $usuarios_options, 'exercicios_options' => $exercicios_options, 'indices_id_options' => $indices_id_options, 'tipo_exercicios' => $tipos_exercicios]);
                 } ?>
 
                 <div class="card">

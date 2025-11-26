@@ -3,7 +3,8 @@
 <div class="main-layout d-flex gap-3">
 
   <!-- Sidebar -->
-  <?php if ($title != "Login"): ?>
+<!--Adicione no array abaixo o nome dos controller que não vão possuir sidebar -->
+  <?php if (in_array($title, ["Login",'EsqueceuSenha'])): ?>
     <?php $this->load->view('templates/fixos/sidebar'); ?>
   <?php endif; ?>
 

@@ -7,6 +7,7 @@
         <?php
         $alert_type = $this->session->flashdata('alert_type');
         $alert_message = $this->session->flashdata('alert_message');
+        $usuarios_options = array_para_select($usuarios, 'id', 'nome');
 
         if ($alert_message): ?>
             <script>
@@ -34,7 +35,7 @@
                     'type' => 'text',
                     'minlength' => 3,
                     'maxlength' => 50,
-                    'pattern' => "^[A-Za-zÀ-ÿ]+(?:\s+[A-Za-zÀ-ÿ]+)+$"
+                    'pattern'=>"^[^\s@]+@[^\s@]+\.[^\s@]{2,}$",
                 ]);
                 ?>
 
@@ -50,10 +51,24 @@
                 ?>
 
                 <!-- Nível de segurança -->
-                
+                <?php
+                $this->load->view('templates/inputs/input_select', [
+                    'id' => 'nivel',
+                    'title' => 'Nível',
+                    'placeholder' => 'Selecione o nível',
+                    'options' => ['Administrador', 'Avaliador', 'Atleta'],
+                ]);
+                ?>
 
                 <!-- Usuário -->
-               
+                <?php
+                $this->load->view('templates/inputs/input_select', [
+                    'id' => 'usuario_id',
+                    'title' => 'Nome do usuário',
+                    'placeholder' => 'Selecione um usuário',
+                    'options' => $usuarios_options,
+                ]);
+                ?>
 
                 <button type="submit" class="btn btn-primary me-1">Novo Login</button>
             </form>
@@ -70,6 +85,8 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Email</th>
+                                    <th>Nível</th>
                                     <th>Matrícula</th>
                                     <th>Nome</th>
                                     <th>Data de nascimento</th>
@@ -79,36 +96,32 @@
                             </thead>
                             <tbody>
                                 <?php
-                                if (!empty($usuarios)):
-                                    foreach ($usuarios as $key => $u):
+                                if (!empty($logins)):
+                                    foreach ($logins as $key => $l):
                                         ?>
                                         <tr>
                                             <td><?= $key + 1 ?></td>
-                                            <td><?= $u['matricula'] ?? '-'; ?></td>
-                                            <td><?= $u['nome'] ?? '-'; ?></td>
-                                            <td><?= formata_data_nascimento($u['data_nascimento']) ?? '-'; ?></td>
-                                            <td><?= coletar_idade($u['data_nascimento']) . ' anos' ?? '-'; ?></td>
-                                            <td><?= $u['sexo'] ?? '-'; ?>
-                                                <?php if ($u['sexo'] == "Masculino"): ?>
+                                            <td><?= $l['email'] ?></td>
+                                            <td><?= $l['nivel'] ?></td>
+                                            <td><?= $l['matricula'] ?? '-'; ?></td>
+                                            <td><?= $l['nome'] ?? '-'; ?></td>
+                                            <td><?= formata_data_nascimento($l['data_nascimento']) ?? '-'; ?></td>
+                                            <td><?= coletar_idade($l['data_nascimento']) . ' anos' ?? '-'; ?></td>
+                                            <td><?= $l['sexo'] ?? '-'; ?>
+                                                <?php if ($l['sexo'] == "Masculino"): ?>
                                                     <i class="fa-solid fa-mars bg-info p-2 rounded text-white"></i>
-                                                <?php elseif ($u['sexo'] == 'Feminino'): ?>
+                                                <?php elseif ($l['sexo'] == 'Feminino'): ?>
                                                     <i class="fa-solid fa-venus bg-danger p-2 rounded text-white"></i>
-                                                <?php endif; ?>
+                                                <?php  endif; ?>
                                             </td>
                                             <td>
                                                 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#usuario_modal_editar" data-id="<?= $u['id'] ?>"
-                                                    data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
-                                                    data-data-nascimento="<?= $u['data_nascimento'] ?>"
-                                                    data-sexo-selecionado="<?= $u['sexo'] ?>"
-                                                    data-sexo-options="Masculino,Feminino">
+                                                    data-bs-target="#seguranca_modal_editar" data-selecionado='<?= json_encode($l) ?>'
+                                                    data-nivel-options='Administrador,Avaliador,Atleta'>
                                                     <i class="fas fa-edit"></i></button>
 
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#usuario_modal_excluir" data-id="<?= $u['id'] ?>"
-                                                    data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
-                                                    data-data-nascimento="<?= $u['data_nascimento'] ?>"
-                                                    data-sexo="<?= $u['sexo'] ?>"><i class="fas fa-trash"></i></button>
+                                                    data-bs-target="#seguranca_modal_excluir" data-selecionado='<?= json_encode($l) ?>'><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

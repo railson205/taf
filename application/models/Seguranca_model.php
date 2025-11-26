@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login_model extends CI_Model
+class Seguranca_model extends CI_Model
 {
     public function __construct()
     {
@@ -16,7 +16,7 @@ class Login_model extends CI_Model
 
     public function listar_logins()
     {
-        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->get()->row_array();
+        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->get()->result_array();
     }
 
     public function adicionar_login($data)

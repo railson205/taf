@@ -10,8 +10,6 @@
                 <form id="form_resultados_editar" method="POST"
                     action="<?= site_url("Resultados/editar_resultados") ?>">
                     <input type="hidden" id="resultados_id" name="resultados_id_editar">
-                    <input type="hidden" id="resultados_usuario_id" name="resultados_usuario_id_editar">
-                    <input type="hidden" id="resultados_exercicio_id" name="resultados_exercicio_id_editar">
 
                     <div class="mb-3">
                         <label for="resultados_nome" class="form-label">Nome</label>
@@ -67,8 +65,6 @@
 
                 // ---- PREENCHER CAMPOS DO MODAL ----
                 preencherInput('resultados_id', selecionado.id);
-                preencherInput('resultados_usuario_id', selecionado.usuario_id);
-                preencherInput('resultados_exercicio_id', selecionado.exercicio_id);
 
                 preencherInput('resultados_nome', selecionado.nome);
                 preencherInput('resultados_sexo', selecionado.sexo);

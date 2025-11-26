@@ -23,82 +23,67 @@
     <div class="row mt-4">
       <div class="col-md-12">
         <h5>Resultados</h5>
+        <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
+          $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r,'isDashboard'=>true]);
+        } ?>
         <div class="card">
           <div class="card-body table-responsive p-0">
+
             <table class="table table-hover text-nowrap">
               <thead>
                 <tr>
-                  <th rowspan="2" class="text-center border-end border-top border-dark">#</th>
-                  <th rowspan="2" class="text-center border-end border-top border-dark">Nome</th>
-                  <th rowspan="2" class="text-center border-end border-top border-dark">Sexo</th>
-                  <th rowspan="2" class="text-center border-end border-top border-dark">Faixa Etária
+                  <th class="text-center border-end border-top border-dark">#</th>
+                  <th class="text-center border-end border-top border-dark">Nome</th>
+                  <th class="text-center border-end border-top border-dark">Sexo</th>
+                  <th class="text-center border-end border-top border-dark">Faixa Etária
                   </th>
-                  <th rowspan="2" class="text-center border-end border-top border-dark">Grupo
+                  <th class="text-center border-end border-top border-dark">Grupo
                     da<br>Faixa
                     Etária</th>
-                  <th rowspan="2" class="text-center border-end border-top border-dark">Nota Média
-                  </th>
-                  <?php foreach ($ex_unic as $exercicio): ?>
-                    <th colspan="3" class="text-center border-end border-dark bg-secondary text-white">
-                      <?= htmlspecialchars($exercicio) ?>
-                    </th>
-                  <?php endforeach; ?>
-                </tr>
-                <tr>
-
-                  <?php foreach ($ex_unic as $exercicio): ?>
-                    <th class="text-center border-end border-dark">Modo de Contagem</th>
-                    <th class="text-center border-end border-dark">Índice</th>
-                    <th class="text-center border-end border-dark">Nota</th>
-                  <?php endforeach; ?>
-
+                  <th class="text-center border-end border-top border-dark">Exercícios</th>
                 </tr>
               </thead>
               <tbody>
-                <?php
-                if (!empty($resultados)):
-                  foreach ($resultados['registro_exercicios'] as $key => $r):
+                <?php if (!empty($resultados)): ?>
+                  <?php foreach ($resultados['registro_exercicios'] as $key => $r): ?>
 
-                    // Mapeia os exercícios do usuário para facilitar acesso pelo nome
-                    $notaTotal = 0;
-                    $qtdNotas = 0;
-                    $map_exercicios = [];
-                    foreach ($r['exercicios'] as $ex) {
-                      $notaTotal += (float) $ex['valor_nota'];
-                      $qtdNotas += 1;
-                      $map_exercicios[$ex['nome_exercicio']] = $ex;
-                    }
 
-                    ?>
+                    <!-- LINHA PAI -->
                     <tr>
-                      <td class="text-center"><?= $key + 1 ?></td>
+                      <td class="text-center"><?= $key + 1 ?> </td>
                       <td class="text-center"><?= $r['nome'] ?? '-' ?></td>
-                      <td class="text-center"><?= $r['sexo'] ?? '-' ?></td>
+
+                      <td class="text-center">
+                        <?= $r['sexo'] ?? '-' ?>
+                        <?php if ($r['sexo'] == "Masculino"): ?>
+                          <i class="fa-solid fa-mars bg-info p-2 rounded text-white"></i>
+                        <?php elseif ($r['sexo'] == 'Feminino'): ?>
+                          <i class="fa-solid fa-venus bg-danger p-2 rounded text-white"></i>
+                        <?php endif; ?>
+                      </td>
+
                       <td class="text-center"><?= $r['faixa_etaria'] ?? '-' ?></td>
                       <td class="text-center"><?= $r['grupo_faixa'] ?? '-' ?></td>
-                      <td class="text-center"><?= $notaTotal/$qtdNotas?></td>
 
-                      <?php
+                      <!-- BOTÃO DO ACCORDION -->
+                      <td class="text-center">
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                          data-bs-target="#avaliacao_modal<?= $key ?>">
+                          Detalhes
+                        </button>
 
-
-                      foreach ($ex_unic as $exercicio):
-                        $ex = $map_exercicios[$exercicio] ?? null;
-                        ?>
-                        <td class="text-center"><?= $ex['modo_contagem'] ?? '-' ?></td>
-                        <td class="text-center">
-                          <?= $ex['modo_contagem'] == 'Tempo' ? segundos_para_tempo($ex['indice']) : $ex['indice'] ?? '-' ?>
-                        </td>
-                        <td class="text-center"><?= $ex['valor_nota'] ?? '-' ?></td>
-                      <?php endforeach; ?>
-
+                      </td>
                     </tr>
+
+
                   <?php endforeach; ?>
                 <?php else: ?>
                   <tr>
-                    <td colspan="5">Nenhum exercício realizado encontrado.</td>
+                    <td colspan="6">Nenhum exercício encontrado.</td>
                   </tr>
                 <?php endif; ?>
               </tbody>
+
             </table>
           </div>
         </div>

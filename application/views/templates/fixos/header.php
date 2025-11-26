@@ -46,6 +46,9 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.min.css
         <a href="<?= site_url('/') ?>" class="navbar-brand">
           <span class="brand-text fw-bold text-primary">Meu Painel</span>
         </a>
+        <a href="<?= site_url('Demo') ?>" class="navbar-brand">
+          <span class="brand-text fw-bold text-primary">Demo</span>
+        </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
