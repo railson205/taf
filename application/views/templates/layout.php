@@ -4,7 +4,7 @@
 
   <!-- Sidebar -->
 <!--Adicione no array abaixo o nome dos controller que não vão possuir sidebar -->
-  <?php if (in_array($title, ["Login",'EsqueceuSenha'])): ?>
+  <?php if (!in_array($title, ["Login",'Esqueceu a senha','Redefinir a senha'])): ?>
     <?php $this->load->view('templates/fixos/sidebar'); ?>
   <?php endif; ?>
 

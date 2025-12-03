@@ -56,3 +56,17 @@ usuario_id int,
 FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE recuperacao_senhas (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  email VARCHAR(255) NOT NULL,
+  token_hash CHAR(64) NOT NULL,     -- SHA-256 hex (opção segura)
+  expires_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  used TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_email_token (email, token_hash(20)), -- evita duplicados curtos
+  INDEX idx_token_hash (token_hash),
+  INDEX idx_email (email),
+  INDEX idx_expires_at (expires_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

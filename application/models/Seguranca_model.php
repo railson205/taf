@@ -19,6 +19,11 @@ class Seguranca_model extends CI_Model
         return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->get()->result_array();
     }
 
+    public function getUserByEmail($email)
+    {
+        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->where('s.email', $email)->get()->row_array();
+    }
+
     public function adicionar_login($data)
     {
         $login_existe = $this->db->where('email', $data['email'])->get($this->nome_tabela)->row_array();
@@ -74,6 +79,24 @@ class Seguranca_model extends CI_Model
             ];
         }
 
+    }
+
+    public function redefinirSenha($email, $senhaHash)
+    {
+        $this->db->where('email', $email)->update($this->nome_tabela,['senha'=>$senhaHash]);
+        if ($this->db->affected_rows() > 0) {
+            return [
+                'status' => true,
+                'message' => 'Edição bem-sucedida.',
+                'type' => 'success'
+            ];
+        } else {
+            return [
+                'status' => false,
+                'message' => 'Nenhuma alteração detectada.',
+                'type' => 'warning'
+            ];
+        }
     }
 }
 ?>

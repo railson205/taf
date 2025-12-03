@@ -56,4 +56,6 @@ class Seguranca extends CI_Controller
 
         redirect('Seguranca');
     }
+
+    
 }

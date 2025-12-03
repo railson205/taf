@@ -2,3 +2,5 @@
 *Admin: pode ver todas as telas
 *Avaliador: ver somente resultados que ele mesmo aplicou e poder adicionar novas avaliações. Ao adicionar nova avaliação, enviar para o email do avaliador e do usuário
 *Atleta: ver somente seus resultados e poder imprimir/enviar para o email
+
+Fazer os alertas de confirmação da mudança da senha
