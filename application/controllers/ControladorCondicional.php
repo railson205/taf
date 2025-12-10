@@ -8,7 +8,7 @@ class ControladorCondicional extends CI_Controller
     {
 
         if (!$_SESSION['usuario']) {
-            redirect('login'); // vai para application/controllers/Login.php
+            redirect('Login'); // vai para application/controllers/Login.php
         } else {
             // Redireciona de acordo com o tipo de usuário
             switch ($_SESSION['usuario']['nivel']) {

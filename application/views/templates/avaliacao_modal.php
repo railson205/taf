@@ -38,7 +38,7 @@
                                 </tbody>
                             </table>
                             <h6 class="fw-bold mb-3">Lista dos Exercício</h6>
-                            <table class="table table-sm table-bordered">
+                            <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>

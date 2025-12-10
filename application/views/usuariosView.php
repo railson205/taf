@@ -91,9 +91,7 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <h5>Usuários</h5>
-                <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -102,6 +100,7 @@
                                     <th>Data de nascimento</th>
                                     <th>Idade</th>
                                     <th>Sexo</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -130,7 +129,7 @@
                                                     data-sexo-selecionado="<?= $u['sexo'] ?>"
                                                     data-sexo-options="Masculino,Feminino">
                                                     <i class="fas fa-edit"></i></button>
-                                                    
+
                                                 <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                     data-bs-target="#usuario_modal_excluir" data-id="<?= $u['id'] ?>"
                                                     data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
@@ -153,6 +152,21 @@
         </div>
     </div>
 
+    <script>
+        $(document).ready(function () {
+            $('.datatable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                pageLength: 5,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
+                },
+                columnDefs: [
+                    { orderable: false, targets: -1 } // Ações não ordena
+                ]
+            });
+        });
+    </script>
     <!-- Script de Validação Bootstrap -->
     <?php $this->load->view('templates/validator_form'); ?>
 </section>

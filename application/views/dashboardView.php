@@ -26,10 +26,8 @@
         <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
           $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r,'isDashboard'=>true]);
         } ?>
-        <div class="card">
-          <div class="card-body table-responsive p-0">
 
-            <table class="table table-hover text-nowrap">
+            <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
               <thead>
                 <tr>
                   <th class="text-center border-end border-top border-dark">#</th>
@@ -91,4 +89,19 @@
       <!--Tabela -->
     </div>
   </div>
+  <script>
+        $(document).ready(function () {
+            $('.datatable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                pageLength: 5,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
+                },
+                columnDefs: [
+                    { orderable: false, targets: -1 } // Ações não ordena
+                ]
+            });
+        });
+    </script>
 </section>

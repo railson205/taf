@@ -63,55 +63,75 @@
         <!--Tabela -->
         <div class="row mt-4">
             <div class="col-md-12">
-                <h5>Usuários</h5>
-                <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
+                <h5>Exercícios</h5>
+
+                <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 50px;">#</th>
+                            <th>Nome do Exercício</th>
+                            <th>Modo de Contagem</th>
+                            <th style="width: 120px;">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php if (!empty($exercicios)): ?>
+                            <?php foreach ($exercicios as $key => $e): ?>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nome do Exercício</th>
-                                    <th>Modo de Contagem</th>
-                                    <th>Ações</th>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= $e['nome_exercicio'] ?? '-' ?></td>
+                                    <td><?= $e['modo_contagem'] ?? '-' ?></td>
+
+                                    <td class="text-center">
+                                        <!-- Editar -->
+                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#tipo_exercicio_modal_editar" data-id="<?= $e['id'] ?>"
+                                            data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
+                                            data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"
+                                            data-modo-contagem-options="Contagem,Tempo">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <!-- Excluir -->
+                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#tipo_exercicio_modal_excluir" data-id="<?= $e['id'] ?>"
+                                            data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
+                                            data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($exercicios)):
-                                    foreach ($exercicios as $key => $e):
-                                        ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $e['nome_exercicio'] ?? '-' ?></td>
-                                            <td><?= $e['modo_contagem'] ?? '-' ?></td>
-                                            <td class="text-center">
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#tipo_exercicio_modal_editar" data-id="<?= $e['id'] ?>"
-                                                    data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
-                                                    data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"
-                                                    data-modo-contagem-options="Contagem,Tempo">
-                                                    <i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#tipo_exercicio_modal_excluir" data-id="<?= $e['id'] ?>"
-                                                    data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
-                                                    data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="5">Nenhum exercício encontrado.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="text-center">Nenhum exercício encontrado.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
-            <!--Tabela -->
         </div>
+
+        <!--Tabela -->
     </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.datatable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                pageLength: 5,
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
+                },
+                columnDefs: [
+                    { orderable: false, targets: -1 } // Ações não ordena
+                ]
+            });
+        });
+    </script>
 
     <!-- Script de Validação Bootstrap -->
     <?php $this->load->view('templates/validator_form'); ?>
