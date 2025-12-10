@@ -10,8 +10,17 @@ class Seguranca_model extends CI_Model
 
     public function efetuar_login($data)
     {
-        $dados = $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->where('s.email', $data['email'])->where('s.senha', $data['senha'])->get()->row_array();
-        return $dados;
+
+        $dados = $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,s.senha')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->where('s.email', $data['email'])->get()->row_array();
+        $senha = $this->db
+            ->select('senha')
+            ->from($this->nome_tabela)
+            ->where('email', $data['email'])
+            ->get()
+            ->row()
+            ->senha ?? null;
+            
+        return password_verify($data['senha'], $senha) ? $dados : null;
     }
 
     public function listar_logins()
@@ -83,7 +92,7 @@ class Seguranca_model extends CI_Model
 
     public function redefinirSenha($email, $senhaHash)
     {
-        $this->db->where('email', $email)->update($this->nome_tabela,['senha'=>$senhaHash]);
+        $this->db->where('email', $email)->update($this->nome_tabela, ['senha' => $senhaHash]);
         if ($this->db->affected_rows() > 0) {
             return [
                 'status' => true,

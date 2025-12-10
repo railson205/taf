@@ -18,7 +18,7 @@ class Seguranca extends CI_Controller
     {
         $data = [
             'email' => $this->input->post('email'),
-            'senha' => $this->input->post('senha'),
+            'senha' => password_hash($this->input->post('senha'),PASSWORD_DEFAULT),
             'nivel' => $this->input->post('nivel'),
             'usuario_id' => $this->input->post('usuario_id'),
         ];
