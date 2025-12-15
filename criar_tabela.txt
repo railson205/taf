@@ -50,7 +50,7 @@ CREATE TABLE resultados (
 
 create TABLE seguranca(id int PRIMARY KEY AUTO_INCREMENT,
 email varchar(50),
-senha varchar(50),
+senha varchar(100),
 nivel varchar(25),
 usuario_id int,
 FOREIGN KEY (usuario_id) REFERENCES usuarios(id)

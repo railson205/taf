@@ -31,6 +31,9 @@
   <!-- SweetAlert CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.min.css">
 
+  <!-- DataTables Buttons -->
+<link rel="stylesheet"
+  href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
 
   <!-- ======== JS PRINCIPAIS ======== -->
 

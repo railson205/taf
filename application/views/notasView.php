@@ -22,6 +22,7 @@
 
         <?php $this->load->view('templates/modal_edicao/notas_modal', ['id' => 'notas_modal_editar']); ?>
         <?php $this->load->view('templates/modal_excluir/notas_modal', ['id' => 'notas_modal_excluir']); ?>
+        <?php $this->load->view('templates/notas_exportacao_modal', ['id' => 'notas_exportacao_modal']); ?>
 
         <?php
         $alert_type = $this->session->flashdata('alert_type');
@@ -80,15 +81,95 @@
 
         <!--Tabela -->
         <div class="row mt-4">
-            <div class="col-md-12">
-                <h5>Notas</h5>
-                <div class="card">
-                    <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Masculino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
-                    <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Feminino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
-                </div>
+            <div class="col-md-12">.
+                <h5 class="mb-0">Notas</h5>
+                <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Masculino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
+                <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Feminino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
+                <script>
+
+                    $(document).ready(function () {
+                        if ($.fn.DataTable.isDataTable('.datatable')) return;
+
+                        const titulo = $('.datatable').data('export-title') || 'Relatório';
+
+                        $('.datatable').DataTable({
+                            ordering: false,
+                            responsive: true,
+                            pageLength: 20,
+                            dom: 'Bfrtip',
+                            buttons: [
+                                {
+                                    extend: 'pdfHtml5',
+                                    text: '<i class="fa fa-file-pdf"></i> PDF',
+                                    className: 'btn btn-danger',
+                                    title: titulo,
+                                    orientation: 'landscape',
+                                    pageSize: 'A4',
+
+                                    customize: function (doc) {
+
+                                        /* ====== ESTILO GLOBAL ====== */
+                                        doc.defaultStyle.fontSize = 9;
+                                        doc.defaultStyle.alignment = 'center';
+
+                                        /* ====== TÍTULO ====== */
+                                        doc.styles.title = {
+                                            fontSize: 16,
+                                            bold: true,
+                                            margin: [0, 0, 0, 12],
+                                            alignment: 'center'
+                                        };
+
+                                        /* ====== CABEÇALHO DA TABELA ====== */
+                                        doc.styles.tableHeader = {
+                                            fillColor: '#6c757d',   // cinza Bootstrap
+                                            color: '#ffffff',
+                                            bold: true,
+                                            fontSize: 10,
+                                            alignment: 'center'
+                                        };
+
+                                        /* ====== AJUSTE DA TABELA ====== */
+                                        const table = doc.content.find(c => c.table);
+                                        table.layout = {
+                                            hLineWidth: function () { return 0.5; },
+                                            vLineWidth: function () { return 0.5; },
+                                            hLineColor: function () { return '#cccccc'; },
+                                            vLineColor: function () { return '#cccccc'; },
+                                            paddingLeft: function () { return 6; },
+                                            paddingRight: function () { return 6; },
+                                            paddingTop: function () { return 4; },
+                                            paddingBottom: function () { return 4; }
+                                        };
+
+                                        /* ====== ZEBRA STRIPING (igual table-striped) ====== */
+                                        const body = table.table.body;
+
+                                        for (let i = 1; i < body.length; i++) {
+                                            if (i % 2 === 0) {
+                                                body[i].forEach(cell => {
+                                                    cell.fillColor = '#f8f9fa'; // cinza claro Bootstrap
+                                                });
+                                            }
+                                        }
+
+                                    }
+                                }
+                            ]
+                            ,
+                            language: {
+                                url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
+                            }
+
+                        });
+                    });
+
+                </script>
             </div>
-            <!--Tabela -->
+
         </div>
+        <!--Tabela -->
+    </div>
     </div>
 
     <script>

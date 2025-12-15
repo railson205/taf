@@ -1,6 +1,6 @@
 Responsividade para mobile
-Exportação da tabela de notas
 Email para avaliador e Atleta ao adicionar nova avaliação
 Log de avaliação
 Formatar os emails
+
 Identidade visual do governo do ceará
