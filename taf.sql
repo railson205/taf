@@ -120,14 +120,14 @@ CREATE TABLE `resultados` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `exercicio_id` int(11) DEFAULT NULL,
-  `nota_id` int(11) DEFAULT NULL
+  `indice_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `resultados`
 --
 
-INSERT INTO `resultados` (`id`, `usuario_id`, `exercicio_id`, `nota_id`) VALUES
+INSERT INTO `resultados` (`id`, `usuario_id`, `exercicio_id`, `indice_id`) VALUES
 (1, 1, 3, 3),
 (2, 1, 2, 4),
 (3, 2, 3, 8),
@@ -187,7 +187,7 @@ ALTER TABLE `resultados`
   ADD PRIMARY KEY (`id`),
   ADD KEY `usuario_id` (`usuario_id`),
   ADD KEY `exercicio_id` (`exercicio_id`),
-  ADD KEY `nota_id` (`nota_id`);
+  ADD KEY `indice_id` (`indice_id`);
 
 --
 -- Índices para tabela `usuarios`
@@ -246,7 +246,7 @@ ALTER TABLE `notas`
 ALTER TABLE `resultados`
   ADD CONSTRAINT `resultados_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `resultados_ibfk_2` FOREIGN KEY (`exercicio_id`) REFERENCES `exercicios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `resultados_ibfk_3` FOREIGN KEY (`nota_id`) REFERENCES `notas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `resultados_ibfk_3` FOREIGN KEY (`indice_id`) REFERENCES `notas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

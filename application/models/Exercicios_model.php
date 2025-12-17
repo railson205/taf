@@ -23,6 +23,14 @@ class Exercicios_model extends CI_Model
         return $dados;
     }
 
+    public function getExercicioById($id){
+        return $this->db
+            ->from($this->nome_tabela)
+            ->where('id',$id)
+            ->get()
+            ->row_array();
+    }
+
     public function inserir_registro_exercicio($data)
     {
         $exercicio_existe = $this->db->where('nome_exercicio', $data['nome_exercicio'])->get($this->nome_tabela)->row_array();

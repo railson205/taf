@@ -1,6 +1,7 @@
 Responsividade para mobile
-Email para avaliador e Atleta ao adicionar nova avaliação
+Email para avaliador e Atleta ao adicionar nova avaliação / Ao adicionar novo resultado salvar no banco de dados para salvar o log de avalização
 Log de avaliação
 Formatar os emails
 
 Identidade visual do governo do ceará
+Restringir 2 atletas com o msm usuario_id

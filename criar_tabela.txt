@@ -36,15 +36,18 @@ CREATE TABLE resultados (
     id INT PRIMARY KEY AUTO_INCREMENT,
     usuario_id INT,
     exercicio_id INT,
-    nota_id INT,
+    indice_id INT,
     avaliador_id INT,
+    atleta_id INT,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (exercicio_id) REFERENCES exercicios(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (nota_id) REFERENCES notas(id)
+    FOREIGN KEY (indice_id) REFERENCES notas(id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (avaliador_id) REFERENCES seguranca(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (atleta_id) REFERENCES seguranca(id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -70,3 +73,17 @@ CREATE TABLE recuperacao_senhas (
   INDEX idx_email (email),
   INDEX idx_expires_at (expires_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table log_avaliacao(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    atleta_id int,
+    avaliador_id int,
+    exercicio_id int,
+    indice_id int,
+    criado_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modificado_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (atleta_id) REFERENCES seguranca(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (avaliador_id) REFERENCES seguranca(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (exercicio_id) REFERENCES exercicios(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (indice_id) REFERENCES notas(id) ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 function input_component($label, $name, $type, $feedback, $placeholder = '', $options = [], $options_id = [], $extra = '')
 {
   $inputId = "input" . ucfirst($name);
@@ -79,4 +80,6 @@ function input_component($label, $name, $type, $feedback, $placeholder = '', $op
     </div>";
 
   return $html;
-}
+};
+
+

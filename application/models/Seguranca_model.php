@@ -33,6 +33,19 @@ class Seguranca_model extends CI_Model
         return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->where('s.email', $email)->get()->row_array();
     }
 
+    public function getIdByUsuarioId($uid){
+        return $this->db->select('id')->from($this->nome_tabela)->where('usuario_id', $uid)->get()->row()->id ??null;
+    }
+
+    public function getEmailById($id){
+        return $this->db->select('email')->from($this->nome_tabela)->where('id', $id)->get()->row()->email ??null;
+    }
+
+    public function getNomeById($id){
+        $uid=$this->db->select('usuario_id')->from($this->nome_tabela)->where('id', $id)->get()->row()->usuario_id ??null;
+        return $this->Usuarios_model->getNomeById($uid);
+    }
+
     public function adicionar_login($data)
     {
         $login_existe = $this->db->where('email', $data['email'])->get($this->nome_tabela)->row_array();

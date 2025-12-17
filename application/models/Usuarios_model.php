@@ -14,6 +14,10 @@ class Usuarios_model extends CI_Model
         return $dados;
     }
 
+    public function getNomeById($uid){
+        return $this->db->select('nome')->from($this->nome_tabela)->where('id', $uid)->get()->row()->nome ??null;
+    }
+
     public function inserir_usuario($data)
     {
         $matricula_existe = $this->db->where('matricula', $data['matricula'])->get($this->nome_tabela)->row_array();

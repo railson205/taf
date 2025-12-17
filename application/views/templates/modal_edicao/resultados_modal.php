@@ -88,7 +88,7 @@
                             const option = document.createElement('option');
                             option.value = indiceId;
                             option.textContent = modoContagem == 'Tempo' ? segundosParaMMSS(indice) + ' min' : indice;
-                            if (selecionado.nota_id == indiceId) option.selected = true;
+                            if (selecionado.indice_id == indiceId) option.selected = true;
                             select.appendChild(option);
                         }
                     });

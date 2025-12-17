@@ -126,7 +126,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
         // Se ainda não existe o usuário no array, cria
         if (!isset($resultados[$uid])) {
             $resultados[$uid] = [
-                
+
                 'usuario_id' => $uid,
                 'nome' => $row['nome'],
                 'sexo' => $row['sexo'],
@@ -145,7 +145,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
             'modo_contagem' => $row['modo_contagem'],
             'indice' => $row['indice'],
             'valor_nota' => $row['valor_nota'],
-            'nota_id' => $row['nota_id'],
+            'indice_id' => $row['indice_id'],
         ];
 
 
@@ -270,7 +270,7 @@ function ordena_array_indice(array $array): array
 
         foreach ($linhas as $linha) {
             [, $indice,] = explode('|', explode('----', $linha)[0]);
-            $indices[] = (float)$indice;
+            $indices[] = (float) $indice;
         }
 
         // Se o modo for "Tempo", ordenar DESC; senão ASC

@@ -7,7 +7,6 @@ class Resultados_model extends CI_Model
     {
         $this->nome_tabela = 'resultados';
         parent::__construct();
-        $this->load->model('Notas_model');
     }
 
     public function listar_resultados()
@@ -29,13 +28,13 @@ class Resultados_model extends CI_Model
         e.modo_contagem,
         n.indice,
         n.valor_nota,
-        n.id as nota_id,
+        n.id as indice_id,
         r.avaliador_id,
     ')
             ->from($this->nome_tabela . ' r')
             ->join('usuarios u', 'u.id = r.usuario_id')
             ->join('exercicios e', 'e.id = r.exercicio_id')
-            ->join('notas n', 'n.id=r.nota_id')
+            ->join('notas n', 'n.id=r.indice_id')
             ->join(
                 'faixas_etarias f',
                 'TIMESTAMPDIFF(YEAR, u.data_nascimento, DATE(CONCAT(YEAR(CURDATE())-1, "-12-31"))) 
@@ -48,8 +47,9 @@ class Resultados_model extends CI_Model
         return agrupar_exercicios_por_usuarios($dados);
     }
 
-    function inserir_resultados($dados)
+    function inserir_resultados($dados,$uid)
     {
+        $dados['usuario_id']=$uid;
         // Verifica duplicidade
         $existe = $this->db
             ->where('usuario_id', $dados['usuario_id'])

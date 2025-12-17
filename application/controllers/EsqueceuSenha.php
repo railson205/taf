@@ -25,38 +25,23 @@ class EsqueceuSenha extends CI_Controller
             redirect('EsqueceuSenha');
         }
 
-        $this->load->library('email');
-
-        $config = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'smtp.gmail.com',
-            'smtp_port' => 587,
-            'smtp_user' => 'testetaf73@gmail.com',
-            'smtp_pass' => 'kdrc txys aesg ijsm',
-            'smtp_crypto' => 'tls',
-            'mailtype' => 'html',
-            'charset' => 'utf-8',
-            'newline' => "\r\n",
-        ];
-
-        $this->email->initialize($config);
-
-        $this->email->from('testetaf73@gmail.com', 'Sistema CBMCE');
-
-        $this->email->to($emailDestino);
-
-        $this->email->subject('Recuperar Senha');
+        $this->load->library('email_service');
 
         $token = $this->gerarTokenRecuperação($emailDestino);
         $link = site_url("EsqueceuSenha/redefinirSenha/$token");
 
-        $this->email->message("
+        $html = "
         <p>Olá, <strong>{$usuario['nome']}</strong></p>
         <p>Para redefinir sua senha, clique no link abaixo:</p>
-        <p><a href='{$link}'>Redefinir minha senha</a></p>
-    ");
+        <p><a href='{$link}'>Redefinir minha senha</a></p>";
 
-        $this->email->send();
+        $this->email_service->enviar(
+            $emailDestino,
+            'Redefinição de senha',
+            $html
+        );
+
+
         $this->session->set_flashdata('alert_type', 'success');
         $this->session->set_flashdata('alert_message', 'Verfique seu email');
         redirect('/');

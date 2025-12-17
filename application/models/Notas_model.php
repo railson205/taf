@@ -58,6 +58,10 @@ class Notas_model extends CI_Model
         return $dados;
     }
 
+    public function getNotasById($id){
+        return $this->db->from($this->nome_tabela)->where('id',$id)->get()->row_array();
+    }
+
     function inserir_nova_nota($data)
     {
         // Condições de unicidade em um único where()

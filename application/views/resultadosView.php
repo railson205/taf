@@ -46,7 +46,6 @@
                     novalidate>
                     <input type="hidden" id="avaliador_id" name="avaliador_id" value="<?= $_SESSION['usuario']['id'] ?>">
 
-
                     <!-- Usuário-->
                     <?php
                     $this->load->view('templates/inputs/input_select', [
@@ -70,7 +69,7 @@
                     <!-- Índice da nota-->
                     <?php
                     $this->load->view('templates/inputs/input_select', [
-                        'id' => 'nota_id',
+                        'id' => 'indice_id',
                         'title' => 'Índice da Nota',
                         'placeholder' => 'Selecione um índice',
                         'options' => $indices_options,
@@ -208,7 +207,7 @@
 
 
 
-                const campoNota = document.getElementById('nota_id');
+                const campoNota = document.getElementById('indice_id');
                 // Limpa o select antes de adicionar novas opções
                 campoNota.innerHTML = '';
 
