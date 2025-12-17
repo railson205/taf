@@ -70,7 +70,8 @@ class Resultados_model extends CI_Model
         return [
             'status' => $this->db->affected_rows() > 0,
             'message' => 'Resultado inserido com sucesso!',
-            'type' => 'success'
+            'type' => 'success',
+            'id'=>$this->db->insert_id()
         ];
     }
 

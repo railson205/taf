@@ -40,67 +40,43 @@ class Resultados extends CI_Controller
             'atleta_id' => $seguranca->getIdByUsuarioId($uid)
         ];
 
-
-        /**<p>Olá, <strong>{$usuario['nome']}</strong></p>
-        <p>Para redefinir sua senha, clique no link abaixo:</p>
-        <p><a href='{$link}'>Redefinir minha senha</a></p>" */
-
-
-        /*
-        Atleta:
-        Olá, atleta, o avaliador NOME adicionou o resultado de um exercício que você fez,
-        abaixo mostra as informações detalhadas do exercício realizado.
-
-        Olá, atleta, o avaliador NOME modificou o resultado de um exercício que você fez,
-        abaixo mostra o log de alterações do exercício realizado.
-
-
-        Avaliador:
-        Olá, avaliador, você adicionou o resultado de um exercício realizado pelo atleta
-        NOME, abaixo mostra as informações detalhadas do exercício adicionado.
-
-        Olá, avaliador, você modificou um resultado de exercício realizado pelo atleta
-        NOME, abaixo mostra o log de alterações do exercício modificado.
-        */
-
-        /*
-        Exercícios:
-        Nome do exercício
-        Tipo de Contagem
-        Índice realizado
-        Nota Recebida
-        */
+        //Avaliador
+        $dadosEmail = $this->montarEmailResultado('add', 'avaliador', [
+            'nome' => $this->Seguranca_model->getNomeById($data['avaliador_id']),
+            'exercicio' => $this->Exercicios_model->getExercicioById($data['exercicio_id']),
+            'resultados' => $this->formataResultadosEmail([$data])
+        ]);
 
         $avaliador = [
             'email' => $seguranca->getEmailById($data['avaliador_id']),
-            'htmlEmail' => '
-        
-        '
+            'htmlEmail' => $this->load->view('templates/corpo_email', $dadosEmail, true)
         ];
+        //Avaliador
+
+        //Atleta
         $dadosEmail = $this->montarEmailResultado('add', 'atleta', [
             'nome' => $this->Seguranca_model->getNomeById($data['atleta_id']),
             'exercicio' => $this->Exercicios_model->getExercicioById($data['exercicio_id']),
-            'resultado' => $this->Notas_model->getNotasById($data['indice_id'])
+            'resultados' => $this->formataResultadosEmail([$data])
         ]);
         $atleta = [
             'email' => $seguranca->getEmailById($data['atleta_id']),
-            'htmlEmail' => "
-        <p>Olá, <strong>{)}</strong></p>
-        <p>O avaliador {$this->Seguranca_model->getNomeById($data['avaliador_id'])} adicionou o resultado de um exercício que você fez,</p>
-        <p>abaixo mostra as informações detalhadas do exercício realizado.</p>
-        "
+            'htmlEmail' => $this->load->view('templates/corpo_email', $dadosEmail, true)
         ];
+        //Atleta
+
+
+        $resultado = $this->Resultados_model->inserir_resultados($data, $uid);
+        $this->Log_model->inserirLog($data, $resultado['id']);
+
         $this->load->library('email_service');
+        $this->email_service->enviar($atleta['email'], 'Novo resultado', $atleta['htmlEmail']);
+        $this->email_service->enviar($avaliador['email'], 'Novo resultado', $avaliador['htmlEmail']);
 
-        debug($data);
-        debug($dadosEmail);
-        //$resultado = $this->Resultados_model->inserir_resultados($data, $uid);
-        //$this->Log_model->inserirLog($data);
-
-        /*$this->session->set_flashdata('alert_type', $resultado['type']);
+        $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
 
-        redirect('Resultados');*/
+        redirect('Resultados');
     }
 
     function editar_resultados()
@@ -110,7 +86,39 @@ class Resultados extends CI_Controller
             'indice_id' => $this->input->post('resultados_indice_editar'),
         ];
 
+        $info_log = $this->Log_model->getInfoByResultadoId($id);
+
+        //Avaliador
+        $dadosEmail = $this->montarEmailResultado('att', 'avaliador', [
+            'nome' => $this->Seguranca_model->getNomeById($info_log[0]['avaliador_id']),
+            'exercicio' => $this->Exercicios_model->getExercicioById($info_log[0]['exercicio_id']),
+            'resultados' => $this->formataResultadosEmail($info_log)
+        ]);
+
+        $avaliador = [
+            'email' => $this->Seguranca_model->getEmailById($info_log[0]['avaliador_id']),
+            'htmlEmail' => $this->load->view('templates/corpo_email', $dadosEmail, true)
+        ];
+        //Avaliador
+
+        //Atleta
+        $dadosEmail = $this->montarEmailResultado('att', 'atleta', [
+            'nome' => $this->Seguranca_model->getNomeById($info_log[0]['atleta_id']),
+            'exercicio' => $this->Exercicios_model->getExercicioById($info_log[0]['exercicio_id']),
+            'resultados' => $this->formataResultadosEmail($info_log)
+        ]);
+        $atleta = [
+            'email' => $this->Seguranca_model->getEmailById($info_log[0]['atleta_id']),
+            'htmlEmail' => $this->load->view('templates/corpo_email', $dadosEmail, true)
+        ];
+        //Atleta
+
         $resultado = $this->Resultados_model->editar_resultados($id, $data);
+        $this->Log_model->atualizarLog($id, $data['indice_id']);
+
+        $this->load->library('email_service');
+        $this->email_service->enviar($atleta['email'], 'Novo resultado', $atleta['htmlEmail']);
+        $this->email_service->enviar($avaliador['email'], 'Novo resultado', $avaliador['htmlEmail']);
 
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
@@ -144,19 +152,34 @@ class Resultados extends CI_Controller
 
             'mensagem_principal' => $isAtleta
                 ? ($isAdicao
-                    ? 'Um novo resultado foi registrado para você.'
-                    : 'Um resultado seu foi atualizado.')
+                    ? 'Um novo resultado foi registrado para você. Abaixo está a informação detalhada sobre o exercício.'
+                    : 'Um resultado seu foi atualizado. Abaixo está o log de alterações do exercício.')
                 : ($isAdicao
-                    ? 'Você registrou um novo resultado.'
-                    : 'Você atualizou um resultado.'),
+                    ? 'Você registrou um novo resultado. Abaixo está a informação detalhada sobre o exercício registrado.'
+                    : 'Você atualizou um resultado. Abaixo está o log de alterações do exercício.'),
 
             'mensagem_final' => $isAtleta
                 ? 'Caso tenha dúvidas, procure o avaliador responsável.'
                 : 'Obrigado por manter os registros atualizados.',
 
             'exercicio' => $dados['exercicio'],
-            'resultado' => $dados['resultado'],
+            'resultados' => $dados['resultados'],
             'observacao' => $dados['observacao'] ?? null,
         ];
+    }
+
+    private function formataResultadosEmail($resultados)
+    {
+        $resultadoFormatado = [];
+        foreach ($resultados as $r) {
+            $resultadoFormatado[] = [
+                'valor_nota' => $this->Notas_model->getNotasById($r['indice_id'])['valor_nota'],
+                'indice' => $this->Notas_model->getNotasById($r['indice_id'])['indice'],
+                'obersavação' => '',
+                'avaliado_em' => $r['criado_em'] ?? '',
+                'atualizado_em' => $r['atualizado_em'] ?? ''
+            ];
+        }
+        return $resultadoFormatado;
     }
 }

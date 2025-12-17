@@ -80,10 +80,12 @@ create table log_avaliacao(
     avaliador_id int,
     exercicio_id int,
     indice_id int,
-    criado_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modificado_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    resultado_id int,
+    criado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (atleta_id) REFERENCES seguranca(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (avaliador_id) REFERENCES seguranca(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (exercicio_id) REFERENCES exercicios(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (indice_id) REFERENCES notas(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (indice_id) REFERENCES notas(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (resultado_id) REFERENCES resultados(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
