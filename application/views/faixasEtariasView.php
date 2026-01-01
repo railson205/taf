@@ -129,22 +129,6 @@
             <!--Tabela -->
         </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $('.datatable').DataTable({
-                responsive: true,
-                autoWidth: false,
-                pageLength: 5,
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
-                },
-                columnDefs: [
-                    { orderable: false, targets: -1 } // Ações não ordena
-                ]
-            });
-        });
-    </script>
     <!-- Script de Validação Bootstrap -->
     <?php $this->load->view('templates/validator_form'); ?>
 </section>

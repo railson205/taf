@@ -84,7 +84,7 @@
         <?php endif; ?>
         <!--Tabela -->
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-md-12 table-responsive">
                 <h5>Usuários</h5>
                 <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
                     $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'usuarios_options' => $usuarios_options, 'exercicios_options' => $exercicios_options, 'indices_id_options' => $indices_id_options, 'tipo_exercicios' => $tipos_exercicios]);
@@ -248,19 +248,6 @@
             return tempo;
         }
 
-        $(document).ready(function () {
-            $('.datatable').DataTable({
-                responsive: true,
-                autoWidth: false,
-                pageLength: 5,
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
-                },
-                columnDefs: [
-                    { orderable: false, targets: -1 } // Ações não ordena
-                ]
-            });
-        });
     </script>
 
 

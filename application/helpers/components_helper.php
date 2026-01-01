@@ -80,6 +80,30 @@ function input_component($label, $name, $type, $feedback, $placeholder = '', $op
     </div>";
 
   return $html;
-};
+}
+;
 
+function switchSideBar($controller)
+{
+  switch ($_SESSION['usuario']['nivel']) {
+    case 'Administrador':
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Dashboard', 'name_page' => 'Dashboard', 'icon' => 'bi bi-clipboard-data']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Seguranca', 'name_page' => 'Segurança', 'icon' => 'fa fa-lock']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Usuarios', 'name_page' => 'Usuários', 'icon' => 'bi bi-person-circle']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'FaixasEtarias', 'name_page' => 'FaixasEtárias', 'icon' => 'fa-solid fa-calendar']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Exercicios', 'name_page' => 'Tipos de Exercícios', 'icon' => 'fa-solid fa-dumbbell']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Notas', 'name_page' => 'Notas', 'icon' => 'fa-solid fa-file-pen']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Resultados', 'name_page' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Demo', 'name_page' => 'AdminLTE Demo', 'icon' => 'bi bi-clipboard-data']);
+      break;
 
+    case 'Avaliador':
+    case 'Atleta':
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Resultados', 'name_page' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']);
+      break;
+
+    default:
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Dashboard', 'name_page' => 'Dashboard', 'icon' => 'bi bi-clipboard-data']);
+      break;
+  }
+}

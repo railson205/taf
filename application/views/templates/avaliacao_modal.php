@@ -13,7 +13,8 @@
 
                         <h6 class="fw-bold mb-3">Detalhes do Exercício</h6>
 
-                        <table class="table table-sm table-bordered">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
                             <thead>
                                 <tr>
                                     <th>Quantidade de Exercícios</th>
@@ -37,8 +38,10 @@
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                         <h6 class="fw-bold mb-3">Lista dos Exercício</h6>
-                        <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>Nome</th>
@@ -103,6 +106,7 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+                        </div>
 
                     </div>
                 <?php else: ?>
