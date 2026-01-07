@@ -69,8 +69,8 @@
         <!-- Retirar depois -->
          <?php if(true):?>
         <li class="nav-item">
-          <a href="<?= site_url('Demo') ?>" class="nav-link fw-bold hover-underline">
-            Demo
+          <a href="<?= site_url('Teste') ?>" class="nav-link fw-bold hover-underline">
+            Teste
           </a>
         </li>
         <?php endif;?>
@@ -93,7 +93,7 @@
           </li>
           <li class="nav-item">
             <a href="<?= site_url('Login/logout') ?>" class="nav-link text-danger fw-bold">
-              <i class="fas fa-sign-out-alt"></i> Sair
+              <i class="fas fa-sign-out-alt fw-bold"></i> Sair
             </a>
           </li>
         <?php endif; ?>
