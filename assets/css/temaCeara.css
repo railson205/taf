@@ -1,0 +1,39 @@
+:root {
+	--ceara-cinza-escuro: #46556a;
+	--ceara-verde: #008241;
+	--ceara-bege: #e1b77e;
+	--ceara-marrom: #be9b5f;
+	--ceara-bege-claro: #f1e4b2;
+	--ceara-argila: #c68b66;
+	--ceara-verde-escuro: #2a7050;
+	--ceara-azul: #87d1e6;
+	--ceara-amarelo: #ffc805;
+	--ceara-cinza: #dcdcdc;
+	--ceara-azul-escuro: #56a7b2;
+}
+
+body {
+	background-color: var(--ceara-cinza);
+	color: var(--ceara-cinza-escuro);
+}
+
+.main-header.navbar {
+	background-color: var(--ceara-verde);
+	border-bottom: 4px solid var(--ceara-amarelo);
+}
+
+.main-header .nav-link {
+	color: #fff;
+}
+
+.hover-underline:hover {
+	text-decoration: underline;
+}
+
+.nav-sidebar-item-text,.nav-sidebar-item-icon,.link {
+	color: var(--ceara-verde);
+}
+.nav-sidebar-item-text:hover,.link:hover {
+	color: var(--ceara-amarelo);
+}
+

@@ -87,7 +87,7 @@ function switchSideBar($controller)
 {
   switch ($_SESSION['usuario']['nivel']) {
     case 'Administrador':
-      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Dashboard', 'name_page' => 'Dashboard', 'icon' => 'bi bi-clipboard-data']);
+      $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Dashboard', 'name_page' => 'Início', 'icon' => 'bi bi-clipboard-data']);
       $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Seguranca', 'name_page' => 'Segurança', 'icon' => 'fa fa-lock']);
       $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'Usuarios', 'name_page' => 'Usuários', 'icon' => 'bi bi-person-circle']);
       $controller->load->view('templates/sidebar/items_sidebar', ['route' => 'FaixasEtarias', 'name_page' => 'FaixasEtárias', 'icon' => 'fa-solid fa-calendar']);

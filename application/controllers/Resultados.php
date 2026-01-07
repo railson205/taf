@@ -36,7 +36,7 @@ class Resultados extends CI_Controller
         $data = [
             'exercicio_id' => $this->input->post('exercicio_id'),
             'indice_id' => $this->input->post('indice_id'),
-            'avaliador_id' => '1',//$this->input->post('avaliador_id'),
+            'avaliador_id' => $this->input->post('avaliador_id'),
             'atleta_id' => $seguranca->getIdByUsuarioId($uid)
         ];
 
@@ -69,10 +69,12 @@ class Resultados extends CI_Controller
         $resultado = $this->Resultados_model->inserir_resultados($data, $uid);
         $this->Log_model->inserirLog($data, $resultado['id']);
 
+        //Envia email para avaliador e atleta
         $this->load->library('email_service');
         $this->email_service->enviar($atleta['email'], 'Novo resultado', $atleta['htmlEmail']);
         $this->email_service->enviar($avaliador['email'], 'Novo resultado', $avaliador['htmlEmail']);
 
+        //Define o conteúdo do alerta
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
 
@@ -111,15 +113,17 @@ class Resultados extends CI_Controller
             'email' => $this->Seguranca_model->getEmailById($info_log[0]['atleta_id']),
             'htmlEmail' => $this->load->view('templates/corpo_email', $dadosEmail, true)
         ];
-        //Atleta
 
+        //Atleta
         $resultado = $this->Resultados_model->editar_resultados($id, $data);
         $this->Log_model->atualizarLog($id, $data['indice_id']);
 
+        //Envia email para avaliador e atleta
         $this->load->library('email_service');
         $this->email_service->enviar($atleta['email'], 'Novo resultado', $atleta['htmlEmail']);
         $this->email_service->enviar($avaliador['email'], 'Novo resultado', $avaliador['htmlEmail']);
 
+        //Define o conteúdo do alerta
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);
 

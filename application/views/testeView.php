@@ -1,81 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Teste DataTable</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Métricas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
 
-    <!-- Bootstrap 5 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 25px;
+      border-radius: 16px;
+      color: #fff;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
+      background: linear-gradient(135deg, #8A05BE, #4A00E0); /* Gradiente Nubank */
+    }
 
-    <!-- DataTables Bootstrap 5 -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+    .card:hover {
+      transform: scale(1.05);
+    }
 
-    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    .icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
 
+    .info h2 {
+      font-size: 32px;
+      margin: 0;
+    }
+
+    .info p {
+      margin: 6px 0 0;
+      font-size: 18px;
+    }
+  </style>
 </head>
-<body class="p-4">
-
-    <div class="container">
-
-        <h2>Teste do DataTable</h2>
-        <p>Esta tabela não usa AdminLTE. Apenas Bootstrap + DataTables.</p>
-
-        <table class="table table-striped table-hover table-bordered datatable" style="width:100%">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Modo</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Corrida 2400m</td>
-                    <td>Tempo</td>
-                    <td><button class="btn btn-sm btn-primary">Editar</button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Flexão de Braço</td>
-                    <td>Contagem</td>
-                    <td><button class="btn btn-sm btn-primary">Editar</button></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Natação 100m</td>
-                    <td>Tempo</td>
-                    <td><button class="btn btn-sm btn-primary">Editar</button></td>
-                </tr>
-            </tbody>
-        </table>
-
+<body>
+  <div class="dashboard">
+    <div class="card">
+      <div class="icon">👤</div>
+      <div class="info">
+        <h2>2</h2>
+        <p>Usuários</p>
+      </div>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $('.datatable').DataTable({
-                responsive: true,
-                autoWidth: false,
-                pageLength: 5,
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
-                },
-                columnDefs: [
-                    { orderable: false, targets: -1 } // Ações não ordena
-                ]
-            });
-        });
-    </script>
-
+    <div class="card">
+      <div class="icon">🏊</div>
+      <div class="info">
+        <h2>1</h2>
+        <p>Resultados</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="icon">📅</div>
+      <div class="info">
+        <h2>8</h2>
+        <p>Faixas Etárias</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="icon">🏋️</div>
+      <div class="info">
+        <h2>6</h2>
+        <p>Tipos de Exercícios</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="icon">📝</div>
+      <div class="info">
+        <h2>17</h2>
+        <p>Notas dos Exercícios</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

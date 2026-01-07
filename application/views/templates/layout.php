@@ -22,7 +22,10 @@
 
   <!-- AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/dist/css/adminlte.css') ?>">
+  <!-- Styles Personalizados com base em AdminLTE -->
   <link rel="stylesheet" href="<?= base_url('assets/adminlte/dist/css/stylesGlobais.css') ?>">
+  <!-- Styles Governo do Ceará -->
+  <link rel="stylesheet" href="<?= base_url('assets/css/temaCeara.css') ?>">
 
   <!-- DataTables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
@@ -35,8 +38,8 @@
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="<?= base_url('assets/js/drawer.js')?>"></script>
-  <script src="<?= base_url('assets/js/datatable-init.js')?>"></script>
+  <script src="<?= base_url('assets/js/drawer.js') ?>"></script>
+  <script src="<?= base_url('assets/js/datatable-init.js') ?>"></script>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -58,15 +61,20 @@
       <!-- LINKS ESQUERDA -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a href="<?= site_url('/') ?>" class="nav-link fw-bold text-primary">
-            Meu Painel
+          <a href="<?= site_url('/') ?>" class="nav-link">
+            <img src="https://www.ceara.gov.br/wp-content/uploads/2023/10/logotipo-governo-do-ceara-2023.svg"
+              alt="logotipo-governo-do-ceara-2023" width="100%" style="max-width: 420px;">
           </a>
         </li>
+        <!-- Retirar depois -->
+         <?php if(true):?>
         <li class="nav-item">
-          <a href="<?= site_url('Demo') ?>" class="nav-link fw-bold text-primary">
+          <a href="<?= site_url('Demo') ?>" class="nav-link fw-bold hover-underline">
             Demo
           </a>
         </li>
+        <?php endif;?>
+        <!-- Retirar depois -->
       </ul>
 
       <!-- DIREITA -->
@@ -79,12 +87,12 @@
           </li>
         <?php else: ?>
           <li class="nav-item">
-            <span class="nav-link text-secondary">
+            <span class="nav-link">
               <i class="fas fa-user"></i> <?= $_SESSION['usuario']['nome'] ?>
             </span>
           </li>
           <li class="nav-item">
-            <a href="<?= site_url('Login/logout') ?>" class="nav-link text-danger">
+            <a href="<?= site_url('Login/logout') ?>" class="nav-link text-danger fw-bold">
               <i class="fas fa-sign-out-alt"></i> Sair
             </a>
           </li>
@@ -118,7 +126,7 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap">
               <h1 class="m-0"><?= isset($title) ? $title : 'Página' ?></h1>
               <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="<?= site_url('ControladorCondicional') ?>">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?= site_url('ControladorCondicional') ?>" class="link">Home</a></li>
                 <li class="breadcrumb-item active"><?= isset($title) ? $title : '' ?></li>
               </ol>
             </div>
