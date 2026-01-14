@@ -4,3 +4,5 @@ Editar/Excluir notas
 
 Conteúdo da página
 card de informações
+
+Modo de adicionar novos usuários e nível de segurança

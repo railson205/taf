@@ -1,39 +1,91 @@
+/* ===============================
+   PALETA BASE — GOVERNO DO CEARÁ
+   =============================== */
 :root {
-	--ceara-cinza-escuro: #46556a;
-	--ceara-verde: #008241;
-	--ceara-bege: #e1b77e;
-	--ceara-marrom: #be9b5f;
-	--ceara-bege-claro: #f1e4b2;
-	--ceara-argila: #c68b66;
-	--ceara-verde-escuro: #2a7050;
-	--ceara-azul: #87d1e6;
-	--ceara-amarelo: #ffc805;
-	--ceara-cinza: #dcdcdc;
-	--ceara-azul-escuro: #56a7b2;
+    --ceara-cinza-escuro: #46556a;
+    --ceara-verde: #008241;
+    --ceara-verde-escuro: #2a7050;
+    --ceara-amarelo: #ffc805;
+
+    --ceara-bege: #e1b77e;
+    --ceara-bege-claro: #f1e4b2;
+    --ceara-marrom: #be9b5f;
+    --ceara-argila: #c68b66;
+
+    --ceara-azul: #87d1e6;
+    --ceara-azul-escuro: #56a7b2;
+
+    --ceara-cinza: #dcdcdc;
 }
 
-body {
-	background-color: var(--ceara-cinza);
-	color: var(--ceara-cinza-escuro);
+/* ===============================
+   TEMA CEARÁ (ABSTRAÇÃO)
+   =============================== */
+.theme-ceara {
+    --primary: var(--ceara-verde);
+    --primary-dark: var(--ceara-verde-escuro);
+    --accent: var(--ceara-amarelo);
+
+    --text-dark: var(--ceara-cinza-escuro);
+    --text-light: #ffffff;
 }
 
+/* ===============================
+   BASE
+   =============================== */
+body.theme-ceara {
+    background-color: var(--ceara-cinza);
+    color: var(--text-dark);
+}
+
+/* ===============================
+   HEADER / NAVBAR
+   =============================== */
 .main-header.navbar {
-	background-color: var(--ceara-verde);
-	border-bottom: 4px solid var(--ceara-amarelo);
+    background-color: var(--primary);
+    border-bottom: 4px solid var(--accent);
 }
 
 .main-header .nav-link {
-	color: #fff;
+    color: var(--text-light);
 }
 
+.main-header .nav-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ===============================
+   SIDEBAR
+   =============================== */
+.nav-sidebar-item-text,
+.nav-sidebar-item-icon,
+.link {
+    color: var(--primary);
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-sidebar-item-text:hover,
+.link:hover {
+    color: var(--accent);
+}
+
+/* ===============================
+   UTILITÁRIOS
+   =============================== */
 .hover-underline:hover {
-	text-decoration: underline;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
-.nav-sidebar-item-text,.nav-sidebar-item-icon,.link {
-	color: var(--ceara-verde);
-}
-.nav-sidebar-item-text:hover,.link:hover {
-	color: var(--ceara-amarelo);
-}
+/* ===============================
+   COMPONENTES
+   =============================== */
+/* ===============================
+   SMALL BOX — VARIANTES
+   =============================== */
 
+.small-box--azul{
+	background-color: var(--ceara-azul);
+	color:var(--ceara-amarelo)
+}

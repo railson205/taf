@@ -2,15 +2,15 @@
   <div class="container-fluid">
 
     <div class="row mt-4 mw-50 mh-50">
-      <?php $this->load->view('templates/small_box', ['color' => 'bg-info', 'value' => count($usuarios), 'title' => 'Usuários', 'icon' => 'fa-solid fa-user']) ?>
-      <?php $this->load->view('templates/small_box', ['color' => 'bg-success', 'value' => count($faixas_etarias), 'title' => 'Faixas Etárias', 'icon' => 'fa-solid fa-calendar']) ?>
-      <?php $this->load->view('templates/small_box', ['color' => 'bg-warning', 'value' => count($exercicios), 'title' => 'Tipos de Exercícios', 'icon' => 'fa-solid fa-dumbbell']) ?>
-      <?php $this->load->view('templates/small_box', ['color' => 'bg-danger', 'value' => count($notas), 'title' => 'Notas dos Exercícios', 'icon' => 'fa-solid fa-file-pen']) ?>
+      <?php $this->load->view('templates/small_box', ['color' => 'azul', 'value' => count($usuarios), 'title' => 'Usuários', 'icon' => 'fa-solid fa-user']) ?>
+      <?php $this->load->view('templates/small_box', ['color' => 'verde', 'value' => count($faixas_etarias), 'title' => 'Faixas Etárias', 'icon' => 'fa-solid fa-calendar']) ?>
+      <?php $this->load->view('templates/small_box', ['color' => 'amarelo', 'value' => count($exercicios), 'title' => 'Tipos de Exercícios', 'icon' => 'fa-solid fa-dumbbell']) ?>
+      <?php $this->load->view('templates/small_box', ['color' => 'azul', 'value' => count($notas), 'title' => 'Notas dos Exercícios', 'icon' => 'fa-solid fa-file-pen']) ?>
       <?php $qtdResultados = 0;
       foreach ($resultados['registro_exercicios'] as $registro) {
         $qtdResultados += count($registro['exercicios']);
       }
-      $this->load->view('templates/small_box', ['color' => 'bg-info', 'value' => $qtdResultados, 'title' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming'])
+      $this->load->view('templates/small_box', ['color' => 'verde', 'value' => $qtdResultados, 'title' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming'])
         ?>
 
     </div>
