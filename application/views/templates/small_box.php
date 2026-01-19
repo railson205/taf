@@ -1,5 +1,5 @@
 <div class="col-lg-3 col-6">
-        <div class="small-box <?= $color?>">
+        <div class="small-box small-box--<?= $color?>">
           <div class="inner">
             <div>
               <h3><?=$value?></h3>

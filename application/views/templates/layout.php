@@ -42,7 +42,7 @@
   <script src="<?= base_url('assets/js/datatable-init.js') ?>"></script>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed theme-ceara">
 
   <div class="wrapper">
 

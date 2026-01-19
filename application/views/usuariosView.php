@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <?php
         $this->load->view('templates/small_box', [
-            'color' => 'bg-info',
+            'color' => 'verde',
             'value' => count($usuarios),
             'title' => 'Usuários',
             'icon' => 'fa-solid fa-user'
@@ -92,64 +92,66 @@
             <div class="col-md-12">
                 <h5>Usuários</h5>
                 <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
-                            <thead>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Matrícula</th>
+                            <th>Nome</th>
+                            <th>Data de nascimento</th>
+                            <th>Idade</th>
+                            <th>Sexo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (!empty($usuarios)):
+                            foreach ($usuarios as $key => $u):
+                                ?>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Matrícula</th>
-                                    <th>Nome</th>
-                                    <th>Data de nascimento</th>
-                                    <th>Idade</th>
-                                    <th>Sexo</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($usuarios)):
-                                    foreach ($usuarios as $key => $u):
-                                        ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $u['matricula'] ?? '-'; ?></td>
-                                            <td><?= $u['nome'] ?? '-'; ?></td>
-                                            <td><?= formata_data_nascimento($u['data_nascimento']) ?? '-'; ?></td>
-                                            <td><?= coletar_idade($u['data_nascimento']) . ' anos' ?? '-'; ?></td>
-                                            <td><?= $u['sexo'] ?? '-'; ?>
-                                                <?php if ($u['sexo'] == "Masculino"): ?>
-                                                    <i class="fa-solid fa-mars bg-info p-2 rounded text-white"></i>
-                                                <?php elseif ($u['sexo'] == 'Feminino'): ?>
-                                                    <i class="fa-solid fa-venus bg-danger p-2 rounded text-white"></i>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#usuario_modal_editar" data-id="<?= $u['id'] ?>"
-                                                    data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
-                                                    data-data-nascimento="<?= $u['data_nascimento'] ?>"
-                                                    data-sexo-selecionado="<?= $u['sexo'] ?>"
-                                                    data-sexo-options="Masculino,Feminino">
-                                                    <i class="fas fa-edit"></i></button>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= $u['matricula'] ?? '-'; ?></td>
+                                    <td><?= $u['nome'] ?? '-'; ?></td>
+                                    <td><?= formata_data_nascimento($u['data_nascimento']) ?? '-'; ?></td>
+                                    <td><?= coletar_idade($u['data_nascimento']) . ' anos' ?? '-'; ?></td>
+                                    <td><?= $u['sexo'] ?? '-'; ?>
+                                        <?php if ($u['sexo'] == "Masculino"): ?>
+                                            <i class="fa-solid fa-mars bg-info p-2 rounded text-white"></i>
+                                        <?php elseif ($u['sexo'] == 'Feminino'): ?>
+                                            <i class="fa-solid fa-venus bg-danger p-2 rounded text-white"></i>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <button class="btn btn-sm btn-primary btn-edicao btn-edicao" data-bs-toggle="modal"
+                                                data-bs-target="#usuario_modal_editar" data-id="<?= $u['id'] ?>"
+                                                data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
+                                                data-data-nascimento="<?= $u['data_nascimento'] ?>"
+                                                data-sexo-selecionado="<?= $u['sexo'] ?>"
+                                                data-sexo-options="Masculino,Feminino">
+                                                <i class="fas fa-edit"></i></button>
 
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#usuario_modal_excluir" data-id="<?= $u['id'] ?>"
-                                                    data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
-                                                    data-data-nascimento="<?= $u['data_nascimento'] ?>"
-                                                    data-sexo="<?= $u['sexo'] ?>"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="5">Nenhum usuário encontrado.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#usuario_modal_excluir" data-id="<?= $u['id'] ?>"
+                                                data-nome="<?= $u['nome'] ?>" data-matricula="<?= $u['matricula'] ?>"
+                                                data-data-nascimento="<?= $u['data_nascimento'] ?>"
+                                                data-sexo="<?= $u['sexo'] ?>"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5">Nenhum usuário encontrado.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
-            <!--Tabela -->
         </div>
+    </div>
+    <!--Tabela -->
+    </div>
     </div>
 
     <!-- Script de Validação Bootstrap -->

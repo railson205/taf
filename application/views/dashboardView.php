@@ -2,16 +2,17 @@
   <div class="container-fluid">
 
     <div class="row mt-4 mw-50 mh-50">
-      <?php $this->load->view('templates/small_box', ['color' => 'azul', 'value' => count($usuarios), 'title' => 'Usuários', 'icon' => 'fa-solid fa-user']) ?>
-      <?php $this->load->view('templates/small_box', ['color' => 'verde', 'value' => count($faixas_etarias), 'title' => 'Faixas Etárias', 'icon' => 'fa-solid fa-calendar']) ?>
-      <?php $this->load->view('templates/small_box', ['color' => 'amarelo', 'value' => count($exercicios), 'title' => 'Tipos de Exercícios', 'icon' => 'fa-solid fa-dumbbell']) ?>
-      <?php $this->load->view('templates/small_box', ['color' => 'azul', 'value' => count($notas), 'title' => 'Notas dos Exercícios', 'icon' => 'fa-solid fa-file-pen']) ?>
-      <?php $qtdResultados = 0;
+      <?php
+      $qtdResultados = 0;
       foreach ($resultados['registro_exercicios'] as $registro) {
         $qtdResultados += count($registro['exercicios']);
       }
-      $this->load->view('templates/small_box', ['color' => 'verde', 'value' => $qtdResultados, 'title' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming'])
-        ?>
+      $this->load->view('templates/small_box', ['color' => 'verde', 'value' => count($usuarios), 'title' => 'Usuários', 'icon' => 'fa-solid fa-user']);
+      $this->load->view('templates/small_box', ['color' => 'azul-escuro', 'value' => count($faixas_etarias), 'title' => 'Faixas Etárias', 'icon' => 'fa-solid fa-calendar']);
+      $this->load->view('templates/small_box', ['color' => 'argila', 'value' => count($exercicios), 'title' => 'Tipos de Exercícios', 'icon' => 'fa-solid fa-dumbbell']);
+      $this->load->view('templates/small_box', ['color' => 'marrom', 'value' => count($notas), 'title' => 'Notas dos Exercícios', 'icon' => 'fa-solid fa-file-pen']);
+      $this->load->view('templates/small_box', ['color' => 'verde-escuro', 'value' => $qtdResultados, 'title' => 'Resultados', 'icon' => 'fa-solid fa-person-swimming']);
+      ?>
 
     </div>
     <!-- Parâmetros iniciais-->
@@ -66,7 +67,7 @@
 
                     <!-- BOTÃO DO ACCORDION -->
                     <td class="text-center">
-                      <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                      <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
                         data-bs-target="#avaliacao_modal<?= $key ?>">
                         Detalhes
                       </button>

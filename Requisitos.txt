@@ -6,3 +6,8 @@ Conteúdo da página
 card de informações
 
 Modo de adicionar novos usuários e nível de segurança
+
+
+
+Organizar horizontalmente:
+ <div class="d-flex gap-2 justify-content-center">

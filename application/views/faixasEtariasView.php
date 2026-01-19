@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <?php
         $this->load->view('templates/small_box', [
-            'color' => 'bg-success',
+            'color' => 'azul-escuro',
             'value' => count($faixas_etarias),
             'title' => 'Faixas Etárias',
             'icon' => 'fa-solid fa-calendar'
@@ -11,7 +11,7 @@
 
         <?php $this->load->view('templates/modal_edicao/faixa_modal', ['id' => 'faixa_modal_editar']); ?>
         <?php $this->load->view('templates/modal_excluir/faixa_modal', ['id' => 'faixa_modal_excluir']); ?>
-        
+
         <?php
         $alert_type = $this->session->flashdata('alert_type');
         $alert_message = $this->session->flashdata('alert_message');
@@ -79,55 +79,57 @@
             <div class="col-md-12">
                 <h5>Usuários</h5>
                 <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
-                            <thead>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome do grupo</th>
+                            <th>Idade Inicial</th>
+                            <th>Idade Final</th>
+                            <th>Faixa Etária</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (!empty($faixas_etarias)):
+                            foreach ($faixas_etarias as $key => $f):
+                                ?>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Nome do grupo</th>
-                                    <th>Idade Inicial</th>
-                                    <th>Idade Final</th>
-                                    <th>Faixa Etária</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                if (!empty($faixas_etarias)):
-                                    foreach ($faixas_etarias as $key => $f):
-                                        ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $f['nome_grupo'] ?? '-' ?></td>
-                                            <td><?= $f['idade_inicial'] . ' anos' ?? '-' ?></td>
-                                            <td><?= $f['idade_final'] . ' anos' ?? '-' ?></td>
-                                            <td><?= $f['faixa_etaria'] ?? '-' ?></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#faixa_modal_editar" data-id="<?= $f['id'] ?>"
-                                                    data-nome="<?= $f['nome_grupo'] ?>"
-                                                    data-idade-inicial="<?= $f['idade_inicial'] ?>"
-                                                    data-idade-final="<?= $f['idade_final'] ?>">
-                                                    <i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#faixa_modal_excluir" data-id="<?= $f['id'] ?>"
-                                                    data-nome="<?= $f['nome_grupo'] ?>"
-                                                    data-idade-inicial="<?= $f['idade_inicial'] ?>"
-                                                    data-idade-final="<?= $f['idade_final'] ?>"><i
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= $f['nome_grupo'] ?? '-' ?></td>
+                                    <td><?= $f['idade_inicial'] . ' anos' ?? '-' ?></td>
+                                    <td><?= $f['idade_final'] . ' anos' ?? '-' ?></td>
+                                    <td><?= $f['faixa_etaria'] ?? '-' ?></td>
+                                    <td>
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
+                                                data-bs-target="#faixa_modal_editar" data-id="<?= $f['id'] ?>"
+                                                data-nome="<?= $f['nome_grupo'] ?>"
+                                                data-idade-inicial="<?= $f['idade_inicial'] ?>"
+                                                data-idade-final="<?= $f['idade_final'] ?>">
+                                                <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#faixa_modal_excluir" data-id="<?= $f['id'] ?>"
+                                                data-nome="<?= $f['nome_grupo'] ?>"
+                                                data-idade-inicial="<?= $f['idade_inicial'] ?>"
+                                                data-idade-final="<?= $f['idade_final'] ?>"><i
                                                     class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="5">Nenhuma faixa etária encontrada.</td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5">Nenhuma faixa etária encontrada.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
-            <!--Tabela -->
         </div>
+    </div>
+    <!--Tabela -->
+    </div>
     </div>
     <!-- Script de Validação Bootstrap -->
     <?php $this->load->view('templates/validator_form'); ?>

@@ -6,7 +6,7 @@
             $qtdResultados += count($registro['exercicios']);
         }
         $this->load->view('templates/small_box', [
-            'color' => 'bg-info',
+            'color' => 'verde-escuro',
             'value' => $qtdResultados,
             'title' => 'Resultados',
             'icon' => 'fa-solid fa-person-swimming'
@@ -128,7 +128,7 @@
 
                                     <!-- BOTÃO DO ACCORDION -->
                                     <td class="text-center">
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
                                             data-bs-target="#avaliacao_modal<?= $key ?>">
                                             Detalhes
                                         </button>

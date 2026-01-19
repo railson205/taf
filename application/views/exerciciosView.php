@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <?php
         $this->load->view('templates/small_box', [
-            'color' => 'bg-warning',
+            'color' => 'argila',
             'value' => count($exercicios),
             'title' => 'Tipos de Exercícios',
             'icon' => 'fa-solid fa-dumbbell'
@@ -84,22 +84,24 @@
                                     <td><?= $e['modo_contagem'] ?? '-' ?></td>
 
                                     <td class="text-center">
-                                        <!-- Editar -->
-                                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#tipo_exercicio_modal_editar" data-id="<?= $e['id'] ?>"
-                                            data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
-                                            data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"
-                                            data-modo-contagem-options="Contagem,Tempo">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
+                                        <div class="d-flex gap-2 justify-content-center">
+                                            <!-- Editar -->
+                                            <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
+                                                data-bs-target="#tipo_exercicio_modal_editar" data-id="<?= $e['id'] ?>"
+                                                data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
+                                                data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"
+                                                data-modo-contagem-options="Contagem,Tempo">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
 
-                                        <!-- Excluir -->
-                                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#tipo_exercicio_modal_excluir" data-id="<?= $e['id'] ?>"
-                                            data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
-                                            data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                            <!-- Excluir -->
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#tipo_exercicio_modal_excluir" data-id="<?= $e['id'] ?>"
+                                                data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
+                                                data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

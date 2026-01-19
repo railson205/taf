@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <?php
         $this->load->view('templates/small_box', [
-            'color' => 'bg-danger',
+            'color' => 'marrom',
             'value' => count($notas),
             'title' => 'Notas dos Exercícios',
             'icon' => 'fa-solid fa-file-pen'
