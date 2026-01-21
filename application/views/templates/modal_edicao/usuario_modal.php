@@ -1,37 +1,57 @@
 <div class="modal fade" id="<?= $id ?>" tabindex="-1" aria-labelledby="<?= $id ?>_label" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="<?= $id ?>_label">Editar Usuário</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0">
+            <!-- Header-->
+            <div class="modal-header text-white modal-edicao">
+                <h5 class="modal-title d-flex align-items-center gap-2">Editar Usuário</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
+            <!-- Header-->
 
             <div class="modal-body">
                 <form id="form_usuario_edicao" method="POST" action="<?= site_url("Usuarios/editar_usuarios") ?>">
                     <input type="hidden" id="usuario_id" name="usuario_id_editar">
 
-                    <div class="mb-3">
-                        <label for="usuario_nome" class="form-label">Nome do Usuário</label>
-                        <input type="text" id="usuario_nome" name="usuario_nome_editar" class="form-control">
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="usuario_matricula" class="form-label">Matrícula</label>
-                        <input type="text" id="usuario_matricula" name="usuario_matricula_editar" class="form-control">
-                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Nome do Usuário</h6>
+                                    <input type="text" id="usuario_nome" name="usuario_nome_editar"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Matrícula</h6>
+                                    <input type="text" id="usuario_matricula" name="usuario_matricula_editar"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Data de Nascimento</h6>
+                                    <input type="date" id="usuario_data_nasc" name="usuario_data_nascimento_editar"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-1">Sexo</h6>
+                                    <select class="form-select" id="usuario_sexo" name="usuario_sexo_editar">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="mb-3">
-                        <label for="usuario_data_nasc" class="form-label">Data de Nascimento</label>
-                        <input type="date" id="usuario_data_nasc" name="usuario_data_nascimento_editar"
-                            class="form-control">
                     </div>
-
-                    <div class="mb-3">
-                        <label for="usuario_sexo" class="form-label">Sexo</label>
-                        <select class="form-select" id="usuario_sexo" name="usuario_sexo_editar">
-                        </select>
-                    </div>
-
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </form>
             </div>
@@ -60,15 +80,15 @@
                 modal.querySelector('#usuario_data_nasc').value = dataNascimento;
 
                 //Pega o campo com select e limpa o conteúdo
-                const campoSexo=document.getElementById('usuario_sexo');
-                campoSexo.innerHTML='';
+                const campoSexo = document.getElementById('usuario_sexo');
+                campoSexo.innerHTML = '';
 
                 //Coloca as opções dentro do select
                 sexoOptions.forEach(sexo => {
                     const opt = document.createElement('option');
 
-                    opt.textContent=sexo;
-                    opt.value=sexo;
+                    opt.textContent = sexo;
+                    opt.value = sexo;
                     campoSexo.appendChild(opt);
                 });
 

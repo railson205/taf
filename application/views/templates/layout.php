@@ -81,7 +81,7 @@
       <ul class="navbar-nav ms-auto">
         <?php if (!$this->session->userdata('usuario')): ?>
           <li class="nav-item">
-            <a href="<?= site_url('Login') ?>" class="nav-link text-secondary">
+            <a href="<?= site_url('Login') ?>" class="nav-link">
               Login
             </a>
           </li>

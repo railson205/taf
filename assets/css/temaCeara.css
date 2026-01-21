@@ -137,10 +137,28 @@ body.theme-ceara {
    .btn.btn-primary.btn-edicao{
 background-color: var(--ceara-azul-escuro);
     border-color: rgba(0,0,0,0);
+    
    }
 
    .btn.btn-primary.btn-edicao:hover{
-    background-color: var(--ceara-cinza-escuro); 
-    
+    background-color: var(--ceara-azul); 
+    box-shadow: none;
     color: #fff;
    }
+
+   /* ===============================
+   Modal
+   =============================== */
+
+.modal-header.modal-edicao {
+    background-color: var(--ceara-azul-escuro);
+    color: #fff;
+}
+
+.modal-header.modal-edicao .modal-title {
+    color: #fff;
+}
+
+.modal-header.modal-edicao .btn-close {
+    filter: invert(1);
+}
