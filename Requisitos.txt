@@ -1,12 +1,10 @@
-Identidade visual do governo do ceará
-
 Editar/Excluir notas
 
-Modo de adicionar novos usuários e nível de segurança
-
-Importar para dentro do projeto os svg para utilizar ícones e imagens
-
 Modal Genérico para edição e remoção de dados
+
+Aceitar data no input
+
+Aceitar valor atual com um valor e valor mostrado como outro no selct do modal
 
 
 

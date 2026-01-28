@@ -36,7 +36,7 @@
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body">
                                     <h6 class="text-muted mb-1">Data de Nascimento</h6>
-                                    <input type="date" id="usuario_data_nasc" name="usuario_data_nascimento_editar"
+                                    <input type="date" id="usuario_data_nasc" name="usuario_data_de_nascimento_editar"
                                         class="form-control">
                                 </div>
                             </div>

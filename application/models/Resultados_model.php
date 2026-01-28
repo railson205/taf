@@ -20,7 +20,7 @@ class Resultados_model extends CI_Model
         u.id as usuario_id,
         u.nome,
         u.sexo,
-        u.data_nascimento,
+        u.data_de_nascimento,
         CONCAT(f.idade_inicial,"-",f.idade_final) AS faixa_etaria,
         f.nome_grupo as grupo_faixa_etaria,
         e.id as exercicio_id,
@@ -37,19 +37,19 @@ class Resultados_model extends CI_Model
             ->join('notas n', 'n.id=r.indice_id')
             ->join(
                 'faixas_etarias f',
-                'TIMESTAMPDIFF(YEAR, u.data_nascimento, DATE(CONCAT(YEAR(CURDATE())-1, "-12-31"))) 
+                'TIMESTAMPDIFF(YEAR, u.data_de_nascimento, DATE(CONCAT(YEAR(CURDATE())-1, "-12-31"))) 
          BETWEEN f.idade_inicial AND f.idade_final'
             )
-            ->order_by('u.nome, u.data_nascimento')
+            ->order_by('u.nome, u.data_de_nascimento')
             ->get()
             ->result_array();
         //exit();
         return agrupar_exercicios_por_usuarios($dados);
     }
 
-    function inserir_resultados($dados,$uid)
+    function inserir_resultados($dados, $uid)
     {
-        $dados['usuario_id']=$uid;
+        $dados['usuario_id'] = $uid;
         // Verifica duplicidade
         $existe = $this->db
             ->where('usuario_id', $dados['usuario_id'])
@@ -71,7 +71,7 @@ class Resultados_model extends CI_Model
             'status' => $this->db->affected_rows() > 0,
             'message' => 'Resultado inserido com sucesso!',
             'type' => 'success',
-            'id'=>$this->db->insert_id()
+            'id' => $this->db->insert_id()
         ];
     }
 

@@ -1,7 +1,7 @@
 CREATE TABLE usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(50),
-    data_nascimento DATE,
+    data_de_nascimento DATE,
     sexo VARCHAR(10),
     matricula VARCHAR(50)
 );

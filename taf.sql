@@ -142,7 +142,7 @@ INSERT INTO `resultados` (`id`, `usuario_id`, `exercicio_id`, `indice_id`) VALUE
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(50) DEFAULT NULL,
-  `data_nascimento` date DEFAULT NULL,
+  `data_de_nascimento` date DEFAULT NULL,
   `sexo` varchar(10) DEFAULT NULL,
   `matricula` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -151,7 +151,7 @@ CREATE TABLE `usuarios` (
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `data_nascimento`, `sexo`, `matricula`) VALUES
+INSERT INTO `usuarios` (`id`, `nome`, `data_de_nascimento`, `sexo`, `matricula`) VALUES
 (1, 'teste a', '2002-05-07', 'Masculino', '12345'),
 (2, 'rafael guimarães', '1983-05-05', 'Masculino', '1583'),
 (3, 'teste mulher', '2002-05-07', 'Feminino', '14789');

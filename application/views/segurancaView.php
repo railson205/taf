@@ -105,8 +105,8 @@
                                     <td><?= $l['nivel'] ?></td>
                                     <td><?= $l['matricula'] ?? '-'; ?></td>
                                     <td><?= $l['nome'] ?? '-'; ?></td>
-                                    <td><?= formata_data_nascimento($l['data_nascimento']) ?? '-'; ?></td>
-                                    <td><?= coletar_idade($l['data_nascimento']) . ' anos' ?? '-'; ?></td>
+                                    <td><?= formata_data_de_nascimento($l['data_de_nascimento']) ?? '-'; ?></td>
+                                    <td><?= coletar_idade($l['data_de_nascimento']) . ' anos' ?? '-'; ?></td>
                                     <td><?= $l['sexo'] ?? '-'; ?>
                                         <?php if ($l['sexo'] == "Masculino"): ?>
                                             <i class="fa-solid fa-mars bg-info p-2 rounded text-white"></i>
@@ -119,7 +119,7 @@
                                             <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
                                                 data-bs-target="#seguranca_modal_editar"
                                                 data-selecionado='<?= json_encode($l) ?>'
-                                                data-opcoes='<?= json_encode(["Nível"=>["Administrador","Avaliador","Atleta"]]) ?>'>
+                                                data-opcoes='<?= json_encode(["Nível" => ["Administrador", "Avaliador", "Atleta"]]) ?>'>
                                                 <i class="fas fa-edit"></i>
                                             </button>
 

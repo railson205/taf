@@ -184,7 +184,7 @@
 
 
                 const notasSelecionadas = notas.filter(n => {
-                    const idade_usuario = new Date().getFullYear() - new Date(infoUsuario.data_nascimento).getFullYear();
+                    const idade_usuario = new Date().getFullYear() - new Date(infoUsuario.data_de_nascimento).getFullYear();
                     const usuarioNaFaixa = faixa.find(f => f.id == n.faixa_id && parseInt(f.idade_inicial) <= idade_usuario && idade_usuario <= parseInt(f.idade_final));
 
                     return infoUsuario.sexo == n.sexo &&

@@ -10,12 +10,13 @@ class Usuarios_model extends CI_Model
 
     public function listar_usuarios()
     {
-        $dados = $this->db->select('id,nome,sexo,data_nascimento,matricula')->from($this->nome_tabela)->order_by('nome, data_nascimento')->get()->result_array();
+        $dados = $this->db->select('id,nome,sexo,data_de_nascimento,matricula')->from($this->nome_tabela)->order_by('nome, data_de_nascimento')->get()->result_array();
         return $dados;
     }
 
-    public function getNomeById($uid){
-        return $this->db->select('nome')->from($this->nome_tabela)->where('id', $uid)->get()->row()->nome ??null;
+    public function getNomeById($uid)
+    {
+        return $this->db->select('nome')->from($this->nome_tabela)->where('id', $uid)->get()->row()->nome ?? null;
     }
 
     public function inserir_usuario($data)
@@ -36,7 +37,7 @@ class Usuarios_model extends CI_Model
         ];
     }
 
-    public function editar_usuarios($id, $data)
+    public function editar_usuario($id, $data)
     {
         $this->db->where('id', $id)->update($this->nome_tabela, $data);
 
@@ -55,7 +56,7 @@ class Usuarios_model extends CI_Model
         }
     }
 
-    public function excluir_usuarios($id)
+    public function excluir_usuario($id)
     {
         $this->db->where('id', $id)->delete($this->nome_tabela);
 

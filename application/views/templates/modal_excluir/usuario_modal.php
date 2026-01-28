@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <form id="form_usuario_excluir" method="POST" action="<?= site_url("Usuarios/excluir_usuarios") ?>">
+                <form id="form_usuario_excluir" method="POST" action="<?= site_url("Usuarios/excluir_usuario") ?>">
                     <input type="hidden" id="usuario_id" name="usuario_id_excluir">
 
                     <div class="row g-3">

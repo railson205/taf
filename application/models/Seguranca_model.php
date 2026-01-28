@@ -25,12 +25,12 @@ class Seguranca_model extends CI_Model
 
     public function listar_logins()
     {
-        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->get()->result_array();
+        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_de_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->get()->result_array();
     }
 
     public function getUserByEmail($email)
     {
-        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->where('s.email', $email)->get()->row_array();
+        return $this->db->select('s.id,s.email,s.nivel,s.usuario_id,u.nome,u.matricula,u.data_de_nascimento,u.sexo')->from($this->nome_tabela . ' s')->join('usuarios u', 'u.id=s.usuario_id')->where('s.email', $email)->get()->row_array();
     }
 
     public function getIdByUsuarioId($uid)

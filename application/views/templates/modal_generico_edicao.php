@@ -1,6 +1,6 @@
-<?php $id = normalizarString($nome_modal); ?>
+<?php $nomeView = normalizarString($nome_modal); ?>
 
-<div class="modal fade modal-edicao-generica" id="<?= $id ?>_modal_editar" tabindex="-1">
+<div class="modal fade modal-edicao-generica" id="<?= $nomeView ?>_modal_editar" tabindex="-1">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content shadow-lg border-0">
@@ -14,27 +14,29 @@
                 <form method="POST" action="<?= site_url($endpoint) ?>">
 
                     <!-- id vem do JSON -->
-                    <input type="hidden" name="<?= $id ?>_id" data-field="id">
+                    <input type="hidden" name="<?= $nomeView ?>_id_editar" data-field="id" id="<?= $nomeView ?>_id_editar">
 
                     <div class="row g-3">
                         <?php foreach ($campos as $c): ?>
-                            <?php $nome_e_tipo = explode('|', $c); ?>
+                            <?php [$nomeInput,$tipoInput] = explode('|', $c);
+                            $nomeInput=normalizarString($nomeInput);
+                            ?>
                             <div class="col-md-6">
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
                                         <h6 class="text-muted mb-1">
-                                            <?= $nome_e_tipo[0] ?>
+                                            <?= $nomeInput ?>
                                         </h6>
                                         <!-- Define se vai ser select ou input-->
-                                        <?php if ($nome_e_tipo[1] == "Select"): ?>
-                                            <select id="<?= $id ?>_<?= $nome_e_tipo[0] ?>"
-                                                name="<?= $id ?>_<?= $nome_e_tipo[0] ?>_editar"></select>
+                                        <?php if ($tipoInput == "Select"): ?>
+                                            <select id="<?= $nomeView ?>_<?= $nomeInput ?>"
+                                                name="<?= $nomeView ?>_<?= $nomeInput ?>_editar"></select>
                                         <?php else: ?>
-                                            <input type="text" id="<?= $id ?>_<?= $nome_e_tipo[0] ?>"
-                                                name="<?= $id ?>_<?= $nome_e_tipo[0] ?>_editar" class="form-control">
+                                            <input type="<?= $tipoInput ?? 'text'?>" id="<?= $nomeView ?>_<?= $nomeInput ?>"
+                                                name="<?= $nomeView ?>_<?= $nomeInput ?>_editar" class="form-control">
                                         <?php endif; ?>
 
-                                        <p id="<?= $id ?>_<?= normalizarString($c) ?>" class="mb-0 fw-bold"></p>
+                                        <p id="<?= $nomeView ?>_<?= normalizarString($c) ?>" class="mb-0 fw-bold"></p>
                                     </div>
                                 </div>
                             </div>
@@ -51,45 +53,58 @@
     </div>
     <script>
         const nomes_e_tipos = <?= json_encode($campos) ?>;
-        const id = "<?= $id ?>";
-        document.addEventListener('show.bs.modal', function (event) {
-            const modal = event.target;
-            if (!modal.classList.contains('modal-edicao-generica')) return;
+        const nomeView = "<?= $nomeView ?>";
 
-            const button = event.relatedTarget;
-            if (!button) return;
+        document.querySelectorAll('.modal-edicao-generica').forEach(modal => {
 
-            // ---- CAPTURA DOS DADOS JSON ----
-            const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
-            const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
+            modal.addEventListener('show.bs.modal', function (event) {
 
-            console.log(selecionado);
-            console.log(opcoes);
-            console.log(nomes_e_tipos);
+                const button = event.relatedTarget;
+                if (!button) return;
 
-            nomes_e_tipos.forEach(e => {
-                const [nome, tipo] = e.split('|');
-                console.log(selecionado[normalizarString(nome)]);
+                // ---- CAPTURA DOS DADOS JSON ----
+                const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
+                const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
 
-                if (tipo == 'Select') {
-                    const campoSelect = document.getElementById(id +'_'+ nome);
-                    campoSelect.innerHTML = '';
+                console.log(selecionado);
+                console.log(opcoes);
+                
+                modal.querySelector('#' + nomeView + '_id_editar').value = selecionado.id;
 
-                    opcoes[nome].forEach(item => {
-                        const option = document.createElement('option');
-                        //Mudar depois
-                        option.value=item;
-                        //Colocar opção se tiver modo de contagem
-                        option.textContent=item;
-                        if(selecionado[normalizarString(nome)]==item)option.selected=true;
-                        campoSelect.appendChild(option);
-                    });
+                nomes_e_tipos.forEach(e => {
+                    const [nome, tipo] = e.split('|');
+                    const nomeInput=normalizarString(nome);
 
-                } else {
-                    modal.querySelector('#' + id + '_' + nome).value = selecionado[normalizarString(nome)];
-                }
+                    if (tipo === 'Select') {
+                        const campoSelect = modal.querySelector('#' + nomeView + '_' + nomeInput);
+                        if (!campoSelect) return;
+
+                        campoSelect.innerHTML = '';
+
+                        (opcoes[nome] || []).forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item;
+                            option.textContent = item;
+
+                            if (selecionado[nomeInput] === item) {
+                                option.selected = true;
+                            }
+
+                            campoSelect.appendChild(option);
+                        });
+
+                    } else {
+                        const id_campo='#' + nomeView + '_' + nomeInput;
+                        console.log(id_campo,nomeInput,selecionado[nomeInput]);
+                        const campo = modal.querySelector(id_campo);
+                        if (!campo) return;
+
+                        campo.value = selecionado[nomeInput] ?? '';
+                    }
+                });
 
             });
+
         });
 
 

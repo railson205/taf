@@ -103,16 +103,16 @@
             const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
             console.log(selecionado);
 
-            modal.querySelector('#seguranca_id').value= selecionado.id;
+            modal.querySelector('#seguranca_id').value = selecionado.id;
 
             modal.querySelector('#seguranca_email').textContent = selecionado.email;
             modal.querySelector('#seguranca_nivel').textContent = selecionado.nivel;
             modal.querySelector('#seguranca_nome').textContent = selecionado.nome;
             modal.querySelector('#seguranca_matricula').textContent = selecionado.matricula;
-            modal.querySelector('#seguranca_data_nasc').textContent = selecionado.data_nascimento;
+            modal.querySelector('#seguranca_data_nasc').textContent = selecionado.data_de_nascimento;
             modal.querySelector('#seguranca_sexo').textContent = selecionado.sexo;
         });
-        
+
         // ---- FUNÇÃO SEGURA PARA JSON ----
         function parseJSON(str) {
             try {
