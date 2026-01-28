@@ -2,7 +2,7 @@
     <div class="container-fluid">
 
 
-        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Segurança', 'endpoint' => 'Seguranca/editar_login','campos'=>['Nome','Nível|Select','Email']]); ?>
+        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Segurança', 'endpoint' => 'Seguranca/editar_login', 'campos' => ['Nome|', 'Nível|Select', 'Email|']]); ?>
         <?php $this->load->view('templates/modal_excluir/seguranca_modal', ['id' => 'seguranca_modal_excluir']); ?>
 
         <?php
@@ -119,7 +119,7 @@
                                             <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
                                                 data-bs-target="#seguranca_modal_editar"
                                                 data-selecionado='<?= json_encode($l) ?>'
-                                                data-optionsNivel="Administrador,Avaliador,Atleta">
+                                                data-opcoes='<?= json_encode(["Nível"=>["Administrador","Avaliador","Atleta"]]) ?>'>
                                                 <i class="fas fa-edit"></i>
                                             </button>
 

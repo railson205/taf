@@ -18,23 +18,26 @@
 
                     <div class="row g-3">
                         <?php foreach ($campos as $c): ?>
-                            <?php $nome_e_tipo=explode('|', $c); debug($nome_e_tipo)?>
+                            <?php $nome_e_tipo = explode('|', $c); ?>
                             <div class="col-md-6">
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
                                         <h6 class="text-muted mb-1">
                                             <?= $nome_e_tipo[0] ?>
                                         </h6>
-                                        <?php if (): ?>
-                                            <select id="<?=$id?>_<?=$nome_e_tipo[0]?>" name="<?=$id?>_<?=$nome_e_tipo[0]?>_editar"></select>
-                                                <?php else: ?>
-                                                    <input type="text" id="<?=$id?>_<?=$nome_e_tipo[0]?>" name="<?=$id?>_<?=$nome_e_tipo[0]?>_editar" class="form-control">
-                                            <?php endif; ?>
+                                        <!-- Define se vai ser select ou input-->
+                                        <?php if ($nome_e_tipo[1] == "Select"): ?>
+                                            <select id="<?= $id ?>_<?= $nome_e_tipo[0] ?>"
+                                                name="<?= $id ?>_<?= $nome_e_tipo[0] ?>_editar"></select>
+                                        <?php else: ?>
+                                            <input type="text" id="<?= $id ?>_<?= $nome_e_tipo[0] ?>"
+                                                name="<?= $id ?>_<?= $nome_e_tipo[0] ?>_editar" class="form-control">
+                                        <?php endif; ?>
 
                                         <p id="<?= $id ?>_<?= normalizarString($c) ?>" class="mb-0 fw-bold"></p>
                                     </div>
-                                    </div>
                                 </div>
+                            </div>
                         <?php endforeach; ?>
                     </div>
 
@@ -47,6 +50,8 @@
         </div>
     </div>
     <script>
+        const nomes_e_tipos = <?= json_encode($campos) ?>;
+        const id = "<?= $id ?>";
         document.addEventListener('show.bs.modal', function (event) {
             const modal = event.target;
             if (!modal.classList.contains('modal-edicao-generica')) return;
@@ -54,54 +59,64 @@
             const button = event.relatedTarget;
             if (!button) return;
 
-            const data = parseJSON(button.dataset.selecionado || '{}');
+            // ---- CAPTURA DOS DADOS JSON ----
+            const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
+            const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
 
-            // Preenchimento automático
-            modal.querySelectorAll('[data-field]').forEach(el => {
-                const key = el.dataset.field;
-                if (!(key in data)) return;
+            console.log(selecionado);
+            console.log(opcoes);
+            console.log(nomes_e_tipos);
 
-                const value = data[key] ?? '';
+            nomes_e_tipos.forEach(e => {
+                const [nome, tipo] = e.split('|');
+                console.log(selecionado[normalizarString(nome)]);
 
-                if (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA') {
-                    el.value = value;
+                if (tipo == 'Select') {
+                    const campoSelect = document.getElementById(id +'_'+ nome);
+                    campoSelect.innerHTML = '';
+
+                    opcoes[nome].forEach(item => {
+                        const option = document.createElement('option');
+                        //Mudar depois
+                        option.value=item;
+                        //Colocar opção se tiver modo de contagem
+                        option.textContent=item;
+                        if(selecionado[normalizarString(nome)]==item)option.selected=true;
+                        campoSelect.appendChild(option);
+                    });
+
                 } else {
-                    el.textContent = value;
+                    modal.querySelector('#' + id + '_' + nome).value = selecionado[normalizarString(nome)];
                 }
-            });
 
-            // Select com opções vindas do botão (ex: data-nivel-options)
-            modal.querySelectorAll('select[data-field]').forEach(select => {
-                const field = select.dataset.field;
-                const optionsAttr = `options${capitalize(field)}`;
-                const rawOptions = button.dataset[optionsAttr];
-
-                if (!rawOptions) return;
-
-                select.innerHTML = '';
-                rawOptions.split(',').forEach(opt => {
-                    const option = document.createElement('option');
-                    option.value = opt;
-                    option.textContent = opt;
-                    select.appendChild(option);
-                });
-
-                select.value = data[field] ?? '';
             });
         });
 
+
+        // ---- FUNÇÃO SEGURA PARA JSON ----
         function parseJSON(str) {
             try {
                 return JSON.parse(str);
             } catch {
-                console.warn('JSON inválido:', str);
-                return {};
+                console.warn('Falha ao parsear JSON:', str);
+                return null;
             }
         }
 
-        function capitalize(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
+        //Função para normalizar string
+        function normalizarString(str) {
+            if (!str) return '';
+
+            return str
+                .toString()
+                .normalize('NFD')                 // separa acentos
+                .replace(/[\u0300-\u036f]/g, '')  // remove acentos
+                .replace(/[^a-zA-Z0-9\s]/g, '')   // remove caracteres especiais
+                .trim()
+                .toLowerCase()
+                .replace(/\s+/g, '_');            // espaços → _
         }
+
 
     </script>
 </div>
