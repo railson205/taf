@@ -9,7 +9,8 @@
         ]);
         ?>
 
-        <?php $this->load->view('templates/modal_edicao/faixa_modal', ['id' => 'faixa_modal_editar']); ?>
+        
+        <?php modalEditar($this,'Faixa Etária','FaixasEtarias/editar_faixa',['Nome do Grupo|', 'Idade inicial|number', 'Idade final|number'])?>
         <?php $this->load->view('templates/modal_excluir/faixa_modal', ['id' => 'faixa_modal_excluir']); ?>
 
         <?php
@@ -36,7 +37,7 @@
                 <!-- Nome do Grupo -->
                 <?php
                 $this->load->view('templates/inputs/input_texto', [
-                    'id' => 'nome_grupo',
+                    'id' => 'nome_do_grupo',
                     'title' => 'Nome do grupo',
                     'placeholder' => 'Ex.: Grupo 1',
                     'type' => 'text',
@@ -96,21 +97,19 @@
                                 ?>
                                 <tr>
                                     <td><?= $key + 1 ?></td>
-                                    <td><?= $f['nome_grupo'] ?? '-' ?></td>
+                                    <td><?= $f['nome_do_grupo'] ?? '-' ?></td>
                                     <td><?= $f['idade_inicial'] . ' anos' ?? '-' ?></td>
                                     <td><?= $f['idade_final'] . ' anos' ?? '-' ?></td>
                                     <td><?= $f['faixa_etaria'] ?? '-' ?></td>
                                     <td>
                                         <div class="d-flex gap-2 justify-content-center">
                                             <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
-                                                data-bs-target="#faixa_modal_editar" data-id="<?= $f['id'] ?>"
-                                                data-nome="<?= $f['nome_grupo'] ?>"
-                                                data-idade-inicial="<?= $f['idade_inicial'] ?>"
-                                                data-idade-final="<?= $f['idade_final'] ?>">
+                                                data-bs-target="#faixa_etaria_modal_editar"
+                                                data-selecionado='<?= json_encode($f) ?>'>
                                                 <i class="fas fa-edit"></i></button>
                                             <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#faixa_modal_excluir" data-id="<?= $f['id'] ?>"
-                                                data-nome="<?= $f['nome_grupo'] ?>"
+                                                data-nome="<?= $f['nome_do_grupo'] ?>"
                                                 data-idade-inicial="<?= $f['idade_inicial'] ?>"
                                                 data-idade-final="<?= $f['idade_final'] ?>"><i
                                                     class="fas fa-trash"></i></button>

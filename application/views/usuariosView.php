@@ -9,7 +9,7 @@
         ]);
         ?>
 
-        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Usuário', 'endpoint' => 'Usuarios/editar_usuario', 'campos' => ['Nome|', 'Matrícula|', 'Data de Nascimento|date', 'Sexo|Select']]); ?>
+        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Usuário', 'endpoint' => 'Usuarios/editar_usuario', 'campos' => ['Nome|', 'Matrícula|', 'Data de Nascimento|date', 'Sexo|select']]); ?>
         <?php $this->load->view('templates/modal_excluir/usuario_modal', ['id' => 'usuario_modal_excluir']); ?>
 
         <?php

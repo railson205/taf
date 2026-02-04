@@ -21,7 +21,7 @@ class Usuarios extends CI_Controller
     {
         $data = [
             'nome' => trim($this->input->post('nome_usuario')),
-            'data_nascimento' => $this->input->post('data_nasc_usuario'),
+            'data_de_nascimento' => $this->input->post('data_nasc_usuario'),
             'sexo' => $this->input->post('sexo_usuario'),
             'matricula' => $this->input->post('matricula'),
         ];
@@ -38,12 +38,9 @@ class Usuarios extends CI_Controller
         $data = [
             'nome' => trim($this->input->post('usuario_nome_editar')),
             'matricula' => $this->input->post('usuario_matricula_editar'),
-            'data_nascimento' => $this->input->post('usuario_data_de_nascimento_editar'),
+            'data_de_nascimento' => $this->input->post('usuario_data_de_nascimento_editar'),
             'sexo' => $this->input->post('usuario_sexo_editar'),
         ];
-        debug($id);
-        debug($data);
-        exit();
         $resultado = $this->Usuarios_model->editar_usuario($id, $data);
         $this->session->set_flashdata('alert_type', $resultado['type']);
         $this->session->set_flashdata('alert_message', $resultado['message']);

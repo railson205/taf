@@ -12,15 +12,17 @@
             'icon' => 'fa-solid fa-person-swimming'
         ]);
         $usuarios_options = array_para_select($usuarios, 'id', 'nome');
-        $exercicios_options = array_para_select($tipos_exercicios, 'id', 'nome_exercicio');
+        $exercicios_options = array_para_select($tipos_exercicios, 'id', 'nome_do_exercicio');
 
         $indices_options = array_para_select($notas, 'id', 'indice');
         $indices_id_options = array_para_select($notas, 'id', ['indice', 'exercicio_id']);
         $ex_unic = $resultados['exercicios_unicos_usuarios'];
         ?>
 
-        <?php $this->load->view('templates/modal_edicao/resultados_modal', ['id' => 'resultados_modal_editar']); ?>
-        <?php $this->load->view('templates/modal_excluir/resultados_modal', ['id' => 'resultados_modal_excluir']); ?>
+        <?php 
+        //$this->load->view('templates/modal_edicao/resultados_modal', ['id' => 'resultados_modal_editar']);
+        modalEditar($this, 'Resultado', 'Resultados/editar_resultado', ['Nome|read','Sexo|read','Faixa Etária|read','Grupo da Faixa Etária|read','Exercício|read','Índice|select']);
+        $this->load->view('templates/modal_excluir/resultados_modal', ['id' => 'resultados_modal_excluir']); ?>
 
 
         <?php
@@ -87,7 +89,7 @@
             <div class="col-md-12 table-responsive">
                 <h5>Usuários</h5>
                 <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
-                    $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'usuarios_options' => $usuarios_options, 'exercicios_options' => $exercicios_options, 'indices_id_options' => $indices_id_options, 'tipo_exercicios' => $tipos_exercicios]);
+                    $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'usuarios_options' => $usuarios_options, 'exercicios_options' => $exercicios_options, 'indices_id_options' => formatarIndicesModalEditar($indices_id_options), 'tipo_exercicios' => $tipos_exercicios]);
                 } ?>
 
                 <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
@@ -233,7 +235,7 @@
                 notasFiltradas.forEach(nota => {
                     const opt = document.createElement('option');
 
-                    opt.textContent = `${nota.modo_contagem == 'Tempo' ? seg_para_tempo(nota.indice) : nota.indice + ' repetições' ?? ''}`;
+                    opt.textContent = `${nota.modo_de_contagem == 'Tempo' ? seg_para_tempo(nota.indice) : nota.indice + ' repetições' ?? ''}`;
                     opt.value = nota.id;
 
                     campoNota.appendChild(opt);

@@ -13,27 +13,28 @@ class Exercicios_model extends CI_Model
         $dados = $this->db
             ->select('
             id,
-            nome_exercicio,
-            modo_contagem
+            nome_do_exercicio,
+            modo_de_contagem
             ')
             ->from($this->nome_tabela)
-            ->order_by('nome_exercicio')
+            ->order_by('nome_do_exercicio')
             ->get()
             ->result_array();
         return $dados;
     }
 
-    public function getExercicioById($id){
+    public function getExercicioById($id)
+    {
         return $this->db
             ->from($this->nome_tabela)
-            ->where('id',$id)
+            ->where('id', $id)
             ->get()
             ->row_array();
     }
 
     public function inserir_registro_exercicio($data)
     {
-        $exercicio_existe = $this->db->where('nome_exercicio', $data['nome_exercicio'])->get($this->nome_tabela)->row_array();
+        $exercicio_existe = $this->db->where('nome_do_exercicio', $data['nome_do_exercicio'])->get($this->nome_tabela)->row_array();
         if ($exercicio_existe) {
             return [
                 'status' => false,
@@ -49,7 +50,7 @@ class Exercicios_model extends CI_Model
         ];
     }
 
-    public function editar_exercicios($id, $data)
+    public function editar_exercicio($id, $data)
     {
         $this->db->where('id', $id)->update($this->nome_tabela, $data);
 

@@ -8,15 +8,15 @@ CREATE TABLE usuarios (
 
 CREATE TABLE faixas_etarias (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome_grupo VARCHAR(15),
+    nome_do_grupo VARCHAR(15),
     idade_inicial INT,
     idade_final INT
 );
 
 CREATE TABLE exercicios (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome_exercicio VARCHAR(40),
-    modo_contagem VARCHAR(10)
+    nome_do_exercicio VARCHAR(40),
+    modo_de_contagem VARCHAR(10)
 );
 
 CREATE TABLE notas (

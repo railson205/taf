@@ -35,7 +35,7 @@ function segundos_para_tempo($segundos)
     return $tempo;
 }
 
-function debug($data, $ver_array = true)
+function debug($data, $com_exit = false, $ver_array = true)
 {
     echo '<pre style="background:#222;color:#0f0;padding:10px;border-radius:6px;font-size:14px;">';
 
@@ -50,6 +50,8 @@ function debug($data, $ver_array = true)
     }
 
     echo '</pre>';
+    if ($com_exit)
+        exit();
 
 }
 
@@ -68,7 +70,7 @@ function agrupar_resultados_exercicios_por_usuarios(array $usuarios_exercicios):
         $uid = $row['usuario_id'];
 
         // Exercícios únicos (mantém o nome pelo ID)
-        $exercicios_unicos[$row['exercicio_id']] = $row['nome_exercicio'];
+        $exercicios_unicos[$row['exercicio_id']] = $row['nome_do_exercicio'];
 
         // Se ainda não existe o usuário no array, cria
         if (!isset($resultados[$uid])) {
@@ -78,7 +80,7 @@ function agrupar_resultados_exercicios_por_usuarios(array $usuarios_exercicios):
                 'nome' => $row['nome'],
                 'sexo' => $row['sexo'],
                 'faixa_etaria' => $row['faixa_etaria'],
-                'grupo_faixa' => $row['nome_grupo'],
+                'grupo_faixa' => $row['nome_do_grupo'],
                 'nota_final' => 0, // inicia a soma
                 'exercicios' => []
             ];
@@ -87,7 +89,7 @@ function agrupar_resultados_exercicios_por_usuarios(array $usuarios_exercicios):
         // Adiciona o exercício ao usuário
         $resultados[$uid]['exercicios'][] = [
             'exercicio_id' => $row['exercicio_id'],
-            'nome_exercicio' => $row['nome_exercicio'],
+            'nome_do_exercicio' => $row['nome_do_exercicio'],
             'tipo_exercicio' => $row['tipo_exercicio'],
             'valor_nota' => $row['valor_nota'],
             'meta_exercicio' => $row['meta_exercicio'],
@@ -121,7 +123,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
         $uid = $row['usuario_id'];
 
         // Exercícios únicos (mantém o nome pelo ID)
-        $exercicios_unicos[$row['exercicio_id']] = $row['nome_exercicio'];
+        $exercicios_unicos[$row['exercicio_id']] = $row['nome_do_exercicio'];
 
         // Se ainda não existe o usuário no array, cria
         if (!isset($resultados[$uid])) {
@@ -141,8 +143,8 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
         $resultados[$uid]['exercicios'][] = [
             'resultado_id' => $row['id'],
             'exercicio_id' => $row['exercicio_id'],
-            'nome_exercicio' => $row['nome_exercicio'],
-            'modo_contagem' => $row['modo_contagem'],
+            'nome_do_exercicio' => $row['nome_do_exercicio'],
+            'modo_de_contagem' => $row['modo_de_contagem'],
             'indice' => $row['indice'],
             'valor_nota' => $row['valor_nota'],
             'indice_id' => $row['indice_id'],
@@ -294,7 +296,7 @@ function ordena_array_indice(array $array): array
  *
  * @param array $agrupado Lista de strings no formato: "Exercicio|Indice|Modo----Faixa|Nota"
  * @param int   $qtdLinhas Número total de linhas da matriz
- * @param array $arrayExercicios Lista de exercícios com ['nome_exercicio']
+ * @param array $arrayExercicios Lista de exercícios com ['nome_do_exercicio']
  * @param array $arrayFaixa Lista de faixas etárias com ['faixa_etaria']
  * @return array Matriz transposta organizada para exibição em tabela
  */
@@ -304,7 +306,7 @@ function gera_matriz(array $agrupado, $qtdLinhas, array $arrayExercicios, array 
 
     // 🔹 1. Inicializa a matriz com valor padrão (-1)
     foreach ($arrayExercicios as $ex) {
-        $nome = $ex['nome_exercicio'];
+        $nome = $ex['nome_do_exercicio'];
         $matriz[$nome] = array_fill(0, $qtdLinhas, -1);
     }
 
@@ -453,3 +455,20 @@ function normalizarString($str)
     return $str;
 }
 
+/**
+ * Função para formatar os ids dos indices para se adequar no formato VALOR|CONTEUDO|FILTRO para o modal de edição
+ * @param mixed $indicesOptions
+ * @return array
+ */
+function formatarIndicesModalEditar($indicesOptions)
+{
+    //TODO: Colocar filtro para modo de contagem para se for tempo ou contage e modificar o CONTEUDO. Filtrar por sexo e faixa etária
+    $indicesFormatados = [];
+    foreach ($indicesOptions as $grupo) {
+        foreach ($grupo as $key => $dados) {
+            $indicesFormatados[] = "{$key}|{$dados['indice']}|{$dados['exercicio_id']}";
+        }
+    }
+debug($indicesFormatados);
+    return $indicesFormatados;
+}

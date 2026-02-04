@@ -81,7 +81,7 @@
                         const indice = Object.values(element)[0]['indice'];
                         const indiceId = Object.keys(element)[0];
 
-                        const modoContagem = opcoes.all_exercicios.find(e => e.id == selecionado.exercicio_id)['modo_contagem'];
+                        const modoContagem = opcoes.all_exercicios.find(e => e.id == selecionado.exercicio_id)['modo_de_contagem'];
 
                         //Adicionar os indices ao select
                         if (selecionado.exercicio_id == Object.values(element)[0]['exercicio_id']) {
@@ -99,6 +99,7 @@
             * Preenche um <input> considerando tanto arrays quanto dicionários
             */
             function preencherInput(id, valorSelecionado, opcoes = []) {
+                console.log(valorSelecionado,opcoes);
                 const input = document.getElementById(id);
                 if (!input || !opcoes) return;
 

@@ -7,7 +7,7 @@
             </div>
 
             <div class="modal-body">
-                <form id="form_exercicio_edicao" method="POST" action="<?= site_url("Exercicios/editar_exercicios") ?>">
+                <form id="form_exercicio_edicao" method="POST" action="<?= site_url("Exercicios/editar_exercicio") ?>">
                     <input type="hidden" id="exercicio_id" name="exercicio_id_editar">
 
                     <div class="mb-3">
@@ -17,7 +17,8 @@
 
                     <div class="mb-3">
                         <label for="exercicio_sexo" class="form-label">Modo de Contagem</label>
-                        <select class="form-select" id="exercicio_modo_contagem" name="exercicio_modo_contagem_editar">
+                        <select class="form-select" id="exercicio_modo_de_contagem"
+                            name="exercicio_modo_de_contagem_editar">
                         </select>
                     </div>
 
@@ -45,7 +46,7 @@
                 modal.querySelector('#exercicio_nome').value = nome;
 
                 //Pega o campo com select e limpa o conteúdo
-                const campoModoContagem = document.getElementById('exercicio_modo_contagem');
+                const campoModoContagem = document.getElementById('exercicio_modo_de_contagem');
                 campoModoContagem.innerHTML = '';
 
                 //Coloca as opções dentro do select
@@ -58,7 +59,7 @@
                 });
 
                 //Define o valor que deve estar selecionado no select
-                modal.querySelector('#exercicio_modo_contagem').value = modoContagemSelecionado;
+                modal.querySelector('#exercicio_modo_de_contagem').value = modoContagemSelecionado;
             });
         });
     </script>

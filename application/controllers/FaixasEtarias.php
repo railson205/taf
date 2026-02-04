@@ -22,7 +22,7 @@ class FaixasEtarias extends CI_Controller
     function adicionar_faixa_etaria()
     {
         $data = [
-            'nome_grupo' => $this->input->post('nome_grupo'),
+            'nome_do_grupo' => $this->input->post('nome_do_grupo'),
             'idade_inicial' => $this->input->post('idade_i'),
             'idade_final' => $this->input->post('idade_f')
         ];
@@ -36,12 +36,13 @@ class FaixasEtarias extends CI_Controller
 
     function editar_faixa()
     {
-        $id = $this->input->post('faixa_id_edicao');
+        $id = $this->input->post('faixa_etaria_id_editar');
         $data = [
-            'nome_grupo' => $this->input->post('faixa_nome_edicao'),
-            'idade_inicial' => $this->input->post('faixa_idade_inicial_edicao'),
-            'idade_final' => $this->input->post('faixa_idade_final_edicao')
+            'nome_do_grupo' => $this->input->post('faixa_etaria_nome_do_grupo_editar'),
+            'idade_inicial' => $this->input->post('faixa_etaria_idade_inicial_editar'),
+            'idade_final' => $this->input->post('faixa_etaria_idade_final_editar')
         ];
+        debug([$id,$data]);
         $resultado = $this->FaixasEtarias_model->editar_faixa($id, $data);
 
         $this->session->set_flashdata('alert_type', $resultado['type']);

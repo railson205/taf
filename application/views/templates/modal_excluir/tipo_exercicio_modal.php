@@ -46,7 +46,7 @@
                             <div class="card shadow-sm border-0">
                                 <div class="card-body">
                                     <h6 class="text-muted mb-1">Modo de Contagem</h6>
-                                    <p id="exercicio_modo_contagem" class="fw-bold fs-6 mb-0"></p>
+                                    <p id="exercicio_modo_de_contagem" class="fw-bold fs-6 mb-0"></p>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
 
             modal.querySelector('#exercicio_id').value = id;
             modal.querySelector('#exercicio_nome').innerText = nome;
-            modal.querySelector('#exercicio_modo_contagem').innerText = modoContagemSelecionado;
+            modal.querySelector('#exercicio_modo_de_contagem').innerText = modoContagemSelecionado;
         });
     });
 </script>

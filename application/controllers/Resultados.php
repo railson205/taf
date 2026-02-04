@@ -81,11 +81,11 @@ class Resultados extends CI_Controller
         redirect('Resultados');
     }
 
-    function editar_resultados()
+    function editar_resultado()
     {
-        $id = $this->input->post('resultados_id_editar');
+        $id = $this->input->post('resultado_id_editar');
         $data = [
-            'indice_id' => $this->input->post('resultados_indice_editar'),
+            'indice_id' => $this->input->post('resultado_indice_editar'),
         ];
 
         $info_log = $this->Log_model->getInfoByResultadoId($id);
@@ -114,14 +114,17 @@ class Resultados extends CI_Controller
             'htmlEmail' => $this->load->view('templates/corpo_email', $dadosEmail, true)
         ];
 
+        debug([$id,$data,$dadosEmail],true,false);
         //Atleta
         $resultado = $this->Resultados_model->editar_resultados($id, $data);
+        /*
         $this->Log_model->atualizarLog($id, $data['indice_id']);
 
         //Envia email para avaliador e atleta
         $this->load->library('email_service');
         $this->email_service->enviar($atleta['email'], 'Novo resultado', $atleta['htmlEmail']);
         $this->email_service->enviar($avaliador['email'], 'Novo resultado', $avaliador['htmlEmail']);
+        */
 
         //Define o conteúdo do alerta
         $this->session->set_flashdata('alert_type', $resultado['type']);

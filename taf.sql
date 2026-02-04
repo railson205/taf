@@ -29,15 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `exercicios` (
   `id` int(11) NOT NULL,
-  `nome_exercicio` varchar(40) DEFAULT NULL,
-  `modo_contagem` varchar(10) DEFAULT NULL
+  `nome_do_exercicio` varchar(40) DEFAULT NULL,
+  `modo_de_contagem` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `exercicios`
 --
 
-INSERT INTO `exercicios` (`id`, `nome_exercicio`, `modo_contagem`) VALUES
+INSERT INTO `exercicios` (`id`, `nome_do_exercicio`, `modo_de_contagem`) VALUES
 (2, 'Abdominal', 'Contagem'),
 (3, 'Corrida 2400m', 'Tempo'),
 (4, 'Barra', 'Contagem'),
@@ -53,7 +53,7 @@ INSERT INTO `exercicios` (`id`, `nome_exercicio`, `modo_contagem`) VALUES
 
 CREATE TABLE `faixas_etarias` (
   `id` int(11) NOT NULL,
-  `nome_grupo` varchar(15) DEFAULT NULL,
+  `nome_do_grupo` varchar(15) DEFAULT NULL,
   `idade_inicial` int(11) DEFAULT NULL,
   `idade_final` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -62,7 +62,7 @@ CREATE TABLE `faixas_etarias` (
 -- Extraindo dados da tabela `faixas_etarias`
 --
 
-INSERT INTO `faixas_etarias` (`id`, `nome_grupo`, `idade_inicial`, `idade_final`) VALUES
+INSERT INTO `faixas_etarias` (`id`, `nome_do_grupo`, `idade_inicial`, `idade_final`) VALUES
 (1, 'grupo 1', 18, 24),
 (2, 'grupo 2', 25, 29),
 (3, 'grupo 5', 40, 44),

@@ -107,3 +107,15 @@ function switchSideBar($controller)
       break;
   }
 }
+
+/**
+ * Função para chamar modal de edição
+ * @param mixed $controller $this
+ * @param mixed $nomeModal  
+ * @param mixed $endpoint   Controlador/função
+ * @param mixed $campos     Nome do campo|text/number/select/date/read(somente leitura)
+ * @return void
+ */
+function modalEditar($controller, $nomeModal, $endpoint, $campos){
+$controller->load->view('templates/modal_generico_edicao', ['nome_modal' => $nomeModal, 'endpoint' => $endpoint, 'campos' => $campos]);
+}

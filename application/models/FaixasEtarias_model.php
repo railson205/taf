@@ -12,7 +12,7 @@ class FaixasEtarias_model extends CI_Model
     {
         $dados = $this->db->select('
         id,
-        nome_grupo,
+        nome_do_grupo,
         idade_inicial,
         idade_final,
         CONCAT(idade_inicial,"-",idade_final) AS faixa_etaria,

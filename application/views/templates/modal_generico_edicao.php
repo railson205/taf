@@ -14,13 +14,12 @@
                 <form method="POST" action="<?= site_url($endpoint) ?>">
 
                     <!-- id vem do JSON -->
-                    <input type="hidden" name="<?= $nomeView ?>_id_editar" data-field="id" id="<?= $nomeView ?>_id_editar">
+                    <input type="hidden" name="<?= $nomeView ?>_id_editar" data-field="id"
+                        id="<?= $nomeView ?>_id_editar">
 
                     <div class="row g-3">
                         <?php foreach ($campos as $c): ?>
-                            <?php [$nomeInput,$tipoInput] = explode('|', $c);
-                            $nomeInput=normalizarString($nomeInput);
-                            ?>
+                            <?php [$nomeInput, $tipoInput] = explode('|', $c); ?>
                             <div class="col-md-6">
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
@@ -28,13 +27,30 @@
                                             <?= $nomeInput ?>
                                         </h6>
                                         <!-- Define se vai ser select ou input-->
-                                        <?php if ($tipoInput == "Select"): ?>
-                                            <select id="<?= $nomeView ?>_<?= $nomeInput ?>"
-                                                name="<?= $nomeView ?>_<?= $nomeInput ?>_editar"></select>
-                                        <?php else: ?>
-                                            <input type="<?= $tipoInput ?? 'text'?>" id="<?= $nomeView ?>_<?= $nomeInput ?>"
-                                                name="<?= $nomeView ?>_<?= $nomeInput ?>_editar" class="form-control">
-                                        <?php endif; ?>
+                                        <?php $nomeInput = normalizarString($nomeInput);
+                                        switch ($tipoInput) {
+
+                                            case 'select': ?>
+                                                <select id="<?= $nomeView ?>_<?= $nomeInput ?>"
+                                                    name="<?= $nomeView ?>_<?= $nomeInput ?>_editar" class="form-select">
+                                                </select>
+                                                <?php
+                                                break;
+
+                                            case 'read': ?>
+                                                <input type="text" id="<?= $nomeView ?>_<?= $nomeInput ?>" class="form-control"
+                                                    readonly>
+                                                <?php
+                                                break;
+
+                                            default: ?>
+                                                <input type="<?= $tipoInput ?? 'text' ?>" id="<?= $nomeView ?>_<?= $nomeInput ?>"
+                                                    name="<?= $nomeView ?>_<?= $nomeInput ?>_editar" class="form-control">
+                                                <?php
+                                                break;
+                                        }
+                                        ?>
+
 
                                         <p id="<?= $nomeView ?>_<?= normalizarString($c) ?>" class="mb-0 fw-bold"></p>
                                     </div>
@@ -65,37 +81,52 @@
                 // ---- CAPTURA DOS DADOS JSON ----
                 const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
                 const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
+                const filtro = parseJSON(button.getAttribute('data-filtro')) || {};
 
-                console.log(selecionado);
-                console.log(opcoes);
-                
+                /*console.log(selecionado);
+                console.log(opcoes);*/
+                console.log(filtro);
+
                 modal.querySelector('#' + nomeView + '_id_editar').value = selecionado.id;
 
                 nomes_e_tipos.forEach(e => {
                     const [nome, tipo] = e.split('|');
-                    const nomeInput=normalizarString(nome);
+                    const nomeInput = normalizarString(nome);
 
-                    if (tipo === 'Select') {
+                    if (tipo === 'select') {
                         const campoSelect = modal.querySelector('#' + nomeView + '_' + nomeInput);
                         if (!campoSelect) return;
 
                         campoSelect.innerHTML = '';
 
                         (opcoes[nome] || []).forEach(item => {
-                            const option = document.createElement('option');
-                            option.value = item;
-                            option.textContent = item;
 
-                            if (selecionado[nomeInput] === item) {
-                                option.selected = true;
+                            const [valor, conteudo, valorFiltro] = item.split("|");
+                            const idFiltro = filtro[nome];
+
+                            const mesmoExercicioId = valorFiltro && selecionado[idFiltro] == valorFiltro
+                            const temFiltro = valorFiltro == undefined;
+
+                            if (mesmoExercicioId || temFiltro) {
+                                const option = document.createElement('option');
+                                option.value = valor;
+                                option.textContent = conteudo ?? valor;
+
+                                if (selecionado[nomeInput] === item) {
+                                    option.selected = true;
+                                }
+
+                                campoSelect.appendChild(option);
                             }
 
-                            campoSelect.appendChild(option);
+
+
+
                         });
 
                     } else {
-                        const id_campo='#' + nomeView + '_' + nomeInput;
-                        console.log(id_campo,nomeInput,selecionado[nomeInput]);
+                        const id_campo = '#' + nomeView + '_' + nomeInput;
+                        //console.log(id_campo, nomeInput, selecionado[nomeInput]);
                         const campo = modal.querySelector(id_campo);
                         if (!campo) return;
 

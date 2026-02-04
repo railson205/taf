@@ -9,7 +9,7 @@
         ]);
         ?>
 
-        <?php $this->load->view('templates/modal_edicao/tipo_exercicio_modal', ['id' => 'tipo_exercicio_modal_editar']); ?>
+        <?php modalEditar($this, 'Exercício', 'Exercicios/editar_exercicio', ['Nome do exercício|text', 'Modo de contagem|select']) ?>
         <?php $this->load->view('templates/modal_excluir/tipo_exercicio_modal', ['id' => 'tipo_exercicio_modal_excluir']); ?>
 
         <?php
@@ -36,7 +36,7 @@
                 <!-- Nome do Exercício -->
                 <?php
                 $this->load->view('templates/inputs/input_texto', [
-                    'id' => 'nome_exercicio',
+                    'id' => 'nome_do_exercicio',
                     'title' => 'Nome do Exercício',
                     'placeholder' => 'Ex.: Corrida 2400m',
                     'type' => 'text',
@@ -49,7 +49,7 @@
                 <!-- Modo de Contagem-->
                 <?php
                 $this->load->view('templates/inputs/input_select', [
-                    'id' => 'modo_contagem',
+                    'id' => 'modo_de_contagem',
                     'title' => 'Modo de Contagem',
                     'placeholder' => 'Selecione o modo',
                     'options' => ['Contagem', 'Tempo'],
@@ -80,25 +80,23 @@
                             <?php foreach ($exercicios as $key => $e): ?>
                                 <tr>
                                     <td><?= $key + 1 ?></td>
-                                    <td><?= $e['nome_exercicio'] ?? '-' ?></td>
-                                    <td><?= $e['modo_contagem'] ?? '-' ?></td>
+                                    <td><?= $e['nome_do_exercicio'] ?? '-' ?></td>
+                                    <td><?= $e['modo_de_contagem'] ?? '-' ?></td>
 
                                     <td class="text-center">
                                         <div class="d-flex gap-2 justify-content-center">
                                             <!-- Editar -->
                                             <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
-                                                data-bs-target="#tipo_exercicio_modal_editar" data-id="<?= $e['id'] ?>"
-                                                data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
-                                                data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>"
-                                                data-modo-contagem-options="Contagem,Tempo">
+                                                data-bs-target="#exercicio_modal_editar"
+                                                data-selecionado='<?= json_encode($e) ?>'
+                                                data-opcoes='<?= json_encode(["Modo de contagem" => ["Contagem", "Tempo"]]) ?>'>
                                                 <i class="fas fa-edit"></i>
                                             </button>
 
                                             <!-- Excluir -->
                                             <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#tipo_exercicio_modal_excluir" data-id="<?= $e['id'] ?>"
-                                                data-nome-exercicio="<?= $e['nome_exercicio'] ?>"
-                                                data-modo-contagem-selecionado="<?= $e['modo_contagem'] ?>">
+                                                data-bs-target="#tipo_exercicio_modal_excluir"
+                                                data-selecionado="<?= json_encode($e) ?>">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>

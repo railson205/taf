@@ -17,12 +17,12 @@ class Notas_model extends CI_Model
             ->select('
         n.id,
         CONCAT(f.idade_inicial,"-",f.idade_final) AS faixa_etaria,
-        f.nome_grupo as grupo_faixa_etaria,
+        f.nome_do_grupo as grupo_faixa_etaria,
         n.sexo,
         n.valor_nota,
         e.id as exercicio_id,
-        e.nome_exercicio,
-        e.modo_contagem,
+        e.nome_do_exercicio,
+        e.modo_de_contagem,
         n.indice,
         f.id as faixa_id,
     ')
@@ -45,7 +45,7 @@ class Notas_model extends CI_Model
             n.sexo,
             n.exercicio_id,
             f.id as faixa_id,
-            e.modo_contagem,
+            e.modo_de_contagem,
             n.valor_nota,
     ')
             ->from($this->nome_tabela . ' n')
@@ -58,8 +58,9 @@ class Notas_model extends CI_Model
         return $dados;
     }
 
-    public function getNotasById($id){
-        return $this->db->from($this->nome_tabela)->where('id',$id)->get()->row_array();
+    public function getNotasById($id)
+    {
+        return $this->db->from($this->nome_tabela)->where('id', $id)->get()->row_array();
     }
 
     function inserir_nova_nota($data)

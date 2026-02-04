@@ -8,8 +8,8 @@
             'icon' => 'fa-solid fa-file-pen'
         ]);
         $faixa_options = array_para_select($faixa, 'id', 'faixa_etaria');
-        $exercicios_options = array_para_select($exercicios, 'id', 'nome_exercicio');
-        $modo_options = array_para_select($exercicios, 'id', 'modo_contagem');
+        $exercicios_options = array_para_select($exercicios, 'id', 'nome_do_exercicio');
+        $modo_options = array_para_select($exercicios, 'id', 'modo_de_contagem');
         $notas_options = array_map(function ($f) {
             return $f;
         }, range(0.5, 10, 0.5));
@@ -28,14 +28,14 @@
         $alert_message = $this->session->flashdata('alert_message');
 
         if ($alert_message): ?>
-            <script>
-                Swal.fire({
-                    title: "Aviso",
-                    text: "<?= $alert_message ?>",
-                    icon: "<?= $alert_type ?>", // success, error, warning, info
-                    confirmButtonText: "OK"
-                });
-            </script>
+                <script>
+                    Swal.fire({
+                        title: "Aviso",
+                        text: "<?= $alert_message ?>",
+                        icon: "<?= $alert_type ?>", // success, error, warning, info
+                        confirmButtonText: "OK"
+                    });
+                </script>
         <?php endif; ?>
 
         <!--Form-->
@@ -194,19 +194,19 @@
                 return;
             }
 
-            const modo_contagem = exercicio.modo_contagem;
+            const modo_de_contagem = exercicio.modo_de_contagem;
             console.log(exercicio);
-            console.log(modo_contagem);
+            console.log(modo_de_contagem);
 
             campo_contagem.removeEventListener('input', aplicarMascaraTempo);
 
-            if (modo_contagem === 'Tempo') {
+            if (modo_de_contagem === 'Tempo') {
                 campo_contagem.type = 'text';
                 campo_contagem.placeholder = 'mm:ss';
                 campo_contagem.disabled = false;
                 campo_contagem.addEventListener('input', aplicarMascaraTempo);
             }
-            else if (modo_contagem === 'Contagem') {
+            else if (modo_de_contagem === 'Contagem') {
                 campo_contagem.type = 'float';
                 campo_contagem.placeholder = 'Digite a contagem';
                 campo_contagem.disabled = false;

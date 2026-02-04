@@ -2,7 +2,7 @@
     <div class="container-fluid">
 
 
-        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Segurança', 'endpoint' => 'Seguranca/editar_login', 'campos' => ['Nome|', 'Nível|Select', 'Email|']]); ?>
+        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Segurança', 'endpoint' => 'Seguranca/editar_login', 'campos' => ['Nome|', 'Nível|select', 'Email|']]); ?>
         <?php $this->load->view('templates/modal_excluir/seguranca_modal', ['id' => 'seguranca_modal_excluir']); ?>
 
         <?php

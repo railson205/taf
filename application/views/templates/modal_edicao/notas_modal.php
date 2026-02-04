@@ -65,8 +65,8 @@
 
                 // Descobre o modo do exercício já selecionado (se houver)
                 let modoSelecionado = null;
-                if (selecionado.exercicio_id && Array.isArray(opcoes.modo_contagem)) {
-                    opcoes.modo_contagem.forEach(item => {
+                if (selecionado.exercicio_id && Array.isArray(opcoes.modo_de_contagem)) {
+                    opcoes.modo_de_contagem.forEach(item => {
                         if (typeof item === 'object' && item !== null) {
                             const key = Object.keys(item)[0];
                             if (key == selecionado.exercicio_id) modoSelecionado = item[key];
@@ -101,11 +101,11 @@
 
                 if (campoId) campoId.value = selecionado.id ?? '';
 
-                // Adiciona listener para quando o exercício mudar (usa opcoes.modo_contagem)
+                // Adiciona listener para quando o exercício mudar (usa opcoes.modo_de_contagem)
                 const selectExercicio = document.getElementById('notas_exercicio');
                 if (selectExercicio) {
                     selectExercicio.removeEventListener('change', onChangeExercicioBound);
-                    onChangeExercicioBound = function (e) { onChangeExercicio(e, opcoes.modo_contagem); };
+                    onChangeExercicioBound = function (e) { onChangeExercicio(e, opcoes.modo_de_contagem); };
                     selectExercicio.addEventListener('change', onChangeExercicioBound);
                 }
             });
