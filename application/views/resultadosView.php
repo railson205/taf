@@ -19,9 +19,8 @@
         $ex_unic = $resultados['exercicios_unicos_usuarios'];
         ?>
 
-        <?php 
-        //$this->load->view('templates/modal_edicao/resultados_modal', ['id' => 'resultados_modal_editar']);
-        modalEditar($this, 'Resultado', 'Resultados/editar_resultado', ['Nome|read','Sexo|read','Faixa Etária|read','Grupo da Faixa Etária|read','Exercício|read','Índice|select']);
+        <?php
+        modalEditar($this, 'Resultado', 'Resultados/editar_resultado', ['Nome|read', 'Sexo|read', 'Faixa Etária|read', 'Grupo da Faixa Etária|read', 'Exercício|read', 'Índice|select']);
         $this->load->view('templates/modal_excluir/resultados_modal', ['id' => 'resultados_modal_excluir']); ?>
 
 
@@ -88,9 +87,6 @@
         <div class="row mt-4">
             <div class="col-md-12 table-responsive">
                 <h5>Usuários</h5>
-                <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
-                    $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'usuarios_options' => $usuarios_options, 'exercicios_options' => $exercicios_options, 'indices_id_options' => formatarIndicesModalEditar($indices_id_options), 'tipo_exercicios' => $tipos_exercicios]);
-                } ?>
 
                 <table class="table table-striped table-hover table-bordered datatable" style="width: 100%;">
                     <thead>
@@ -131,9 +127,11 @@
                                     <!-- BOTÃO DO ACCORDION -->
                                     <td class="text-center">
                                         <button class="btn btn-sm btn-primary btn-edicao" data-bs-toggle="modal"
-                                            data-bs-target="#avaliacao_modal<?= $key ?>">
+                                            data-bs-target="#avaliacao_modal" data-notas='<?= json_encode($notas) ?>'
+                                            data-registro='<?= json_encode($r, JSON_HEX_APOS | JSON_HEX_QUOT) ?>'>
                                             Detalhes
                                         </button>
+
 
                                     </td>
                                 </tr>
@@ -150,6 +148,16 @@
                 </table>
             </div>
         </div>
+        <?php
+        $this->load->view('templates/avaliacao_modal', [
+            'id' => 'avaliacao_modal',
+            'usuarios_options' => $usuarios_options,
+            'exercicios_options' => $exercicios_options,
+            'indices_id_options' => $indices_id_options,
+            'tipo_exercicios' => $tipos_exercicios
+        ]);
+        ?>
+
     </div>
     <!--Tabela -->
     </div>

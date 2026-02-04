@@ -135,6 +135,7 @@ function agrupar_exercicios_por_usuarios(array $usuarios_exercicios): array
                 'data_de_nascimento' => $row['data_de_nascimento'],
                 'faixa_etaria' => $row['faixa_etaria'],
                 'grupo_faixa' => $row['grupo_faixa_etaria'],
+                'faixa_id'=>$row['faixa_id'],
                 'exercicios' => []
             ];
         }
@@ -453,22 +454,4 @@ function normalizarString($str)
     $str = preg_replace('/[^a-z0-9_]/', '', $str);
 
     return $str;
-}
-
-/**
- * Função para formatar os ids dos indices para se adequar no formato VALOR|CONTEUDO|FILTRO para o modal de edição
- * @param mixed $indicesOptions
- * @return array
- */
-function formatarIndicesModalEditar($indicesOptions)
-{
-    //TODO: Colocar filtro para modo de contagem para se for tempo ou contage e modificar o CONTEUDO. Filtrar por sexo e faixa etária
-    $indicesFormatados = [];
-    foreach ($indicesOptions as $grupo) {
-        foreach ($grupo as $key => $dados) {
-            $indicesFormatados[] = "{$key}|{$dados['indice']}|{$dados['exercicio_id']}";
-        }
-    }
-debug($indicesFormatados);
-    return $indicesFormatados;
 }

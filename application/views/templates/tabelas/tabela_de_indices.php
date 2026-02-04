@@ -19,6 +19,7 @@
         </tr>
         <tr>
             <?php if (!empty($infoExercicios)): ?>
+                
                     <?php foreach ($infoExercicios as $e): ?>
                             <th class="text-center border-end border-dark"><?= $e['nome_do_exercicio'] ?></th>
                     <?php endforeach; ?>

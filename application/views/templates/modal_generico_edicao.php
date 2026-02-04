@@ -81,11 +81,9 @@
                 // ---- CAPTURA DOS DADOS JSON ----
                 const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
                 const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
-                const filtro = parseJSON(button.getAttribute('data-filtro')) || {};
 
                 /*console.log(selecionado);
                 console.log(opcoes);*/
-                console.log(filtro);
 
                 modal.querySelector('#' + nomeView + '_id_editar').value = selecionado.id;
 
@@ -101,35 +99,23 @@
 
                         (opcoes[nome] || []).forEach(item => {
 
-                            const [valor, conteudo, valorFiltro] = item.split("|");
-                            const idFiltro = filtro[nome];
+                            const [valor, conteudo] = item.split("|");
+                            const option = document.createElement('option');
 
-                            const mesmoExercicioId = valorFiltro && selecionado[idFiltro] == valorFiltro
-                            const temFiltro = valorFiltro == undefined;
+                            option.value = valor;
+                            option.textContent = conteudo ?? valor;
 
-                            if (mesmoExercicioId || temFiltro) {
-                                const option = document.createElement('option');
-                                option.value = valor;
-                                option.textContent = conteudo ?? valor;
-
-                                if (selecionado[nomeInput] === item) {
-                                    option.selected = true;
-                                }
-
-                                campoSelect.appendChild(option);
+                            console.log(selecionado[nomeInput],item,valor);
+                            if (selecionado[nomeInput] === conteudo) {
+                                option.selected = true;
                             }
-
-
-
-
+                            campoSelect.appendChild(option);
                         });
 
                     } else {
                         const id_campo = '#' + nomeView + '_' + nomeInput;
-                        //console.log(id_campo, nomeInput, selecionado[nomeInput]);
                         const campo = modal.querySelector(id_campo);
                         if (!campo) return;
-
                         campo.value = selecionado[nomeInput] ?? '';
                     }
                 });

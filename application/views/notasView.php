@@ -28,14 +28,14 @@
         $alert_message = $this->session->flashdata('alert_message');
 
         if ($alert_message): ?>
-                <script>
-                    Swal.fire({
-                        title: "Aviso",
-                        text: "<?= $alert_message ?>",
-                        icon: "<?= $alert_type ?>", // success, error, warning, info
-                        confirmButtonText: "OK"
-                    });
-                </script>
+            <script>
+                Swal.fire({
+                    title: "Aviso",
+                    text: "<?= $alert_message ?>",
+                    icon: "<?= $alert_type ?>", // success, error, warning, info
+                    confirmButtonText: "OK"
+                });
+            </script>
         <?php endif; ?>
 
         <!--Form-->
@@ -85,13 +85,14 @@
                 <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Masculino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
                 <?php $this->load->view('templates/tabelas/tabela_de_indices', ['nome_tabela' => 'Feminino', 'infoNotas' => $notas_por_sexo, 'infoFaixa' => $faixa, 'infoExercicios' => $exercicios, 'cores' => $cores]) ?>
                 <script>
-
+                    //TODO: consertar tabela e mostrar botão de exportação
                     $(document).ready(function () {
                         if ($.fn.DataTable.isDataTable('.datatable')) return;
 
                         const titulo = $('.datatable').data('export-title') || 'Relatório';
 
                         $('.datatable').DataTable({
+                            destroy: true,
                             ordering: false,
                             responsive: true,
                             pageLength: 20,

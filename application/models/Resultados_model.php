@@ -30,6 +30,7 @@ class Resultados_model extends CI_Model
         n.valor_nota,
         n.id as indice_id,
         r.avaliador_id,
+        f.id as faixa_id
     ')
             ->from($this->nome_tabela . ' r')
             ->join('usuarios u', 'u.id = r.usuario_id')
