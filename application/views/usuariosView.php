@@ -9,8 +9,10 @@
         ]);
         ?>
 
-        <?php $this->load->view('templates/modal_generico_edicao', ['nome_modal' => 'Usuário', 'endpoint' => 'Usuarios/editar_usuario', 'campos' => ['Nome|', 'Matrícula|', 'Data de Nascimento|date', 'Sexo|select']]); ?>
-        <?php $this->load->view('templates/modal_excluir/usuario_modal', ['id' => 'usuario_modal_excluir']); ?>
+        <?php 
+        modalEditar($this,'Usuário','Usuarios/editar_usuario',['Nome|text', 'Matrícula|number', 'Data de Nascimento|date', 'Sexo|select']);
+        modalExcluir($this,'Usuário','Usuarios/excluir_usuario',['Nome', 'Matrícula', 'Data de Nascimento', 'Sexo'])
+        ?>
 
         <?php
         $alert_type = $this->session->flashdata('alert_type');

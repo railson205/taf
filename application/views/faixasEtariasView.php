@@ -10,8 +10,10 @@
         ?>
 
         
-        <?php modalEditar($this,'Faixa Etária','FaixasEtarias/editar_faixa',['Nome do Grupo|', 'Idade inicial|number', 'Idade final|number'])?>
-        <?php $this->load->view('templates/modal_excluir/faixa_modal', ['id' => 'faixa_modal_excluir']); ?>
+        <?php
+        modalEditar($this,'Faixa Etária','FaixasEtarias/editar_faixa',['Nome do Grupo|', 'Idade inicial|number', 'Idade final|number']);
+        modalExcluir($this,'Faixa Etária','FaixasEtarias/excluir_faixa',['Nome do Grupo', 'Idade inicial', 'Idade final']);
+        ?>
 
         <?php
         $alert_type = $this->session->flashdata('alert_type');

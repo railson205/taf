@@ -20,9 +20,6 @@
         }
         ?>
 
-        <?php $this->load->view('templates/modal_edicao/notas_modal', ['id' => 'notas_modal_editar']); ?>
-        <?php $this->load->view('templates/modal_excluir/notas_modal', ['id' => 'notas_modal_excluir']); ?>
-
         <?php
         $alert_type = $this->session->flashdata('alert_type');
         $alert_message = $this->session->flashdata('alert_message');

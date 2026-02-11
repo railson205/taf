@@ -162,3 +162,16 @@ background-color: var(--ceara-azul-escuro);
 .modal-header.modal-edicao .btn-close {
     filter: invert(1);
 }
+
+.modal-header.modal-excluir {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.modal-header.modal-excluir .modal-title {
+    color: #fff;
+}
+
+.modal-header.modal-excluir .btn-close {
+    filter: invert(1);
+}

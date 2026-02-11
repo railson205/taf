@@ -68,86 +68,86 @@
         </div>
     </div>
     <script>
-        const nomes_e_tipos = <?= json_encode($campos) ?>;
-        const nomeView = "<?= $nomeView ?>";
+        (function () {
+            const nomes_e_tipos = <?= json_encode($campos) ?>;
+            const nomeView = "<?= $nomeView ?>";
 
-        document.querySelectorAll('.modal-edicao-generica').forEach(modal => {
+            document.querySelectorAll('.modal-edicao-generica').forEach(modal => {
 
-            modal.addEventListener('show.bs.modal', function (event) {
+                modal.addEventListener('show.bs.modal', function (event) {
 
-                const button = event.relatedTarget;
-                if (!button) return;
+                    const button = event.relatedTarget;
+                    if (!button) return;
 
-                // ---- CAPTURA DOS DADOS JSON ----
-                const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
-                const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
+                    // ---- CAPTURA DOS DADOS JSON ----
+                    const selecionado = parseJSON(button.getAttribute('data-selecionado')) || {};
+                    const opcoes = parseJSON(button.getAttribute('data-opcoes')) || {};
 
-                /*console.log(selecionado);
-                console.log(opcoes);*/
+                    modal.querySelector('#' + nomeView + '_id_editar').value = selecionado.id;
 
-                modal.querySelector('#' + nomeView + '_id_editar').value = selecionado.id;
+                    nomes_e_tipos.forEach(e => {
+                        const [nome, tipo] = e.split('|');
+                        const nomeInput = normalizarString(nome);
 
-                nomes_e_tipos.forEach(e => {
-                    const [nome, tipo] = e.split('|');
-                    const nomeInput = normalizarString(nome);
+                        if (tipo === 'select') {
+                            const campoSelect = modal.querySelector('#' + nomeView + '_' + nomeInput);
+                            if (!campoSelect) return;
 
-                    if (tipo === 'select') {
-                        const campoSelect = modal.querySelector('#' + nomeView + '_' + nomeInput);
-                        if (!campoSelect) return;
+                            campoSelect.innerHTML = '';
 
-                        campoSelect.innerHTML = '';
+                            (opcoes[nome] || []).forEach(item => {
 
-                        (opcoes[nome] || []).forEach(item => {
+                                const [valor, conteudo] = item.split("|");
+                                const option = document.createElement('option');
 
-                            const [valor, conteudo] = item.split("|");
-                            const option = document.createElement('option');
+                                option.value = valor;
+                                option.textContent = conteudo ?? valor;
 
-                            option.value = valor;
-                            option.textContent = conteudo ?? valor;
+                                console.log(selecionado[nomeInput], item, valor);
+                                if (selecionado[nomeInput] === conteudo) {
+                                    option.selected = true;
+                                }
+                                campoSelect.appendChild(option);
+                            });
 
-                            console.log(selecionado[nomeInput],item,valor);
-                            if (selecionado[nomeInput] === conteudo) {
-                                option.selected = true;
-                            }
-                            campoSelect.appendChild(option);
-                        });
+                        } else {
+                            const id_campo = '#' + nomeView + '_' + nomeInput;
+                            const campo = modal.querySelector(id_campo);
+                            if (!campo) return;
+                            campo.value = selecionado[nomeInput] ?? '';
+                        }
+                    });
 
-                    } else {
-                        const id_campo = '#' + nomeView + '_' + nomeInput;
-                        const campo = modal.querySelector(id_campo);
-                        if (!campo) return;
-                        campo.value = selecionado[nomeInput] ?? '';
-                    }
                 });
 
             });
 
-        });
 
-
-        // ---- FUNÇÃO SEGURA PARA JSON ----
-        function parseJSON(str) {
-            try {
-                return JSON.parse(str);
-            } catch {
-                console.warn('Falha ao parsear JSON:', str);
-                return null;
+            // ---- FUNÇÃO SEGURA PARA JSON ----
+            function parseJSON(str) {
+                try {
+                    return JSON.parse(str);
+                } catch {
+                    console.warn('Falha ao parsear JSON:', str);
+                    return null;
+                }
             }
-        }
 
-        //Função para normalizar string
-        function normalizarString(str) {
-            if (!str) return '';
+            //Função para normalizar string
+            function normalizarString(str) {
+                if (!str) return '';
 
-            return str
-                .toString()
-                .normalize('NFD')                 // separa acentos
-                .replace(/[\u0300-\u036f]/g, '')  // remove acentos
-                .replace(/[^a-zA-Z0-9\s]/g, '')   // remove caracteres especiais
-                .trim()
-                .toLowerCase()
-                .replace(/\s+/g, '_');            // espaços → _
-        }
+                return str
+                    .toString()
+                    .normalize('NFD')                 // separa acentos
+                    .replace(/[\u0300-\u036f]/g, '')  // remove acentos
+                    .replace(/[^a-zA-Z0-9\s]/g, '')   // remove caracteres especiais
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, '_');            // espaços → _
+            }
+        })();
+
 
 
     </script>

@@ -25,7 +25,7 @@
       <div class="col-md-12">
         <h5>Resultados</h5>
         <?php foreach ($resultados['registro_exercicios'] as $key => $r) {
-          $this->load->view('templates/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'isDashboard' => true]);
+          $this->load->view('templates/modal/avaliacao_modal', ['id' => "avaliacao_modal$key", 'exercicios' => $r['exercicios'], 'registro' => $r, 'isDashboard' => true]);
         } ?>
 
         <div class="table-responsive">

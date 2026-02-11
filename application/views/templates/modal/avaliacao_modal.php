@@ -98,6 +98,23 @@
                             >
                                 <i class="fas fa-edit"></i>
                             </button>
+                            <button class="btn btn-sm btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#resultado_modal_excluir"
+                                data-selecionado='${JSON.stringify({
+                                nome: registro.nome,
+                                usuario_id: registro.usuario_id,
+                                sexo: registro.sexo,
+                                faixa_etaria: registro.faixa_etaria,
+                                grupo_da_faixa_etaria: registro.grupo_faixa,
+                                id: exec.resultado_id,
+                                exercicio_id: exec.exercicio_id,
+                                indice_id: exec.indice_id,
+                                exercicio: exec.nome_do_exercicio,
+                                indice: exec.indice
+                            })}'>
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </td>
                     <?php endif; ?>
                 </tr>

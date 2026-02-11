@@ -9,8 +9,10 @@
         ]);
         ?>
 
-        <?php modalEditar($this, 'Exercício', 'Exercicios/editar_exercicio', ['Nome do exercício|text', 'Modo de contagem|select']) ?>
-        <?php $this->load->view('templates/modal_excluir/tipo_exercicio_modal', ['id' => 'tipo_exercicio_modal_excluir']); ?>
+        <?php
+        modalEditar($this, 'Exercício', 'Exercicios/editar_exercicio', ['Nome do exercício|text', 'Modo de contagem|select']);
+        modalExcluir($this, 'Exercício', 'Exercicios/excluir_exercicio', ['Nome do exercício', 'Modo de contagem']);
+        ?>
 
         <?php
         $alert_type = $this->session->flashdata('alert_type');

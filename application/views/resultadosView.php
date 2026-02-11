@@ -21,7 +21,8 @@
 
         <?php
         modalEditar($this, 'Resultado', 'Resultados/editar_resultado', ['Nome|read', 'Sexo|read', 'Faixa Etária|read', 'Grupo da Faixa Etária|read', 'Exercício|read', 'Índice|select']);
-        $this->load->view('templates/modal_excluir/resultados_modal', ['id' => 'resultados_modal_excluir']); ?>
+        modalExcluir($this, 'Resultado', 'Resultados/excluir_resultado', ['Nome', 'Sexo', 'Faixa Etária', 'Grupo da Faixa Etária', 'Exercício|read', 'Índice']);
+        ?>
 
 
         <?php
@@ -149,7 +150,7 @@
             </div>
         </div>
         <?php
-        $this->load->view('templates/avaliacao_modal', [
+        $this->load->view('templates/modal/avaliacao_modal', [
             'id' => 'avaliacao_modal',
             'usuarios_options' => $usuarios_options,
             'exercicios_options' => $exercicios_options,
