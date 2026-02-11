@@ -38,8 +38,30 @@
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.3/dist/sweetalert2.all.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="<?= base_url('assets/js/drawer.js') ?>"></script>
-  <script src="<?= base_url('assets/js/datatable-init.js') ?>"></script>
+  <script src="<?= base_url('assets/js/drawer.js') ?>"></script>,
+
+  <style>
+    @media print {
+
+    body * {
+        visibility: hidden;
+    }
+
+    .print-area, .print-area * {
+        visibility: visible;
+    }
+
+    .print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+  </style>
+
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed theme-ceara">
@@ -67,13 +89,13 @@
           </a>
         </li>
         <!-- Retirar depois -->
-         <?php if(true):?>
-        <li class="nav-item">
-          <a href="<?= site_url('Teste') ?>" class="nav-link fw-bold hover-underline">
-            Teste
-          </a>
-        </li>
-        <?php endif;?>
+        <?php if (true): ?>
+          <li class="nav-item">
+            <a href="<?= site_url('Teste') ?>" class="nav-link fw-bold hover-underline">
+              Teste
+            </a>
+          </li>
+        <?php endif; ?>
         <!-- Retirar depois -->
       </ul>
 
@@ -126,7 +148,8 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap">
               <h1 class="m-0"><?= isset($title) ? $title : 'Página' ?></h1>
               <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="<?= site_url('ControladorCondicional') ?>" class="link">Home</a></li>
+                <li class="breadcrumb-item"><a href="<?= site_url('ControladorCondicional') ?>" class="link">Home</a>
+                </li>
                 <li class="breadcrumb-item active"><?= isset($title) ? $title : '' ?></li>
               </ol>
             </div>
@@ -147,39 +170,29 @@
       </footer>
     </div> <!-- ./wrapper -->
 
-    <!-- jQuery CDN (obrigatório para DataTables funcionar) -->
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- OverlayScrollbars -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.3.0/browser/overlayscrollbars.browser.es6.min.js"></script>
-
-    <!-- DataTables JS (só funciona DEPOIS do jQuery do AdminLTE carregar) -->
+    <!-- DataTables -->
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 
-    <!-- DataTables Buttons -->
+    <!-- Buttons -->
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
 
-    <!-- Dependências -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
-    <!-- Botões -->
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-
-
     <!-- AdminLTE -->
     <script src="<?= base_url('assets/adminlte/dist/js/adminlte.js') ?>"></script>
+
+    <!-- Seu init por último -->
+    <script src="<?= base_url('assets/js/datatable-init.js') ?>"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
 </body>
 
 </html>

@@ -1,33 +1,26 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
+	document.querySelectorAll(".datatable").forEach((table) => {
+		// Se já foi iniciado, destrói primeiro
+		if ($.fn.DataTable.isDataTable(table)) {
+			$(table).DataTable().destroy();
+		}
 
-    document.querySelectorAll('.datatable').forEach(table => {
+		$(table).DataTable({
+			responsive: false,
+			autoWidth: false,
 
-        if (!$.fn.DataTable.isDataTable(table)) {
-            $(table).DataTable({
-                responsive: {
-                    details: {
-                        type: 'column'
-                    }
-                },
-                autoWidth: false,
-                pageLength: 5,
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json'
-                },
-                columnDefs: [
-                    {
-                        className: 'dtr-control',
-                        orderable: false,
-                        targets: 0
-                    },
-                    {
-                        orderable: false,
-                        targets: -1
-                    }
-                ]
-            });
-        }
+			pageLength: 20,
 
-    });
+			language: {
+				url: "https://cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json",
+			},
 
+			columnDefs: [
+				{
+					orderable: false,
+					targets: -1,
+				},
+			],
+		});
+	});
 });
